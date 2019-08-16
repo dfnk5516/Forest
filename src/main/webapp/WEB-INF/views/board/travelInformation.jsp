@@ -260,8 +260,6 @@
 		else
 		{
 			map.removeOverlayMapTypeId(maptypeClassify(checkBox.id));
-			control.className = 'active';
-			toggleOverlay(true);
 		}
 	}
 
