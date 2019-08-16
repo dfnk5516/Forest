@@ -43,24 +43,31 @@
 	$(document).ready(function()
 	{ 	
 		$("[name=searchType]").click(function()      
-		{
+		{			
 			if($('input:radio[name=searchType]:checked').val() == "searchByCity")
 			{
 				$("#textBox").hide();
+				$("#search-box-button2").hide();
+				$("#search-box-wrapper").hide();
 				$("#forestSelect").show();
 				$("#citySelect").show();
+				$("#search-box-button1").show();
+				
 			}	
 			else
 			{
-				//var str = "<input type = 'text' onkeyup='searchByName(this)' style = ''/>";
-				//document.getElementById("searchOption").innerHTML = str;
 				$("#forestSelect").hide();
 				$("#citySelect").hide();
+				$("#search-box-button1").hide();
 				$("#textBox").show();
+				$("#search-box-button2").show();
+				$("#search-box-wrapper").show();
 			}
 		});
 		
 		$("#textBox").hide();
+		$("#search-box-button2").hide();
+		$("#search-box-wrapper").hide();
 	})
    /////////////////////	$(document).ready(function() end
    
@@ -506,42 +513,40 @@
 <body onload = "mapInit()">
 	<!-- Main -->
 	<div id="main" class="wrapper style2">
+	
 		<!-- Content -->
 		<div id="content" class="container">
-			<section>
+			<section class = "travelInformation">
 				<header class="major">
 					<h2>여행 정보 검색</h2>
 					<span class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
 				</header>				
-				<form name="searchForm" id = "searchForm" style = "display : inline-block">
+				<form name="searchForm" id = "searchForm" style = "width : 100%">
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-					<input type="radio" name="searchType" id="searchType" value="searchByCity" checked="checked">지역으로 찾기
-					<input type="radio" name="searchType" id="searchType" value="searchByName">이름으로 찾기
-					<p><p>
-					<select id = "citySelect" onchange="citySelectChange(this.value)">
+					<div id = "radio-group">
+						<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked"><label for = "searchType1">지역으로 찾기</label><input type="radio" name="searchType" id="searchType2" value="searchByName"><label for = "searchType2">이름으로 찾기</label>
+					</div>
+					<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 40%;">
 						<option>시/도 선택</option>
 						<c:forEach items="${cityList}" var="city">
 							<option>${city}</option>
 						</c:forEach>
 					</select>
-					<select id="forestSelect" onchange=''>
+					<select id="forestSelect" style = "width : 54%">
 						<option>산림휴양시설 선택</option>
 					</select>
-					
-					<input id = "textBox" type = "text" onkeyup="searchByName(this)" style = "width : 200px; display : inline-block;"/><a href="#"><img alt="검색" src="" /></a>
+					<button id = "search-box-button1">&#128269;</button>
+					<div id = "search-box-wrapper" style = "width : 100%">
+						<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
+						<button id = "search-box-button2">&#128269;</button>
+					</div>
 				</form>
-				<br>
-				<br>
 				
-				<div class="radio-group">
-					<input type="radio" id="option-one" name="selector"><label for="option-one">One</label><input type="radio" id="option-two" name="selector"><label for="option-two">Two</label><input type="radio" id="option-three" name="selector"><label for="option-three">Three</label>
-  				</div>
-				
-				<!-- ---------------------------------------------- -->
+				<br>
 				<div>
-					<table style = "height : 30px">
+					<table style = "width : 100%">
 						<tr>
-							<td style = "text-align : left; vertical-align: middle">
+							<td style = "text-align : left; vertical-align: middle;">
 								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
 								<input type="checkbox" id = "sights"/>관광지 보기
 								<input type="checkbox" id = "festival"/>행사 보기
@@ -552,16 +557,15 @@
 								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
 							</td>
 						</tr>
-					</table>
+					</table>				
 				</div>
-				
 
 	
 				<!-- /div-->
 				
 				<!-- 지도 -->	
 				
-				<div id="container" style = "width: 100%; height: 700px;">
+				<div id="container" style = "width: 100%; height: 650px;">
 					<div id="rvWrapper">
 						<div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
 						<div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>

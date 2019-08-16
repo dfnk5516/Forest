@@ -25,9 +25,7 @@
 					<div class="6u">
 						<header class="major">
 							<h2>멤버십 혜택</h2>
-							<span class="byline">
-								<h6> 제휴처 입장권, 상품 할인 | VIP 고객 숙박료 10% 할인 | 휴양림 예약 시 여행 책자 발송 </h6>
-							</span>
+							<span class="byline">제휴처 입장권, 상품 할인 | VIP 고객 숙박료 10% 할인 | 휴양림 예약 시 여행 책자 발송</span>
 						</header>
 					</div>
 					<div class="6u">

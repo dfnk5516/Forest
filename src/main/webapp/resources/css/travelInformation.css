@@ -5,6 +5,11 @@
 	left : 50%;
 	transform : translate(-50%, -50%);
 }
+.travelInformation
+{
+    margin-left:15%;
+    margin-right:15%;
+}
 
 input[type = "checkbox"]
 {
@@ -103,6 +108,75 @@ input:checked[type = "checkbox"]::before
 	height: 14px;
 }
 
+
+input[type="text"], select
+{
+	font-weight : normal;
+}
+input[type="text"], select
+{
+	height: 40px;
+	line-height: normal;
+	padding : 0.2em 0.2em;
+	border : 4px solid #1E1E1E;
+    border-radius : 5px 0 0 5px;
+    background-color: #FFFFFF;
+    outline : 0;
+}
+input[type="text"]:focus
+{
+	border-color: #050505;
+}
+
+#search-box-wrapper
+{
+	display : inline-flex;
+	font-size : 20px;
+}
+
+#search-box-button2
+{
+	font-size : inherit;
+	border : 4px solid #1E1E1E;
+	border-radius : 0 5px 5px 0;
+	background-color : #1E1E1E;
+	border-left : 0;
+	padding : 0 0.75em;
+	color : white;
+	font-weight : bold;
+	outline : 0;
+	cursor : pointer;
+}
+
+input[type = "text"]:hover,
+input[type = "text"]:focus
+{
+	border-color : #050505;
+}
+
+#search-box-button2:hover,
+#search-box-button2:focus
+{
+	border-color : #050505;
+	background-color : #050505
+}
+
+#search-box-button1
+{
+	font-size : inherit;
+	border : 4px solid #1E1E1E;
+	border-radius : 5px;
+	background-color : #1E1E1E;
+	width : 5%;
+	height: 40px;
+	padding : 0 0.75em;
+	color : white;
+	font-weight : bold;
+	outline : 0;
+	cursor : pointer;
+	border-left : 0;
+}
+
 table
 {
 	margin:0;
@@ -112,33 +186,59 @@ table
 	font:inherit;
 	vertical-align:center;
 }
-input[type="text"]
-{
-	font-weight : normal;
-}
-input[type="text"]
-{
-	height: 40px; /* 높이 초기화 */
-	line-height: normal; /* line-height 초기화 */
-	padding: .2em .2em; /* 여백 설정 */
-	border: 4px solid #1E1E1E;
-    border-radius: 5px;
-    background-color: #FFFFFF;  
-}
-input[type="text"]:focus
-{
-	border-color: #1E1E1E;
-}
+
 
 select
 {
     /*width: 80px;*/
     height: 40px; /* 높이 초기화 */
 	line-height: normal; /* line-height 초기화 */
-    padding: .2em .2em;
-    border: 4px solid #1E1E1E;
+    padding : 0.2em 0.2em;
+    border: 4px solid #050505;
     border-radius: 5px;
     /*color: black;*/
     background-color: #FFFFFF;  
+    display : inline-block;
+    font-size : inherit;
 }
+
+
+
+@import url("http://fonts.googleapis.com/css?family=Roboto");
+body {
+  background: #332f35;
+  font-family: roboto;
+}
+
+input[type=radio] {
+  position: absolute;
+  visibility: hidden;
+  display: none;
+}
+
+label {
+  color: #9a929e;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px 20px;
+}
+
+input[type=radio]:checked + label {
+  color: #ccc8ce;
+  background: #675f6b;
+}
+
+label + input[type=radio] + label {
+  border-left: solid 3px #675f6b;
+}
+
+.radio-group {
+  border: solid 3px #675f6b;
+  display: inline-block;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+		
 
