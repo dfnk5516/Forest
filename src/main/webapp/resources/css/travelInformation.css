@@ -22,13 +22,13 @@ input:checked[type = "checkbox"][id = "forest"]
 {
 	background : #00E359;
 }
-input:checked[type = "checkbox"][id = "bicycle"]
+input:checked[type = "checkbox"][id = "sights"]
 {
-	background : #D9BDDB;
+	background : #3B89EC;
 }
-input:checked[type = "checkbox"][id = "bicycle"]
+input:checked[type = "checkbox"][id = "festival"]
 {
-	background : #D9BDDB;
+	background : #F20202;
 }
 input:checked[type = "checkbox"][id = "traffic"]
 {
@@ -109,5 +109,31 @@ table
 	font-size:100%;
 	font:inherit;
 	vertical-align:center;
+}
+
+input[type="text"], input[type="password"]
+{
+	height: 40px; /* 높이 초기화 */
+	line-height: normal; /* line-height 초기화 */
+	padding: .2em .2em; /* 여백 설정 */
+	border: 4px solid #1E1E1E;
+    border-radius: 5px;
+    background-color: #FFFFFF;  
+}
+input[type="text"]:focus
+{
+	border-color: #1E1E1E;
+}
+
+select
+{
+    /*width: 80px;*/
+    height: 40px; /* 높이 초기화 */
+	line-height: normal; /* line-height 초기화 */
+    padding: .2em .2em;
+    border: 4px solid #1E1E1E;
+    border-radius: 5px;
+    /*color: black;*/
+    background-color: #FFFFFF;  
 }
 

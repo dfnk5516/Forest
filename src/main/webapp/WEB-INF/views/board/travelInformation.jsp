@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.min.js"></script>
+<c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
+<script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45666bcb826210a72dbea20e833f5168"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/travelInformation.css"/>
-
+<body><%@ include file="topcontent.jsp"%></body>
+<link rel="stylesheet" href="${path}/resources/css/travelInformation.css"/>
 <script type="text/javascript">
 	var mapLevel = 12;
 	var xMaxSize = 70;
@@ -508,8 +508,6 @@
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
 <body onload = "mapInit()">
-	<%@ include file="topcontent.jsp"%>
-
 	<!-- Main -->
 	<div id="main" class="wrapper style2">
 		<!-- Content -->
@@ -523,7 +521,7 @@
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 					<input type="radio" name="searchType" id="searchType" value="searchByCity" checked="checked">지역으로 찾기
 					<input type="radio" name="searchType" id="searchType" value="searchByName">이름으로 찾기
-					<br>
+					<p><p>
 					<select id = "citySelect" onchange="citySelectChange(this.value)">
 						<option>시/도 선택</option>
 						<c:forEach items="${cityList}" var="city">
@@ -534,24 +532,24 @@
 						<option>산림휴양시설 선택</option>
 					</select>
 					
-					<input id = "textBox" type = "text" onkeyup="searchByName(this)" style = "width : 200px, display : inline-block"/><a href="#"><img alt="검색" src="" /></a>
+					<input id = "textBox" type = "text" onkeyup="searchByName(this)" style = "width : 200px; display : inline-block;"/><a href="#"><img alt="검색" src="" /></a>
 				</form>
 				<br>
 				<br>
 				
 				<!-- ---------------------------------------------- -->
 				<div>
-					<table>
+					<table border="1">
 						<tr>
 							<td style = "text-align : left;">
 								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "true"/>휴양림 보기
 								<input type="checkbox" id = "sights"/>관광지 보기
 								<input type="checkbox" id = "festival"/>행사 보기
 							</td>
-							<td style = "text-align : right;">
-								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
-								<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
-								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
+							<td style = "text-align : right; height : 80px; vertical-align: center">
+								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" /><span>교통정보 보기</span>
+								<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" /><span>로드뷰 보기</span>
+								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" /><span>자전거도로 보기</span>
 							</td>
 						</tr>
 					</table>
@@ -575,25 +573,6 @@
 		</div>
 	</div>
 	
-	<!-- Footer -->
-	<div id="footer">
-		<section class="container">
-			<header class="major">
-				<h2>Connect with us</h2>
-				<span class="byline">경기도 성남시 분당구 대왕판교로 670 유스페이스2 B동 | 대표전화 : 1588-9999 | 메일주소 : teamforrest77@gmail.com</span>
-			</header>
-			<ul class="icons">
-				<li class="active"><a href="#" class="fa fa-facebook"><span>Facebook</span></a></li>
-				<li><a href="#" class="fa fa-twitter"><span>Twitter</span></a></li>
-				<li><a href="#" class="fa fa-dribbble"><span>Pinterest</span></a></li>
-				<li><a href="#" class="fa fa-google-plus"><span>Google+</span></a></li>
-			</ul>
-			<hr />
-		</section>	
-		<!-- Copyright -->
-		<div id="copyright">					
-			<a href="http://templated.co">개인정보처리방침</a> | <a href="http://unsplash.com">홈페이지이용약관</a> | <a href="http://unsplash.com/cc0">민감정보수집및동의</a>
-		</div>			
-	</div>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>
