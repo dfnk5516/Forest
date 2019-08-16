@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="faqMapper">
+
+<sql id="faqcolumnName">
+   faq_no, faq_id, faq_title, faq_content, faq_img, faq_date
+</sql>
+
+<sql id="faqSearch">
+	<choose>
+	<when test="option=='all'">
+		where faq_title like '%'|| #{keyWord} ||'%'
+		or faq_content like '%'|| #{keyWord} ||'%'
+	</when>
+	<when test="option=='title'">
+		where faq_title like '%'|| #{keyWord} ||'%'
+	</when>
+	<when test="option=='content'">
+		where faq_content like '%'|| #{keyWord} ||'%'
+	</when>
+	</choose>
+</sql>
+
+
+<select id="selectAll" resultType="faqDTO" parameterType="map">
+	select <include refid="faqcolumnName"/> from bbs_faq
+	<include refid="faqSearch"/>
+	order by faq_no desc
+</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

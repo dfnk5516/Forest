@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travelInformationMapper">
+	
+	<select id="selectForestByCity" resultType="forestDTO">
+		select *
+		from forest where city=#{_parameter}
+	</select>
+	
+	<select id="selectForestByName" resultType="String" parameterType="String">
+		select FOREST_NAME
+		from FOREST
+		where lower(FOREST_NAME) like lower('%'||#{_parameter}||'%')
+	</select>
+	
+	<select id="selectCity" resultType="String" >
+	select * from PROVINCE order by city
+	</select>
+	
+	<select id="selectForest" resultType="forestDTO">
+		select * from forest
+	</select>
+  
+</mapper>
