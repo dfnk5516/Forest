@@ -4,15 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
   
 <configuration>
-   
-   <!--  #{이름} 에 해당하는 값이 null을 허용 할수 있도록 설정 -->
-   <settings>
-     <setting name="jdbcTypeForNull" value="NULL"/>
-     <setting name="mapUnderscoreToCamelCase" value="true"/>
-   </settings>
-   
-   
-
-     
-   
+	<!--  #{이름} 에 해당하는 값이 null을 허용 할수 있도록 설정 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
 </configuration>

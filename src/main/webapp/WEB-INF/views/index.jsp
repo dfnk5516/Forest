@@ -8,7 +8,7 @@
 	.entry{
 		width:100%;
 		height:80%;
-		background-image: url('/controller/resources/images/background.jpg');
+		background-image: url('${pageContext.request.contextPath}/resources/images/background.jpg');
 		background-repeat: no-repeat;
 		}
 	h1.title{
@@ -35,9 +35,7 @@
 <body>
 	<div class="entry">
 		<h1 class="title"> For your best rest place </h1>
-		<a href="hometest"> For Rest </a>
+		<a href="${pageContext.request.contextPath}/hometest"> For Rest </a>
 	</div>
-	
-	
 </body>
 </html>

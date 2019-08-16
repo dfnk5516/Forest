@@ -6,24 +6,22 @@
 <head>
 <c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<script src="/controller/resources/js/jquery.min.js"></script>
+<script src="${path}/resources/js/jquery.min.js"></script>
 <script src="${path}/resources/js/jquery.dropotron.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/style.css">
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/style-wide.css">
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/style-normal.css">		
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/style-narrow.css">
-
+<link rel="stylesheet" href="${path}/resources/css/style.css">
+<link rel="stylesheet" href="${path}/resources/css/style-wide.css">
+<link rel="stylesheet" href="${path}/resources/css/style-normal.css">		
+<link rel="stylesheet" href="${path}/resources/css/style-narrow.css">
 <script src="${path}/resources/js/skel.min.js"></script>
 <script src="${path}/resources/js/skel-layers.min.js"></script>
 <script src="${path}/resources/js/init.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/skel.css" />
 <link rel="stylesheet" href="${path}/resources/css/style.css" />
 <link rel="stylesheet" href="${path}/resources/css/bootStrap.css"/>
-
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
 <body>
