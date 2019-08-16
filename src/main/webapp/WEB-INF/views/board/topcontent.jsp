@@ -10,7 +10,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-
+<script src="/controller/resources/js/jquery.min.js"></script>
 <script src="${path}/resources/js/jquery.dropotron.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/style.css">
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/style-wide.css">

@@ -5,13 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
-<script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45666bcb826210a72dbea20e833f5168"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <body><%@ include file="topcontent.jsp"%></body>
+<script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45666bcb826210a72dbea20e833f5168&libraries=services,clusterer,drawing"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformation.css"/>
 <script type="text/javascript">
 	var mapLevel = 12;
@@ -537,23 +535,29 @@
 				<br>
 				<br>
 				
+				<div class="radio-group">
+					<input type="radio" id="option-one" name="selector"><label for="option-one">One</label><input type="radio" id="option-two" name="selector"><label for="option-two">Two</label><input type="radio" id="option-three" name="selector"><label for="option-three">Three</label>
+  				</div>
+				
 				<!-- ---------------------------------------------- -->
 				<div>
-					<table border="1">
+					<table style = "height : 30px">
 						<tr>
-							<td style = "text-align : left;">
+							<td style = "text-align : left; vertical-align: middle">
 								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "true"/>휴양림 보기
 								<input type="checkbox" id = "sights"/>관광지 보기
 								<input type="checkbox" id = "festival"/>행사 보기
 							</td>
-							<td style = "text-align : right; height : 80px; vertical-align: center">
-								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" /><span>교통정보 보기</span>
-								<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" /><span>로드뷰 보기</span>
-								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" /><span>자전거도로 보기</span>
+							<td style = "text-align : right; vertical-align: middle">
+								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
+								<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
+								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
 							</td>
 						</tr>
 					</table>
 				</div>
+				
+
 	
 				<!-- /div-->
 				
@@ -572,6 +576,8 @@
 			</section>
 		</div>
 	</div>
+	
+
 	
 	<%@ include file="footer.jsp"%>
 </body>
