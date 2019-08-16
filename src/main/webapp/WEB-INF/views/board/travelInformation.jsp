@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ include file="topcontent.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<body><%@ include file="topcontent.jsp"%></body>
 <script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45666bcb826210a72dbea20e833f5168&libraries=services,clusterer,drawing"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -544,7 +542,7 @@
 					<table style = "height : 30px">
 						<tr>
 							<td style = "text-align : left; vertical-align: middle">
-								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "true"/>휴양림 보기
+								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
 								<input type="checkbox" id = "sights"/>관광지 보기
 								<input type="checkbox" id = "festival"/>행사 보기
 							</td>
@@ -576,9 +574,6 @@
 			</section>
 		</div>
 	</div>
-	
-
-	
-	<%@ include file="footer.jsp"%>
 </body>
 </html>
+<%@ include file="footer.jsp"%>
