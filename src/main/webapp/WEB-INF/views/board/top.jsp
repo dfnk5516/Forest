@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="${path}/resources/css/style-normal.css">
 		<script src="${path}/resources/js/skel.min.js"></script>
 		<script src="${path}/resources/js/skel-layers.min.js"></script>
-		<script src="${path}/resources/js/init.js"></script>	
+		<script src="${path}/resources/js/init.js"></script>
 		<link rel="stylesheet" href="${path}/resources/css/skel.css" />
 		<link rel="stylesheet" href="${path}/resources/css/style.css" />
 		<title>For Rest : 휴양림 예약 사이트</title>
@@ -25,8 +25,8 @@
 		<!-- Header Wrapper -->
 		<div class="wrapper style1">
 			<!-- Header -->
-			<div id="header">					
-				<div class="container">							
+			<div id="header">
+				<div class="container">
 					<!-- Logo -->
 					<h1><a href="#" id="logo">FORREST</a></h1>
 					<!-- Nav -->
