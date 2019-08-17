@@ -53,9 +53,9 @@
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1",
 		//"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1",
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"
-		"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1&loop=1&rel=0&controls=0",
-		"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1&loop=1&rel=0&controls=0",
-		"https://www.youtube.com/embed/l0IoPQM1HlU?autoplay=1&loop=1&rel=0&controls=0"
+		"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1&loop=1&rel=0&controls=1",
+		"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1&loop=1&rel=0&controls=1",
+		"https://www.youtube.com/embed/l0IoPQM1HlU?autoplay=1&loop=1&rel=0&controls=1"
 		
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScnyf2EtZmLFfuc1CVTvUdDA&autoplay=1&loop=1&rel=0",
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScm1bh7y8oTi0E9xiVOliZ4C&autoplay=1&loop=1&rel=0",
