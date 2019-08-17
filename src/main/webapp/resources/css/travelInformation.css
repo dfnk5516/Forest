@@ -5,10 +5,10 @@
 	left : 50%;
 	transform : translate(-50%, -50%);
 }
+
 .travelInformation
 {
-    margin-left:15%;
-    margin-right:15%;
+    width : 100%;
 }
 
 input[type = "checkbox"]
@@ -87,6 +87,14 @@ input:checked[type = "checkbox"]::before
 }
 
 #roadviewControl.active {background-position:0 -350px;}
+
+.containerDiv
+{
+	display : inline-block;
+	line-height : 0;
+	padding : 0;
+	margin : 0;
+}
 
 #close
 {

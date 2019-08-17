@@ -10,6 +10,11 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformation.css"/>
 <script type="text/javascript">
+	var currentScroll;
+	var maxScroll;
+	
+	//var scrollMargin;
+
 	var mapLevel = 12;
 	var xMaxSize = 70;
 	var yMaxSize = 85;
@@ -68,8 +73,32 @@
 		$("#textBox").hide();
 		$("#search-box-button2").hide();
 		$("#search-box-wrapper").hide();
+		
+		$(window).on('mousewheel',function(e)
+		{ 
+			currentScroll = document.documentElement.scrollTop;
+			
+			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll
+			
+			$("#ScrollMarginDiv").height(($("#content").height() - $("#videoFrame").height()) * (1 - currentScrollPercent));
+		});
 	})
-   /////////////////////	$(document).ready(function() end
+	/////////////////////	$(document).ready(function() end
+		   
+	function formInit()
+	{
+		//$("#containerDiv1").height($("#content").height());
+		//$("#containerDiv2").height($("#content").height());
+		$("#containerDiv3").height($("#content").height());
+		
+		maxScroll = $(document).height() - $(window).height();
+	}
+	
+	
+	function getCurrentScrollPercentage()
+	{
+		return (window.scrollY + window.innerHeight) / document.body.clientHeight * 100;
+	}
    
 	function searchByName(text)
 	{
@@ -111,7 +140,7 @@
 	
 	////////////////////////////////////////////////// Map
 	function mapInit()
-	{
+	{		
 		mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 			
@@ -157,6 +186,7 @@
 		})
 		
 		roadViewInit();
+		formInit();
 	}
 	/////////////	function mapInit() end
 	function setMarkersSize(Image)
@@ -503,6 +533,7 @@
 		var position = marker.getPosition();
 		toggleMapWrapper(true, position);
 	}
+ 	
 
 	
 	//////////////////////////////////////////////////
@@ -513,31 +544,27 @@
 <body onload = "mapInit()">
 	<!-- Main -->
 	<div id="main" class="wrapper style2">
-	
 		<!-- Content -->
 		<div id="content" class="container">
-			<section class = "travelInformation">
+			<div class = "containerDiv" style = "width : 18%;" id = "containerDiv1"></div>
+			<div class = "containerDiv" style = "width : 60%;" id = "containerDiv2">
 				<header class="major">
-					<div style = "float:left; width : 70%;">
-						<h2 style = "inline">여행 정보 검색</h2>
-						<span class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
-					</div>
-					<div style = "float:left; width : 30%; text-align : right;">
-						<iframe width="300" height="200" src="https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"></iframe>
-					</div>
+					<h2>여행 정보 검색</h2>
+					<span class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
 				</header>				
 				<form name="searchForm" id = "searchForm" style = "width : 100%">
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 					<div id = "radio-group">
 						<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked"><label for = "searchType1">지역으로 찾기</label><input type="radio" name="searchType" id="searchType2" value="searchByName"><label for = "searchType2">이름으로 찾기</label>
 					</div>
-					<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 40%;">
+					<p>
+					<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 41%;">
 						<option>시/도 선택</option>
 						<c:forEach items="${cityList}" var="city">
 							<option>${city}</option>
 						</c:forEach>
 					</select>
-					<select id="forestSelect" style = "width : 54%">
+					<select id="forestSelect" style = "width : 52%">
 						<option>산림휴양시설 선택</option>
 					</select>
 					<button id = "search-box-button1">&#128269;</button>
@@ -548,6 +575,7 @@
 				</form>
 				
 				<br>
+				
 				<div>
 					<table style = "width : 100%">
 						<tr>
@@ -580,7 +608,14 @@
         				<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
     				</div>
 				</div>
-			</section>
+			</div>
+
+			<div class = "containerDiv" style = "vertical-align: top;  width : 18%;" id = "containerDiv3">
+				<div id = "ScrollMarginDiv" style = "line-height : 0;"></div>
+				<div style = "line-height : 0; height : 200; text-align : right">
+					<iframe width="85%" height="200" src="https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1" id = "videoFrame"></iframe>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
