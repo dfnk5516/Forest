@@ -13,7 +13,7 @@
 	var currentScroll;
 	var maxScroll;
 
-	var mapLevel = 12;
+	var mapLevel = 5;
 	var xMaxSize = 70;
 	var yMaxSize = 85;
 	var mapCenter = new kakao.maps.LatLng(37.539753 , 128.112484); // 지도의 중심좌표
@@ -42,6 +42,25 @@
 	var zoomControl;
 	
 	var currentTypeId; // 지도에 추가된 지도타입정보를 가지고 있을 변수
+	function aaa()
+	{
+		alert(3);
+	}
+	
+	
+	var videos =
+	[
+		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1",
+		//"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1",
+		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"
+		"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1&loop=1&rel=0&controls=0",
+		"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1&loop=1&rel=0&controls=0",
+		"https://www.youtube.com/embed/l0IoPQM1HlU?autoplay=1&loop=1&rel=0&controls=0"
+		
+        //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScnyf2EtZmLFfuc1CVTvUdDA&autoplay=1&loop=1&rel=0",
+        //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScm1bh7y8oTi0E9xiVOliZ4C&autoplay=1&loop=1&rel=0",
+        //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScmjbhykFpKWfITwCU3qq8NV&autoplay=1&loop=1&rel=0"
+    ];	
    
 	$(document).ready(function()
 	{ 	
@@ -78,16 +97,37 @@
 			
 			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll
 			
-			$("#ScrollMarginDiv").height(($("#content").height() - $("#videoFrame").height()) * (1 - currentScrollPercent));
+			$("#ScrollMarginDiv").height(($("#content").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent));
 		});
+		
+		
+		$(window).resize(function ()
+		{
+			if($("#travelInformation").width() < 1000)
+			{
+				//alert($("#travelInformation").width());
+				$("#checkBoxGroup1").css("display","block");
+				$("#checkBoxGroup1").width("100%");
+				$("#checkBoxGroup2").width("100%");
+			}
+			else
+			{
+				$("#checkBoxGroup1").css("display","inline-block");
+				$("#checkBoxGroup1").width("49%");
+				$("#checkBoxGroup2").width("49%");
+			}
+			
+			maxScroll = $(document).height() - $(window).height();
+		})
 	})
 	/////////////////////	$(document).ready(function() end
 		   
 	function formInit()
 	{
 		$("#videoContainerDiv").height($("#content").height());
-		
 		maxScroll = $(document).height() - $(window).height();
+		videoRandomList();
+		$("#videoControllerDiv").height($("#videoContainer").height());
 	}
 	
 	
@@ -531,6 +571,12 @@
 	}
  	
 
+ 	function videoRandomList()
+ 	{
+        var random = Math.floor(Math.random() * 3);
+        var randomSrc = videos[random];
+        document.getElementById("videoFrame").src = randomSrc;
+    }
 	
 	//////////////////////////////////////////////////
 </script>
@@ -542,91 +588,84 @@
 	<div id="main" class="wrapper style2">
 		<!-- Content -->
 		<div id="content" class="container">
-			<div class = "containerDiv" style = "width : 20%;" id = ""></div>
-			<div class = "containerDiv" style = "width : 60%;" id = "">
-				<header class="major">
-					<h2 id = "travelInformationHeader">여행 정보 검색</h2>
-				</header>				
-				<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
-				<form name="searchForm" id = "searchForm" style = "width : 100%">
-					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-					<div id = "radioGroup">
-						<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
-						<input type="radio" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
-					</div>
-					<p>
-					<div id = "searchGroup">
-						<div id = "select-box-wrapper" style = "width : 100%">
-							<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
-								<option>시/도 선택</option>
-								<c:forEach items="${cityList}" var="city">
-									<option>${city}</option>
-								</c:forEach>
-							</select>
-							<select id="forestSelect" style = "width : 54%">
-								<option>산림휴양시설 선택</option>
-							</select>
+			<section id = "travelInformationSection">
+				<div id = "videoContainerDiv" class = "containerDiv" style = "vertical-align: top;  width : 20%;" >
+					<div id = "ScrollMarginDiv" style = "line-height : 0;"></div>
+					<div id = "videoControllerDiv" style = "line-height : 0; text-align : center; padding : 0 20px 0 20px; margin-left:5px; margin-right:5px">
+						<div id = "videoController"style = "margin-left: 7.5%;  margin-right:7.5%">
+							<iframe id = "videoFrame" width="100%" height="200" src="" ></iframe>
+							<div style = "display : inline-block; width : 50%;vertical-align: middle;" id = "leftVideoButtonDiv">
+								<input type="button" class = "videoButton" onclick = "videoRandomList()" value = "다음 영상 재생" style = "width : 100%; height : 30px;">
+							</div>
+							<div style = "display : inline-block; width : 50%; vertical-align: middle;" id = "rightVideoButtonDiv">
+								<input type="button" class = "videoButton" onclick = "videoRandomList()" value = "무작위 영상 재생" style = "width : 100%; height : 30px;">
+							</div>
+							<div style = "display : inline-block;"></div>
 						</div>
+					</div>
+				</div>
+				<div class = "containerDiv" style = "width : 60%;" id = "travelInformation">
+					<header class="major">
+						<div id = "travelInformationHeader">여행 정보 검색</div>
+					</header>				
+					<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
+					<form name="searchForm" id = "searchForm" style = "width : 100%">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<div id = "radioGroup">
+							<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
+							<input type="radio" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
+						</div>
+						<p>
+						<div id = "searchGroup">
+							<div id = "select-box-wrapper" style = "width : 100%">
+								<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
+									<option>시/도 선택</option>
+									<c:forEach items="${cityList}" var="city">
+										<option>${city}</option>
+									</c:forEach>
+								</select>
+								<select id="forestSelect" style = "width : 54%">
+									<option>산림휴양시설 선택</option>
+								</select>
+							</div>
 						
-						<div id = "search-box-wrapper" style = "width : 100%">
-							<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
-							<button id = "search-box-button2">&#128269;</button>
+							<div id = "search-box-wrapper" style = "width : 100%">
+								<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
+								<button id = "search-box-button2">&#128269;</button>
+							</div>
+						</div>
+					</form>
+				
+					<br>
+				
+					<div style = "width : 100%" >
+						<div id = "checkBoxGroup1" style = "display : inline-block; text-align : left; vertical-align: middle; width : 50%;">
+							<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
+							<input type="checkbox" id = "sights"/>관광지 보기
+							<input type="checkbox" id = "festival"/>행사 보기
+						</div>
+						<div id = "checkBoxGroup2" style = "display : inline-block; text-align : right; vertical-align: middle; width : 50%;">
+							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
+							<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
+							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
 						</div>
 					</div>
-				</form>
-				
-				<br>
-				
-				<div>
-					<div id = "checkBoxGroup1" style = "display : inline-block; text-align : left; vertical-align: middle; width : 50%;">
-						<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
-						<input type="checkbox" id = "sights"/>관광지 보기
-						<input type="checkbox" id = "festival"/>행사 보기
-					</div>
-					<div id = "checkBoxGroup2" style = "display : inline-block; text-align : right; vertical-align: middle; width : 50%;">
-						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
-						<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
-						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
-					</div>
-					<!--table style = "width : 100%">
-						<tr>
-							<td style = "text-align : left; vertical-align: middle;">
-								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
-								<input type="checkbox" id = "sights"/>관광지 보기
-								<input type="checkbox" id = "festival"/>행사 보기
-							</td>
-							<td style = "text-align : right; vertical-align: middle">
-								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
-								<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
-								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
-							</td>
-						</tr>
-					</table-->
-				</div>
 	
-				<!-- /div-->
-				
-				<!-- 지도 -->	
-				
-				<div id="container" style = "width: 100%; height: 650px;">
-					<div id="rvWrapper">
-						<div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
-						<div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>
+					<!-- 지도 -->	
+					<div id="container" style = "width: 100%; height: 650px;">
+						<div id="rvWrapper">
+							<div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+							<div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>
+						</div>
+    					<div id="mapWrapper">
+        					<div id="map" style="width:100%;height:100%;"></div> <!-- 지도를 표시할 div 입니다 -->
+        					<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
+    					</div>
 					</div>
-    				<div id="mapWrapper">
-        				<div id="map" style="width:100%;height:100%;"></div> <!-- 지도를 표시할 div 입니다 -->
-        				<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
-    				</div>
 				</div>
-			</div>
-
-			<div class = "containerDiv" style = "vertical-align: top;  width : 20%;" id = "videoContainerDiv">
-				<div id = "ScrollMarginDiv" style = "line-height : 0;"></div>
-				<div style = "line-height : 0; height : 200; text-align : right">
-					<!-- iframe width="85%" height="200" src="https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1" id = "videoFrame"></iframe-->
-					<iframe width="85%" height="200" src="https://www.youtube.com/embed/fVpzeOUeEow?autoplay=1" id = "videoFrame"></iframe>
-				</div>
-			</div>
+				<div class = "containerDiv" style = "width : 20%;" id = ""></div>
+			
+			</section>
 		</div>
 	</div>
 </body>

@@ -5,7 +5,7 @@
 <mapper namespace="travelInformationMapper">
 	
 	<select id="selectForestByCity" resultType="forestDTO">
-		select *
+		select FOREST_NAME, FOREST_LATITUDE, FOREST_LONGITUDE
 		from forest where city=#{_parameter}
 	</select>
 	
@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id="selectForest" resultType="forestDTO">
-		select * from forest
+		select FOREST_NAME, CITY, FOREST_LATITUDE, FOREST_LONGITUDE from forest
 	</select>
   
 </mapper>

@@ -8,17 +8,22 @@ div[class = "containerDiv"]
 	font-size : 0;
 }
 
-h2[id = "travelInformationHeader"]
+div[id = "travelInformationHeader"]
 {
+	line-height : 28.8px;
 	font-size : 28.8px;
+	height : 50px;
+	padding : 5px 0 5px 0;
 }
 
 span[id = "travelInformationExplain"]
 {
+	line-height : 22.4px;
 	font-size : 22.4px;
 }
-@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 
+
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 
 div[id = "radioGroup"],
 div[id = "searchGroup"],
@@ -30,6 +35,35 @@ div[id = "checkBoxGroup2"]
 	padding : 5px;
 	border : 0px;
 	outer : 0;
+}
+
+input[type = "button"][class = "videoButton"]
+{
+	font-size : 10px;
+	color : #FFFFFF;
+	border : 0;
+	background-color : #1E1E1E;
+	vertical-align : middle;
+	padding : 0;
+	margin : 0;
+}
+input[type = "button"][class = "videoButton"]:hover,
+input[type = "button"][class = "videoButton"]:focus
+{
+	font-size : 10px;
+	color : #FFFFFF;
+	border : 0;
+	background-color : #1E1E1E;
+	vertical-align : middle;
+	padding : 0;
+	margin : 0;
+}
+div[id = "leftVideoButtonDiv"]
+{
+	border-top : 1px solid #FFFFFF;
+	border-right : 1px solid #FFFFFF;
+	border-bottom : 1px solid #FFFFFF;
+	border-left : 0px solid #FFFFFF;
 }
 
 /******************************************************/
