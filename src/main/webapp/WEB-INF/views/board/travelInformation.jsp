@@ -12,8 +12,6 @@
 <script type="text/javascript">
 	var currentScroll;
 	var maxScroll;
-	
-	//var scrollMargin;
 
 	var mapLevel = 12;
 	var xMaxSize = 70;
@@ -87,9 +85,7 @@
 		   
 	function formInit()
 	{
-		//$("#containerDiv1").height($("#content").height());
-		//$("#containerDiv2").height($("#content").height());
-		$("#containerDiv3").height($("#content").height());
+		$("#videoContainerDiv").height($("#content").height());
 		
 		maxScroll = $(document).height() - $(window).height();
 	}
@@ -546,38 +542,53 @@
 	<div id="main" class="wrapper style2">
 		<!-- Content -->
 		<div id="content" class="container">
-			<div class = "containerDiv" style = "width : 18%;" id = "containerDiv1"></div>
-			<div class = "containerDiv" style = "width : 60%;" id = "containerDiv2">
+			<div class = "containerDiv" style = "width : 20%;" id = ""></div>
+			<div class = "containerDiv" style = "width : 60%;" id = "">
 				<header class="major">
-					<h2>여행 정보 검색</h2>
-					<span class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
+					<h2 id = "travelInformationHeader">여행 정보 검색</h2>
 				</header>				
+				<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
 				<form name="searchForm" id = "searchForm" style = "width : 100%">
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-					<div id = "radio-group">
-						<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked"><label for = "searchType1">지역으로 찾기</label><input type="radio" name="searchType" id="searchType2" value="searchByName"><label for = "searchType2">이름으로 찾기</label>
+					<div id = "radioGroup">
+						<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
+						<input type="radio" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
 					</div>
 					<p>
-					<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 41%;">
-						<option>시/도 선택</option>
-						<c:forEach items="${cityList}" var="city">
-							<option>${city}</option>
-						</c:forEach>
-					</select>
-					<select id="forestSelect" style = "width : 52%">
-						<option>산림휴양시설 선택</option>
-					</select>
-					<button id = "search-box-button1">&#128269;</button>
-					<div id = "search-box-wrapper" style = "width : 100%">
-						<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
-						<button id = "search-box-button2">&#128269;</button>
+					<div id = "searchGroup">
+						<div id = "select-box-wrapper" style = "width : 100%">
+							<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
+								<option>시/도 선택</option>
+								<c:forEach items="${cityList}" var="city">
+									<option>${city}</option>
+								</c:forEach>
+							</select>
+							<select id="forestSelect" style = "width : 54%">
+								<option>산림휴양시설 선택</option>
+							</select>
+						</div>
+						
+						<div id = "search-box-wrapper" style = "width : 100%">
+							<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
+							<button id = "search-box-button2">&#128269;</button>
+						</div>
 					</div>
 				</form>
 				
 				<br>
 				
 				<div>
-					<table style = "width : 100%">
+					<div id = "checkBoxGroup1" style = "display : inline-block; text-align : left; vertical-align: middle; width : 50%;">
+						<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
+						<input type="checkbox" id = "sights"/>관광지 보기
+						<input type="checkbox" id = "festival"/>행사 보기
+					</div>
+					<div id = "checkBoxGroup2" style = "display : inline-block; text-align : right; vertical-align: middle; width : 50%;">
+						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
+						<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
+						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
+					</div>
+					<!--table style = "width : 100%">
 						<tr>
 							<td style = "text-align : left; vertical-align: middle;">
 								<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
@@ -590,9 +601,8 @@
 								<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
 							</td>
 						</tr>
-					</table>				
+					</table-->
 				</div>
-
 	
 				<!-- /div-->
 				
@@ -610,10 +620,11 @@
 				</div>
 			</div>
 
-			<div class = "containerDiv" style = "vertical-align: top;  width : 18%;" id = "containerDiv3">
+			<div class = "containerDiv" style = "vertical-align: top;  width : 20%;" id = "videoContainerDiv">
 				<div id = "ScrollMarginDiv" style = "line-height : 0;"></div>
 				<div style = "line-height : 0; height : 200; text-align : right">
-					<iframe width="85%" height="200" src="https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1" id = "videoFrame"></iframe>
+					<!-- iframe width="85%" height="200" src="https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1" id = "videoFrame"></iframe-->
+					<iframe width="85%" height="200" src="https://www.youtube.com/embed/fVpzeOUeEow?autoplay=1" id = "videoFrame"></iframe>
 				</div>
 			</div>
 		</div>

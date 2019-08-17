@@ -1,15 +1,38 @@
-.center
+div[id = "content"],
+div[class = "containerDiv"]
 {
-	position : absolute;
-	top : 50%;
-	left : 50%;
-	transform : translate(-50%, -50%);
+	display : inline-block;
+	line-height : 0;
+	padding : 0;
+	margin : 0;
+	font-size : 0;
 }
 
-.travelInformation
+h2[id = "travelInformationHeader"]
 {
-    width : 100%;
+	font-size : 28.8px;
 }
+
+span[id = "travelInformationExplain"]
+{
+	font-size : 22.4px;
+}
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+
+div[id = "radioGroup"],
+div[id = "searchGroup"],
+div[id = "checkBoxGroup1"],
+div[id = "checkBoxGroup2"]
+{	
+	font-size : 16px;
+	margin : 0px;
+	padding : 5px;
+	border : 0px;
+	outer : 0;
+}
+
+/******************************************************/
 
 input[type = "checkbox"]
 {
@@ -87,14 +110,6 @@ input:checked[type = "checkbox"]::before
 }
 
 #roadviewControl.active {background-position:0 -350px;}
-
-.containerDiv
-{
-	display : inline-block;
-	line-height : 0;
-	padding : 0;
-	margin : 0;
-}
 
 #close
 {
@@ -178,7 +193,6 @@ button[id = "search-box-button1"]
 	border : 4px solid #1E1E1E;
 	border-radius : 5px;
 	background-color : #1E1E1E;
-	width : 5%;
 	height: 40px;
 	padding : 0 0.75em;
 	color : white;
@@ -199,44 +213,4 @@ table
 }
 
 
-
-
-
-@import url("http://fonts.googleapis.com/css?family=Roboto");
-body {
-  background: #332f35;
-  font-family: roboto;
-}
-
-input[type=radio] {
-  position: absolute;
-  visibility: hidden;
-  display: none;
-}
-
-label {
-  color: #9a929e;
-  display: inline-block;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 5px 20px;
-}
-
-input[type=radio]:checked + label {
-  color: #ccc8ce;
-  background: #675f6b;
-}
-
-label + input[type=radio] + label {
-  border-left: solid 3px #675f6b;
-}
-
-.radio-group {
-  border: solid 3px #675f6b;
-  display: inline-block;
-  margin: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-		
 
