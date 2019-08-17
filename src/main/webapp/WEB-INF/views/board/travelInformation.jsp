@@ -518,8 +518,13 @@
 		<div id="content" class="container">
 			<section class = "travelInformation">
 				<header class="major">
-					<h2>여행 정보 검색</h2>
-					<span class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
+					<div style = "float:left; width : 70%;">
+						<h2 style = "inline">여행 정보 검색</h2>
+						<span class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
+					</div>
+					<div style = "float:left; width : 30%; text-align : right;">
+						<iframe width="300" height="200" src="https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"></iframe>
+					</div>
 				</header>				
 				<form name="searchForm" id = "searchForm" style = "width : 100%">
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
