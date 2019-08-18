@@ -62,6 +62,12 @@
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScmjbhykFpKWfITwCU3qq8NV&autoplay=1&loop=1&rel=0"
     ];	
    
+	function test()
+	{
+		alert(3);
+	}
+	
+	
 	$(document).ready(function()
 	{ 	
 		$("[name=searchType]").click(function()      
@@ -103,7 +109,7 @@
 		
 		$(window).resize(function ()
 		{
-			if($("#travelInformation").width() < 1000)
+			if($("#travelInformation").width() < 974)
 			{
 				//alert($("#travelInformation").width());
 				$("#checkBoxGroup1").css("display","block");
@@ -583,7 +589,7 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
-<body onload = "mapInit()">
+<body id = "tavelInformationBody" onload = "mapInit()">
 	<!-- Main -->
 	<div id="main" class="wrapper style2">
 		<!-- Content -->
@@ -600,7 +606,19 @@
 							<div style = "display : inline-block; width : 50%; vertical-align: middle;" id = "rightVideoButtonDiv">
 								<input type="button" class = "videoButton" onclick = "videoRandomList()" value = "무작위 영상 재생" style = "width : 100%; height : 30px;">
 							</div>
-							<div style = "display : inline-block;"></div>
+							<div id = "videoListDiv" style = "display : block; width : 100%; border: 1px solid #1E1E1E">
+								<ul id = "videoListUl" style = "width : 100%; height : auto;">
+									<li onclick = "test()"><div class = "number">1</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
+									<li><div class = "paddingDiv"></div></li>
+									<li><div class = "number" >2</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
+									<li><div class = "paddingDiv"></div></li>
+									<li><div class = "number" >3</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
+									<li><div class = "paddingDiv"></div></li>
+									<li><div class = "number" >4</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
+									<li><div class = "paddingDiv"></div></li>
+									<li><div class = "number" >5</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
