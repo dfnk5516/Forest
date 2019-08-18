@@ -19,8 +19,12 @@
 	select * from PROVINCE order by city
 	</select>
 	
-	<select id="selectForest" resultType="forestDTO">
+	<select id = "selectForest" resultType="forestDTO">
 		select FOREST_NAME, CITY, FOREST_LATITUDE, FOREST_LONGITUDE from forest
+	</select>
+	
+	<select id = "selectVideo" resultType = "videoDTO">
+		SELECT * FROM VIDEO ORDER BY VIDEO_NAME
 	</select>
   
 </mapper>

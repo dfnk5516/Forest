@@ -12,6 +12,10 @@
 <script type="text/javascript">
 	var currentScroll;
 	var maxScroll;
+	
+	var videoArray = JSON.parse('${videoArray}');
+	var videoMax = videoArray.length;
+	alert(videoMax);
 
 	var mapLevel = 5;
 	var xMaxSize = 70;
@@ -42,11 +46,6 @@
 	var zoomControl;
 	
 	var currentTypeId; // 지도에 추가된 지도타입정보를 가지고 있을 변수
-	function aaa()
-	{
-		alert(3);
-	}
-	
 	
 	var videos =
 	[
@@ -127,7 +126,14 @@
 		})
 	})
 	/////////////////////	$(document).ready(function() end
-		   
+	function travelInformationInit()
+	{
+		mapInit();
+		roadViewInit();
+		formInit();
+	}
+			
+			
 	function formInit()
 	{
 		$("#videoContainerDiv").height($("#content").height());
@@ -226,9 +232,6 @@
 			var markerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
 			setMarkersSize(markerImage);
 		})
-		
-		roadViewInit();
-		formInit();
 	}
 	/////////////	function mapInit() end
 	function setMarkersSize(Image)
@@ -589,7 +592,7 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
-<body id = "tavelInformationBody" onload = "mapInit()">
+<body id = "tavelInformationBody" onload = "travelInformationInit()">
 	<!-- Main -->
 	<div id="main" class="wrapper style2">
 		<!-- Content -->

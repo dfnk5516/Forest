@@ -3,6 +3,7 @@ package kosta.forrest.model.board.service;
 import java.util.List;
 
 import kosta.forrest.model.board.dto.ForestDTO;
+import kosta.forrest.model.board.dto.VideoDTO;
 
 public interface TravelInformationService
 {
@@ -10,4 +11,5 @@ public interface TravelInformationService
 	public List<ForestDTO> selectForestByCity(String city);
 	public List<String> selectForestByName(String text);
 	public List<ForestDTO> selectForest();
+	List<VideoDTO> selectVideo();
 }
