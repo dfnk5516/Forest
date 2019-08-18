@@ -97,7 +97,7 @@
 		{ 
 			currentScroll = document.documentElement.scrollTop;
 			
-			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll
+			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll;
 			
 			$("#ScrollMarginDiv").height(($("#content").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent));
 		});
@@ -653,7 +653,17 @@
  	
  	function videoListOnOff(button)
  	{
- 		$("#videoListDiv").slideToggle(500, function(){});
+ 		$("#videoListDiv").slideToggle(500, function()
+ 		{
+ 			if($("#videoControllerDiv").height() + $("#ScrollMarginDiv").height() > $("#videoContainerDiv").height())
+ 	 		{
+ 	 			currentScroll = document.documentElement.scrollTop;
+ 	 			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll;
+ 	 			
+ 	 			var gap = $("#ScrollMarginDiv").height() - ($("#content").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent);
+ 	 			 $("#ScrollMarginDiv").animate({height: "-=" + gap}, 1000);
+ 	 		}
+ 		});
  		
  		if(!videoListOnOffCheck)
  		{
