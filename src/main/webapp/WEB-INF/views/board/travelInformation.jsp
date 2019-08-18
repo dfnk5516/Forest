@@ -18,6 +18,7 @@
 	var currentVideo;
 	var playIcon = "♪"
 	var nonPlayIcon = "　"
+	var videoListOnOffCheck = false;
 
 	var mapLevel = 5;
 	var xMaxSize = 70;
@@ -120,6 +121,8 @@
 			
 			maxScroll = $(document).height() - $(window).height();
 		})
+		
+		$("#videoListDiv").slideUp(0, function(){});
 	})
 	/////////////////////	$(document).ready(function() end
 	function travelInformationInit()
@@ -128,10 +131,6 @@
 		roadViewInit();
 		formInit();
 	}
-			
-			
-	
-	
 	
 	function getCurrentScrollPercentage()
 	{
@@ -651,6 +650,22 @@
  			videoPlay(currentVideo + 1);
  		}
  	}
+ 	
+ 	function videoListOnOff(button)
+ 	{
+ 		$("#videoListDiv").slideToggle(500, function(){});
+ 		
+ 		if(!videoListOnOffCheck)
+ 		{
+ 			button.value = "◆";
+ 			videoListOnOffCheck = true;
+ 		}
+ 		else
+ 		{
+ 			button.value = "■";
+ 			videoListOnOffCheck = false;
+ 		}
+ 	}
 	
 	//////////////////////////////////////////////////
 </script>
@@ -668,11 +683,14 @@
 					<div id = "videoControllerDiv" style = "line-height : 0; text-align : center; padding : 0 20px 0 20px; margin-left:5px; margin-right:5px">
 						<div id = "videoController"style = "margin-left: 7.5%;  margin-right:7.5%">
 							<iframe id = "videoFrame" width="100%" height="200" src="" ></iframe>
-							<div style = "display : inline-block; width : 50%;vertical-align: middle;" id = "leftVideoButtonDiv">
+							<div style = "display : inline-block; width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
 								<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
 							</div>
-							<div style = "display : inline-block; width : 50%; vertical-align: middle;" id = "rightVideoButtonDiv">
+							<div style = "display : inline-block; width : 45%; vertical-align: middle;" id = "middleVideoButtonDiv">
 								<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
+							</div>
+							<div style = "display : inline-block; width : 10%; vertical-align: middle;" id = "rightVideoButtonDiv">
+								<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px;">
 							</div>
 							<div id = "videoListDiv" style = "display : block; width : 100%; border: 1px solid #1E1E1E">
 								<ul id = "videoListUl" style = "width : 100%; height : auto;"></ul>

@@ -161,10 +161,10 @@ input[type = "button"][class = "videoButton"]
 	margin : 0;
 }
 
-div[id = "leftVideoButtonDiv"]
+div[id = "leftVideoButtonDiv"], div[id = "middleVideoButtonDiv"]
 {
 	border-top : 1px solid #F2F2F2;
-	border-right : 1px solid #F2F2F2;
+	border-right : 0.5px solid #F2F2F2;
 	border-bottom : 1px solid #F2F2F2;
 	border-left : 0px solid #F2F2F2;
 }
