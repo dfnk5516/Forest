@@ -15,7 +15,9 @@
 	
 	var videoArray = JSON.parse('${videoArray}');
 	var videoMax = videoArray.length;
-	var currentVideo = 0;
+	var currentVideo;
+	var playIcon = "♪"
+	var nonPlayIcon = "　"
 
 	var mapLevel = 5;
 	var xMaxSize = 70;
@@ -59,41 +61,7 @@
 		alert(3);
 	}
 	
-	function videoControllerInit()
-	{
-		if(videoMax == 0)
-		{
-			$("#videoController").hide();
-		}
-		else
-		{
-			var str = "";
-			for(var i = 0; i < videoMax; ++i)
-			{
-				str += "<li onclick = 'test()'><div class = 'number'>" + (i + 1) + "</div>";
-				str += "<div class = '" + videoArray[i].videoName + "'>" + videoArray[i].videoName + "</div>";
-				str += "<div class = 'length'>" + videoArray[i].videoLength + "</div>";
-				
-				if(currentVideo == i + 1)
-				{
-					str += "<div class = 'icon'>♪</div></li>";
-				}
-				else
-				{
-					str += "<div class = 'icon'></div></li>";
-				}
-				
-				
-				if(i == videoMax - 1)
-				{
-					break;
-				}
-				str += "<li><div class = 'paddingDiv'></div></li>";
-			}
-			document.getElementById("videoListUl").innerHTML = str;
-			//
-		}		
-	}
+	
 	
 	$(document).ready(function()
 	{ 	
@@ -162,14 +130,7 @@
 	}
 			
 			
-	function formInit()
-	{
-		$("#videoContainerDiv").height($("#content").height());
-		maxScroll = $(document).height() - $(window).height();
-		videoRandomList();
-		$("#videoControllerDiv").height($("#videoContainer").height());
-		videoControllerInit();
-	}
+	
 	
 	
 	function getCurrentScrollPercentage()
@@ -607,28 +568,89 @@
 		var position = marker.getPosition();
 		toggleMapWrapper(true, position);
 	}
+ 	//////////////////////////////////////////////////////////////////////////////////RoadView End
  	
- 	function videoPlay(src)
+ 	function formInit()
+	{
+		$("#videoContainerDiv").height($("#content").height());
+		maxScroll = $(document).height() - $(window).height();
+		$("#videoControllerDiv").height($("#videoContainer").height());
+		videoControllerInit();
+	}
+ 	
+ 	function videoControllerInit()
+	{
+		if(videoMax == 0)
+		{
+			$("#videoController").hide();
+		}
+		else
+		{
+			currentVideo = Math.floor(Math.random() * videoMax);
+			
+			var str = "";
+			for(var i = 0; i < videoMax; ++i)
+			{
+				str += "<li onclick = 'videoPlay(" + i + ")'><div class = 'number'>" + (i + 1) + "</div>";
+				str += "<div class = '" + videoArray[i].videoName + "'>" + videoArray[i].videoName + "</div>";
+				str += "<div class = 'length'>" + videoArray[i].videoLength + "</div>";
+				
+				if(currentVideo == i)
+				{
+					str += "<div class = 'icon' name = 'playListIndex" + i + "'>♪</div></li>";
+				}
+				else
+				{
+					str += "<div class = 'icon' name = 'playListIndex" + i + "'></div></li>";
+				}
+				
+				if(i == videoMax - 1)
+				{
+					break;
+				}
+				str += "<li><div class = 'paddingDiv'></div></li>";
+			}
+			document.getElementById("videoListUl").innerHTML = str;
+			document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + videoArray[currentVideo].videoSrc + "?autoplay=1&loop=1&rel=0&controls=1";
+		}		
+	}
+
+ 	function videoPlay(index)
  	{
- 		document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + src + "?autoplay=1&loop=1&rel=0&controls=1";
+ 		document.getElementsByName("playListIndex" + currentVideo)[0].innerText = "";
+ 		document.getElementsByName("playListIndex" + index)[0].innerText = playIcon;
+ 		
+ 		document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + videoArray[index].videoSrc + "?autoplay=1&loop=1&rel=0&controls=1";
+ 		currentVideo = index;
  	}
 
- 	function videoRandomList()
+ 	function randomVideoPlay()
  	{
-        var random = Math.floor(Math.random() * videoMax) + 1;
+        var randomVideo = Math.floor(Math.random() * videoMax);
         
         for(;;)
         {
-        	if(random != currentVideo)
+        	if(randomVideo != currentVideo)
         	{
-        		currentVideo = random;
         		break;
         	}
-        	random = Math.floor(Math.random() * videoMax) + 1;
+        	randomVideo = Math.floor(Math.random() * videoMax);
         }
-        var randomSrc = videoArray[random - 1].videoSrc;
-        videoPlay(randomSrc);
+        
+        videoPlay(randomVideo);
     }
+ 	
+ 	function nextVideoPlay()
+ 	{
+ 		if(currentVideo == videoArray.length - 1)
+ 		{
+ 			videoPlay(0);
+ 		}
+ 		else
+ 		{
+ 			videoPlay(currentVideo + 1);
+ 		}
+ 	}
 	
 	//////////////////////////////////////////////////
 </script>
@@ -647,10 +669,10 @@
 						<div id = "videoController"style = "margin-left: 7.5%;  margin-right:7.5%">
 							<iframe id = "videoFrame" width="100%" height="200" src="" ></iframe>
 							<div style = "display : inline-block; width : 50%;vertical-align: middle;" id = "leftVideoButtonDiv">
-								<input type="button" class = "videoButton" onclick = "videoRandomList()" value = "다음 영상 재생" style = "width : 100%; height : 30px;">
+								<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
 							</div>
 							<div style = "display : inline-block; width : 50%; vertical-align: middle;" id = "rightVideoButtonDiv">
-								<input type="button" class = "videoButton" onclick = "videoRandomList()" value = "무작위 영상 재생" style = "width : 100%; height : 30px;">
+								<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
 							</div>
 							<div id = "videoListDiv" style = "display : block; width : 100%; border: 1px solid #1E1E1E">
 								<ul id = "videoListUl" style = "width : 100%; height : auto;"></ul>
