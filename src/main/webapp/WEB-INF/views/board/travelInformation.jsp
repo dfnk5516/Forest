@@ -15,7 +15,7 @@
 	
 	var videoArray = JSON.parse('${videoArray}');
 	var videoMax = videoArray.length;
-	alert(videoMax);
+	var currentVideo = 0;
 
 	var mapLevel = 5;
 	var xMaxSize = 70;
@@ -47,25 +47,53 @@
 	
 	var currentTypeId; // 지도에 추가된 지도타입정보를 가지고 있을 변수
 	
-	var videos =
-	[
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1",
 		//"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1",
-		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"
-		"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1&loop=1&rel=0&controls=1",
-		"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1&loop=1&rel=0&controls=1",
-		"https://www.youtube.com/embed/l0IoPQM1HlU?autoplay=1&loop=1&rel=0&controls=1"
-		
+		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"		
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScnyf2EtZmLFfuc1CVTvUdDA&autoplay=1&loop=1&rel=0",
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScm1bh7y8oTi0E9xiVOliZ4C&autoplay=1&loop=1&rel=0",
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScmjbhykFpKWfITwCU3qq8NV&autoplay=1&loop=1&rel=0"
-    ];	
    
 	function test()
 	{
 		alert(3);
 	}
 	
+	function videoControllerInit()
+	{
+		if(videoMax == 0)
+		{
+			$("#videoController").hide();
+		}
+		else
+		{
+			var str = "";
+			for(var i = 0; i < videoMax; ++i)
+			{
+				str += "<li onclick = 'test()'><div class = 'number'>" + (i + 1) + "</div>";
+				str += "<div class = '" + videoArray[i].videoName + "'>" + videoArray[i].videoName + "</div>";
+				str += "<div class = 'length'>" + videoArray[i].videoLength + "</div>";
+				
+				if(currentVideo == i + 1)
+				{
+					str += "<div class = 'icon'>♪</div></li>";
+				}
+				else
+				{
+					str += "<div class = 'icon'></div></li>";
+				}
+				
+				
+				if(i == videoMax - 1)
+				{
+					break;
+				}
+				str += "<li><div class = 'paddingDiv'></div></li>";
+			}
+			document.getElementById("videoListUl").innerHTML = str;
+			//
+		}		
+	}
 	
 	$(document).ready(function()
 	{ 	
@@ -140,6 +168,7 @@
 		maxScroll = $(document).height() - $(window).height();
 		videoRandomList();
 		$("#videoControllerDiv").height($("#videoContainer").height());
+		videoControllerInit();
 	}
 	
 	
@@ -579,12 +608,26 @@
 		toggleMapWrapper(true, position);
 	}
  	
+ 	function videoPlay(src)
+ 	{
+ 		document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + src + "?autoplay=1&loop=1&rel=0&controls=1";
+ 	}
 
  	function videoRandomList()
  	{
-        var random = Math.floor(Math.random() * 3);
-        var randomSrc = videos[random];
-        document.getElementById("videoFrame").src = randomSrc;
+        var random = Math.floor(Math.random() * videoMax) + 1;
+        
+        for(;;)
+        {
+        	if(random != currentVideo)
+        	{
+        		currentVideo = random;
+        		break;
+        	}
+        	random = Math.floor(Math.random() * videoMax) + 1;
+        }
+        var randomSrc = videoArray[random - 1].videoSrc;
+        videoPlay(randomSrc);
     }
 	
 	//////////////////////////////////////////////////
@@ -610,17 +653,7 @@
 								<input type="button" class = "videoButton" onclick = "videoRandomList()" value = "무작위 영상 재생" style = "width : 100%; height : 30px;">
 							</div>
 							<div id = "videoListDiv" style = "display : block; width : 100%; border: 1px solid #1E1E1E">
-								<ul id = "videoListUl" style = "width : 100%; height : auto;">
-									<li onclick = "test()"><div class = "number">1</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
-									<li><div class = "paddingDiv"></div></li>
-									<li><div class = "number" >2</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
-									<li><div class = "paddingDiv"></div></li>
-									<li><div class = "number" >3</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
-									<li><div class = "paddingDiv"></div></li>
-									<li><div class = "number" >4</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
-									<li><div class = "paddingDiv"></div></li>
-									<li><div class = "number" >5</div><div class = "name">동영상 이름 넣는곳~~~~</div><div class = "length">01:00:00</div><div class = "icon">♩</div></li>
-								</ul>
+								<ul id = "videoListUl" style = "width : 100%; height : auto;"></ul>
 							</div>
 						</div>
 					</div>
