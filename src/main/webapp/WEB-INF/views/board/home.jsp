@@ -25,7 +25,11 @@
 					<div class="6u">
 						<header class="major">
 							<h2>멤버십 혜택</h2>
-							<span class="byline">제휴처 입장권, 상품 할인 | VIP 고객 숙박료 10% 할인 | 휴양림 예약 시 여행 책자 발송</span>
+							<span class="byline" style="float:left;">
+									<img src="/controller/resources/images/benefit1.PNG" alt="benefit1" width="180px" height="230px" style="border-radius: 10px;">
+									<img src="/controller/resources/images/benefit2.PNG" alt="benefit2" width="180px" height="230px" style="border-radius: 10px;">
+									<img src="/controller/resources/images/benefit3.PNG" alt="benefit3" width="180px" height="230px" style="border-radius: 10px;">
+							</span>
 						</header>
 					</div>
 					<div class="6u">
@@ -39,16 +43,37 @@
 		</div>
 		
 		<!-- Section Two -->
-		<div class="wrapper style3">
-			<section class="container">
+		<div class="wrapper style5">
+			<section id="team" class="container">
 				<header class="major">
-					<h2>추천 이벤트</h2>
+					<h2>추천 휴양림 Top 4</h2>
+					<span class="byline">pulvinar mollis. Vestibulum sem magna, elementum vestibulum arcu</span>
 				</header>
-				<p>Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum vestibulum arcu.</p>
-				<a href="#" class="button alt">제휴 할인 혜택</a>
+				<div class="row">
+					<div class="3u">
+						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<h3>Molly Millions</h3>
+						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+					</div>
+					<div class="3u">
+						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<h3>Henry Dorsett Case</h3>
+						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+					</div>
+					<div class="3u">
+						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<h3>Willis Corto</h3>
+						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+					</div>
+					<div class="3u">
+						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<h3>Linda Lee</h3>
+						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+					</div>
+				</div>
 			</section>
 		</div>
-
+		
 		<!-- Section Three -->
 		<div class="wrapper style4">
 			<section class="container">
@@ -88,37 +113,30 @@
 			</section>
 		</div>
 		
-		<!-- Team -->
-		<div class="wrapper style5">
-			<section id="team" class="container">
+		<!-- Section Four -->
+		<div class="wrapper style3">
+			<section class="container">
 				<header class="major">
-					<h2>추천 휴양림 Top 4</h2>
-					<span class="byline">pulvinar mollis. Vestibulum sem magna, elementum vestibulum arcu</span>
+					<h2>추천 이벤트</h2>
+					<span class="byline">FORREST 숙박 예약 내역을 제시하시면 제휴 혜택을 누리실 수 있습니다!</span>
 				</header>
 				<div class="row">
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
-						<h3>Molly Millions</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<img src="/controller/resources/images/event1.PNG" alt="event1" width="250px" height="280px" style="border-radius: 10px;">
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
-						<h3>Henry Dorsett Case</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<img src="/controller/resources/images/event2.PNG" alt="event2" width="250px" height="280px" style="border-radius: 10px;">
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
-						<h3>Willis Corto</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<img src="/controller/resources/images/event3.PNG" alt="event3" width="250px" height="280px" style="border-radius: 10px;">
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
-						<h3>Linda Lee</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<img src="/controller/resources/images/event4.PNG" alt="event4" width="250px" height="280px" style="border-radius: 10px;">
 					</div>
 				</div>
 			</section>
 		</div>
+
 	</body>
 </html>
 <%@ include file="footer.jsp"%>
