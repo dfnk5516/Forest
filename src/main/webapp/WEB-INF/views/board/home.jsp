@@ -1,4 +1,4 @@
-<%@ include file="top.jsp"%>
+<%@ include file="../include/top.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -51,22 +51,22 @@
 				</header>
 				<div class="row">
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
 						<h3>Molly Millions</h3>
 						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
 						<h3>Henry Dorsett Case</h3>
 						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
 						<h3>Willis Corto</h3>
 						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="images/placeholder.png" alt=""></a>
+						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
 						<h3>Linda Lee</h3>
 						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
 					</div>
@@ -139,4 +139,4 @@
 
 	</body>
 </html>
-<%@ include file="footer.jsp"%>
+<%@ include file="../include/footer.jsp"%>
