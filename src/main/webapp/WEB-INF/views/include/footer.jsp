@@ -12,13 +12,6 @@
 				<h2>Connect with us</h2>
 				<span class="byline">경기도 성남시 분당구 대왕판교로 670 유스페이스2 B동 | 대표전화 : 1588-9999 | 메일주소 : teamforrest77@gmail.com</span>
 			</header>
-			<ul class="icons">
-				<li class="active"><a href="#" class="fa fa-facebook"><span>Facebook</span></a></li>
-				<li><a href="#" class="fa fa-twitter"><span>Twitter</span></a></li>
-				<li><a href="#" class="fa fa-dribbble"><span>Pinterest</span></a></li>
-				<li><a href="#" class="fa fa-google-plus"><span>Google+</span></a></li>
-			</ul>
-			<hr />
 		</section>	
 		<!-- Copyright -->
 		<div id="copyright">					

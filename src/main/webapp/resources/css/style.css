@@ -1,5 +1,5 @@
-@import url("font-awesome.min.css");
-@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
+@import url("DoHyeon-Regular.css");
+@import url("https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap");
 
 /*
 	Solarize by TEMPLATED
@@ -28,7 +28,7 @@
 
 	body, input, select, textarea {
 		color: #555555;
-		font-family: 'Open Sans', sans-serif;
+		font-family: 'DoHyeon-Regular', sans-serif;
 		font-size: 12pt;
 		font-weight: 300;
 		line-height: 1.65em;
@@ -227,7 +227,7 @@
 			content: "";
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
-			font-family: FontAwesome;
+			font-family: DoHyeon-Regular;
 			font-style: normal;
 			font-weight: normal;
 			text-transform: none !important;
