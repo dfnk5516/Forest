@@ -682,13 +682,13 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
-<body id = "tavelInformationBody" onload = "travelInformationInit()">
+<body id = "tavelInformationBody" >
 	<!-- Main -->
 	<div id="main" class="wrapper style2">
 		<!-- Content -->
 		<div id="content" class="container">
 			<section id = "travelInformationSection">
-				<div id = "videoContainerDiv" class = "containerDiv" style = "vertical-align: top;  width : 20%;" >
+				<div id = "videoContainerDiv" class = "containerDiv" style = "vertical-align: top;  width : 25%;" >
 					<div id = "ScrollMarginDiv" style = "line-height : 0;"></div>
 					<div id = "videoControllerDiv" style = "line-height : 0; text-align : center; padding : 0 20px 0 20px; margin-left:5px; margin-right:5px">
 						<div id = "videoController"style = "margin-left: 7.5%;  margin-right:7.5%">
@@ -708,9 +708,12 @@
 						</div>
 					</div>
 				</div>
-				<div class = "containerDiv" style = "width : 60%;" id = "travelInformation">
+				<div class = "containerDiv" style = "width : 50%;" id = "travelInformation">
 					<header class="major">
 						<div id = "travelInformationHeader">여행 정보 검색</div>
+						<form method = "get" action = "${path}/board/travelInformationWrite">
+						<input type = "submit">
+						</form>
 					</header>				
 					<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
 					<form name="searchForm" id = "searchForm" style = "width : 100%">
@@ -767,7 +770,7 @@
     					</div>
 					</div>
 				</div>
-				<div class = "containerDiv" style = "width : 20%;" id = ""></div>
+				<div class = "containerDiv" style = "width : 25%;" id = ""></div>
 			
 			</section>
 		</div>
