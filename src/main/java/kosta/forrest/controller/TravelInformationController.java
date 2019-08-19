@@ -30,6 +30,7 @@ public class TravelInformationController
 	@RequestMapping("/travelInformationWrite")
 	public String write(Model model)
 	{
+		System.out.println(1111111111);
 		return "board/travelInformationWrite";
 	}
 }
