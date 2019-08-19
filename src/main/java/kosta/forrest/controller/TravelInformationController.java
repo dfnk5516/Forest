@@ -27,10 +27,9 @@ public class TravelInformationController
 		return "board/travelInformation";
 	}
 	
-	@RequestMapping("/board/travelInformationWrite")
-	public void write(Model model)
+	@RequestMapping("/travelInformationWrite")
+	public String write(Model model)
 	{
-		
-		return;
+		return "board/travelInformationWrite";
 	}
 }
