@@ -1,0 +1,36 @@
+section[id = "ContentSection"]
+{
+	width : 100%;
+	vertical-align : top;
+}
+
+section[id = "ContentSection"] div
+{
+	font-size : 14px;
+}
+
+div[class = "floatDiv"]
+{
+	float : left; 
+}
+
+/* 가로 div class에 floatDiv 붙여주고 그 div들을 포함하고 있는 부모 div에 clearfix class 붙여줄것!*/
+
+.clearfix:after
+{
+  content:'';
+  display:block;
+  clear:both;
+}
+input[type = "button"][class = "formButton"]
+{
+	background : #FFFFFF;
+	color : #000000;
+	border : 1px solid #000000;
+	padding : 0;
+	vertical-align : middle;
+	font-size :14px;
+}
+
+
+

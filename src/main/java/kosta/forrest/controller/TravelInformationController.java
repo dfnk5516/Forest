@@ -33,4 +33,11 @@ public class TravelInformationController
 		System.out.println(1111111111);
 		return "board/travelInformationWrite";
 	}
+	
+	@RequestMapping("/test")
+	public String test(Model model)
+	{
+		System.out.println(1111111111);
+		return "board/test";
+	}
 }
