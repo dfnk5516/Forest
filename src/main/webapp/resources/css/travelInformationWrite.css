@@ -31,12 +31,6 @@ input[type = "button"][class = "formButton"]
 	vertical-align : middle;
 	font-size :14px;
 }
-
- .listLi
- {
- 	margin-top :5px;
- 	margin-bottom :5px;
- }
  
  ul[id = "listUl"],ul[id = "tableUl"]
  {
@@ -44,4 +38,18 @@ input[type = "button"][class = "formButton"]
  }
 
 
-
+ input[type = "text"],
+ input[type = "text"]:focus
+ {
+ 	border : 1px solid #1E1E1E;
+ 	padding : 0px;
+ }
+ 
+ #aa
+ {
+ 	border : 0rx
+ }
+ 
+ <input type = "text' id = "aa">
+ 
+ 

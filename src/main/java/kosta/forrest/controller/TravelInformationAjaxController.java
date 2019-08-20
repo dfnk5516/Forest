@@ -4,11 +4,13 @@ package kosta.forrest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.service.TravelInformationService;
+import net.sf.json.JSONArray;
 
 
 @RestController
@@ -51,5 +53,12 @@ public class TravelInformationAjaxController
 	public List<String> selectForestByName(String text)
 	{
 		return service.selectForestByName(text);//jakson에 의해 json으로 변환되어 response
+	}
+	
+	@RequestMapping("/sightsInsert")
+	public int sightsInsert(String sightsNumber) {
+		
+		
+		return 1;
 	}
 }

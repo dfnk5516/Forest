@@ -47,4 +47,6 @@ public class TravelInformationController
 		System.out.println(1111111111);
 		return "board/test";
 	}
+	
+
 }

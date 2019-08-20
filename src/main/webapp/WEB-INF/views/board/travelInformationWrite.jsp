@@ -14,100 +14,249 @@
 <script type="text/javascript">
 	var sightsNameArray = JSON.parse('${sightsNameArray}');
 	console.log(sightsNameArray);
+	var radioCheck = false;
+	
+	
 	function sightsListInit()
 	{
 		var str = "<li style = 'width : 100%;' class = 'clearfix listLi'>";
-		str += "<div style = 'width : 30%; overflow : hidden;' class = 'floatDiv'>순번</div>";
+		str += "<div style = 'width : 30%; height : 64.92px; overflow : hidden;' class = 'floatDiv'>순번</div>";
 		str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>관광지명</div></li>";
 		
 		for(var i = 0; i < sightsNameArray.length; ++i)
 		{
 			str += "<li style = 'width : 100%;' class = 'clearfix listLi'>";
-			str += "<div id = 'sightsIndex"+ i +"' style = 'width : 30%; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
+			str += "<div id = 'sightsIndex"+ i +"' style = 'width : 30%; height : 32.46px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
 			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + sightsNameArray[i] + "</div></li>";
 			//str += "<div id = 'sightsIndex" + i  + "' class = 'floatDiv' style = 'width : 30%; height : auto>" + (i + 1) + "</div>";
 			//str += "<div id = 'sightsIndex" + i  + "' style = 'width : 70%; height : auto' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
 		}
 		document.getElementById("listUl").innerHTML = str;
+		//document.getElementById("tableUl").innerHTML = str;
+	}
+	
+	$(function()
+	{
+		
+		
+		$("[name=writeType]").click(function()    
+		{
+			if(radioCheck)
+			{
+				$("#sightsForm").show();
+				$("#festivalForm").hide();
+				radioCheck = false;
+			}
+			else
+			{
+				$("#sightsForm").hide();
+				$("#festivalForm").show();
+				radioCheck = true;
+			}
+		})
+		
+		
+		$("#festivalForm").hide();
+	});
+	
+	
+	function insert()
+	{
+		if($('input:radio[name=writeType]:checked').val()=="sightsRadio"){
+			$.ajax({
+				url: "${path}/sightsInsert", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data :"${_csrf.parameterName}=${_csrf.token}&&sightsName=" + $("#sightsName").val()+"&&city="+$("#city").val()+"&&sightsRegion="+$("#sightsRegion").val()+"&&sightsDescription="+$("#sightsDescription").val()+"&&sightsLocation="+$("#sightsLocation").val()+"&&sightsHomepage="+$("#sightsHomepage").val()+"&&sightsLatitude="+$("#sightsLatitude").val()+"&&sightsLongitude="+$("#sightsLongitude").val() , //서버에게 전송할 parameter정보
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
 	}
 	
 </script>
 </head>
-<body id = "ContentBody" onload = "sightsListInit()">
+<body id = "ContentBody" onload = "sightsListInit(), aa()">
 	<!-- Main -->
 	<div id="main" class="wrapper style2 clearfix">
 
 			<div class = "floatDiv" style = "width : 10%;">
-				최상위 div인 main 바로 밑의 여백div - 내용물 생기면 자동으로 높이 생김 <p>> main div도 자동으로 main이 가진 padding + 이거의 높이 됨
+				sdfadsfads
 			</div>
 			
-			<div class = "floatDiv" style = "width : 80%;  height : auto"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
-				<div id = "headerDiv" class = "clearfix" style = "width : 100%">
+			<div class = "floatDiv" style = "width : 80%;  height : 731.25px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
+				<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 20%">
 					<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
-						<input type="radio" name="writeType" id="write1" checked="checked" >관광지
-						<input type="radio" name="writeType" id="write2" >행사
+						<input type="radio" name="writeType" id="write1" value="sightsRadio" checked="checked" >관광지
+						<input type="radio" name="writeType" id="write2" value="festivalRadio" >행사
 					</div>
 					<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
 					<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
-						<input type = "button" value = "등록" class = "formButton" style = "width : 100%; height : 33%">
-						<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33%">
-						<input type = "button" value = "삭제" class = "formButton" style = "width : 100%; height : 33%">
+						<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
+						<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33.3%">
+						<input type = "button" value = "삭제" class = "formButton" style = "width : 100%; height : 33.3%">
 					</div>
 				</div>
-				<div id = "contentDiv" class = "clearfix">
-					<div id = "listDiv" class = "floatDiv" style = "width : 50%; height : 100%">
-							<ul id = "listUl" style = "width : 100%; height : 100%"></ul>
+				<div id = "contentDiv" class = "clearfix" style = "height : 80%">
+					<div id = "listDiv" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
+							<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
 					</div>
-					<div id = "formContainerDiv" class = "floatDiv" style = "width : 50%; height : 100%">
-						<div id = "formDiv" style = "height : 100%">
-							<form method = "get" action = "">
-								<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-								<ul id = "tableUl" style = "width : 100%; height : 100%">
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsNum" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsName" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsCity" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsRegion" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsDescription" class="floatDiv"></div>
-										<div class="floatDiv"><textarea></textarea></div>
-									</li>
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsLocation" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%;" class="clearfix">
-										<div id="sightsHomepage" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%; height : 11%" class="clearfix">
-										<div id="sightsLatitude" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-									<li style = "width : 100%; height : 11%" class="clearfix">
-										<div id="sightsLongitude" class="floatDiv"></div>
-										<div class="floatDiv"><input type="text"></div>
-									</li>
-								</ul>
-							</form>
-						</div>
+					<div id = "formContainerDiv" class = "floatDiv" style = "width : 50%; height : 100%;">
+						<form id = "sightsForm" method = "get" action = "${path}/sightsInsert" style = "height : 100%">
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+							<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">순번</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsNumber" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">관광지명</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsName" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="city" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsRegion" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsDescription" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">위치</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsLocation" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsHomepage" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsLatitude" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 11.1%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="sightsLongitude" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+							</ul>
+						</form>
+						
+						<form id = "festivalForm" method = "get" action = "" style = "height : 100%">
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+							<ul id = "festivalTableUl" style = "width : 100%; height : 100%">
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">순번</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalNumber" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalName" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">위치</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalLocation" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">시작일</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalStart" class ="textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">종료일</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalEnd"class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalDescription" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">주최기관</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalAgency" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">전화번호</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalPhone" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalHomepage" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="city" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">주소</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalAddress" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalLatitude" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 7.69%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="festivalLongitude" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+							</ul>
+						</form>
 					</div>
 				</div>
 			</div>
 			
 			<div class = "floatDiv" style = "width : 10%;  height : 100%">
-				최상위 div인 main 바로 밑의 여백div - 내용물 생기면 자동으로 높이 생김 <p>> main div도 자동으로 main이 가진 padding + 이거의 높이 됨
+			adsfadsfadsf
 			</div>
 	</div>
 	
