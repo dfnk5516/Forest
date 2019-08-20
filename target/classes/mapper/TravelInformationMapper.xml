@@ -27,4 +27,7 @@
 		SELECT * FROM VIDEO ORDER BY VIDEO_NAME
 	</select>
   
+  	<select id="selectSights" resultType="sightDTO">
+		select * from sights
+	</select>
 </mapper>
