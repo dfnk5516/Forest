@@ -26,8 +26,12 @@
 	<select id = "selectVideo" resultType = "videoDTO">
 		SELECT * FROM VIDEO ORDER BY VIDEO_NAME
 	</select>
-  
-  	<select id="selectSights" resultType="sightDTO">
+	
+	<select id="selectSights" resultType="sightsDTO">
 		select * from sights
+	</select>
+	
+	<select id="selectSightsName" resultType="String">
+		select SIGHTS_NAME from sights ORDER BY SIGHTS_NAME
 	</select>
 </mapper>

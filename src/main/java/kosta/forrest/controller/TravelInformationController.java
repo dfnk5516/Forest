@@ -30,7 +30,14 @@ public class TravelInformationController
 	@RequestMapping("/travelInformationWrite")
 	public String write(Model model)
 	{
-		System.out.println(1111111111);
+		JSONArray sightsNameArray = new JSONArray();
+		for(String a : service.selectSightsName())
+		{
+			System.out.println(a);
+		}
+		
+		model.addAttribute("sightsNameArray",sightsNameArray.fromObject(service.selectSightsName()));
+		
 		return "board/travelInformationWrite";
 	}
 	

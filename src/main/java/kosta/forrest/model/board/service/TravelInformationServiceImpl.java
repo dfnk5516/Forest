@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kosta.forrest.model.board.dao.TravelInformationDAO;
 import kosta.forrest.model.board.dto.ForestDTO;
+import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.dto.VideoDTO;
 
 @Service
@@ -43,5 +44,15 @@ public class TravelInformationServiceImpl implements TravelInformationService
 	public List<VideoDTO> selectVideo()
 	{
 		return dao.selectVideo();
+	}
+	
+	@Override
+	public List<SightsDTO> selectAll() {
+		return dao.selectAll();
+	}
+
+	@Override
+	public List<String> selectSightsName() {
+		return dao.selectSightsName();
 	}
 }

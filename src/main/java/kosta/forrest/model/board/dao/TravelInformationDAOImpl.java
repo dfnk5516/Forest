@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kosta.forrest.model.board.dto.ForestDTO;
+import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.dto.VideoDTO;
 
 @Repository
@@ -59,6 +60,22 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	{
 		List<VideoDTO> list = new ArrayList<VideoDTO>();
 		list = session.selectList("travelInformationMapper.selectVideo");
+		return list;
+	}
+	
+	@Override
+	public List<SightsDTO> selectAll() {
+		
+		List<SightsDTO> list = new ArrayList<SightsDTO>();
+		list = session.selectList("travelInformationMapper.selectSights");
+		
+		return list;
+	}
+
+	@Override
+	public List<String> selectSightsName() {
+		List<String> list = new ArrayList<String>();
+		list = session.selectList("travelInformationMapper.selectSightsName");
 		return list;
 	}
 }
