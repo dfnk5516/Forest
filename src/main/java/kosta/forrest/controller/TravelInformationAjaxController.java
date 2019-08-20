@@ -59,7 +59,8 @@ public class TravelInformationAjaxController
 	}
 	
 	@RequestMapping("/sightsInsert")
-	public int sightsInsert(SightsDTO dto) {
+	public int sightsInsert(SightsDTO dto)
+	{
 		System.out.println(dto);
 		
 		return service.insertSights(dto);

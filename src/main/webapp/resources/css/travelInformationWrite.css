@@ -1,12 +1,7 @@
-section[id = "ContentSection"]
+div#main
 {
-	width : 100%;
-	vertical-align : top;
-}
-
-section[id = "ContentSection"] div
-{
-	font-size : 14px;
+	padding-left: 15%;
+	padding-right:15%;
 }
 
 div[class = "floatDiv"]
@@ -32,14 +27,13 @@ input[type = "button"][class = "formButton"]
 	font-size :14px;
 }
  
- ul[id = "listUl"],ul[id = "tableUl"]
+ ul,input[type = "text"],input[type = "text"]:focus
  {
- 	border : 1px solid #1E1E1E;
+ 	border : 0px solid #1E1E1E;
  }
 
-
- input[type = "text"],
- input[type = "text"]:focus
+.textBox,
+.textBox:focus
  {
  	border : 1px solid #1E1E1E;
  	padding : 0px;
@@ -49,7 +43,5 @@ input[type = "button"][class = "formButton"]
  {
  	border : 0rx
  }
- 
- <input type = "text' id = "aa">
  
  

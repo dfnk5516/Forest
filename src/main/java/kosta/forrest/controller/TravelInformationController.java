@@ -31,12 +31,8 @@ public class TravelInformationController
 	public String write(Model model)
 	{
 		JSONArray sightsNameArray = new JSONArray();
-		for(String a : service.selectSightsName())
-		{
-			System.out.println(a);
-		}
-		
 		model.addAttribute("sightsNameArray",sightsNameArray.fromObject(service.selectSightsName()));
+		model.addAttribute("cityList", service.selectCity());
 		
 		return "board/travelInformationWrite";
 	}

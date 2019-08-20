@@ -11,15 +11,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SightsDTO {
+public class SightsDTO
+{
 	private String sightsName;
 	private String city;
 	private String sightsRegion;
 	private String sightsDescription;
 	private String sightsLocation;
 	private String sightsHomepage;
-	private String sightsLatitude;
-	private String sightsLongitude;
+	private double sightsLatitude;
+	private double sightsLongitude;
 }
 
 
