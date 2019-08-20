@@ -15,4 +15,5 @@ public interface TravelInformationService
 	List<VideoDTO> selectVideo();
 	public List<SightsDTO> selectAll();
 	List<String> selectSightsName();
+	int insertSights(SightsDTO dto);
 }

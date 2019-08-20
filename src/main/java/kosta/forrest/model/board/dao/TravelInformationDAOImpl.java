@@ -78,4 +78,12 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 		list = session.selectList("travelInformationMapper.selectSightsName");
 		return list;
 	}
+	
+	@Override
+	public int insertSights(SightsDTO dto) {
+		
+		int a =  session.insert("travelInformationMapper.sightsInsert", dto);
+		System.out.println(a);
+		return a;
+	}
 }

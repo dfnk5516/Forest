@@ -15,5 +15,7 @@ public interface TravelInformationDAO
 	List<VideoDTO> selectVideo();
 	List<SightsDTO> selectAll();
 	List<String> selectSightsName();
+	int insertSights(SightsDTO dto);
+	
 }
 		

@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
+
 import kosta.forrest.model.board.dto.ForestDTO;
+import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.service.TravelInformationService;
 import net.sf.json.JSONArray;
 
@@ -56,9 +59,9 @@ public class TravelInformationAjaxController
 	}
 	
 	@RequestMapping("/sightsInsert")
-	public int sightsInsert(String sightsNumber) {
+	public int sightsInsert(SightsDTO dto) {
+		System.out.println(dto);
 		
-		
-		return 1;
+		return service.insertSights(dto);
 	}
 }

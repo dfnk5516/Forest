@@ -34,4 +34,9 @@
 	<select id="selectSightsName" resultType="String">
 		select SIGHTS_NAME from sights ORDER BY SIGHTS_NAME
 	</select>
+	
+	<insert id="sightsInsert" parameterType="sightsDTO">
+		INSERT INTO SIGHTS (SIGHTS_NAME, CITY, SIGHTS_REGION, SIGHTS_DESCRIPTION, SIGHTS_LOCATION, SIGHTS_HOMEPAGE, SIGHTS_LATITUDE, SIGHTS_LONGITUDE)
+		VALUES (#{sightsName},#{city},#{sightsRegion},#{sightsDescription},#{sightsLocation},#{sightsHomepage},#{sightsLatitude},#{sightsLongitude})
+	</insert>
 </mapper>

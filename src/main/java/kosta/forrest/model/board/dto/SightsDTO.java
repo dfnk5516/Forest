@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class SightsDTO {
 	private String sightsName;
 	private String city;
@@ -16,8 +18,8 @@ public class SightsDTO {
 	private String sightsDescription;
 	private String sightsLocation;
 	private String sightsHomepage;
-	private double sightsLatitude;
-	private double sightsLongitude;
+	private String sightsLatitude;
+	private String sightsLongitude;
 }
 
 

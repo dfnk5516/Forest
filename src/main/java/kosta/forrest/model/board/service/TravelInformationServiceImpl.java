@@ -55,4 +55,9 @@ public class TravelInformationServiceImpl implements TravelInformationService
 	public List<String> selectSightsName() {
 		return dao.selectSightsName();
 	}
+	
+	@Override
+	public int insertSights(SightsDTO dto) {
+		return dao.insertSights(dto);
+	}
 }
