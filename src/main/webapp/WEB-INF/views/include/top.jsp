@@ -33,7 +33,11 @@
 					<nav id="nav">
 						<ul>
 							<li class="active"><a href="hometest">Home</a></li>
-							<li><a href="${path}/forest/list">통합 예약</a></li>
+							<li><a href="${path}/forest/list">통합 예약</a>
+								<ul>
+									<li><a href="${path}/forest/list">통합 예약</a></li>
+								</ul>
+							</li>
 							<li><a href="${path}/travelInformation">여행 정보</a>
 								<ul>
 									<li><a href="${path}/travelInformation">여행 정보</a></li>
