@@ -168,10 +168,19 @@
 		{
 			if(forestArray[i].city == city)
 			{
-				str += "<option value = '" + forestArray[i].forestName + "'>" + forestArray[i].forestName + "</option>";			
+				str += "<option value = '" + i +"'>" + forestArray[i].forestName + "</option>";			
 			}
 		}
 		document.getElementById("forestSelect").innerHTML = str;
+	}
+	
+	function forestSelectChange(){
+		var target= document.getElementById("forestSelect");
+		var index = target.options[target.selectedIndex].value;
+		var latitude = forestArray[index].forestLatitude;
+		var longitude = forestArray[index].forestLongitude;
+		
+		panTo(latitude, longitude);
 	}
 	
 	
@@ -676,6 +685,15 @@
  			videoListOnOffCheck = false;
  		}
  	}
+ 	
+ 	function panTo(latitude, longitude) {
+ 	    // 이동할 위도 경도 위치를 생성합니다 
+ 	    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+ 	    
+ 	    // 지도 중심을 부드럽게 이동시킵니다
+ 	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+ 	    map.panTo(moveLatLon);            
+ 	}         
 	
 	//////////////////////////////////////////////////
 </script>
@@ -728,7 +746,7 @@
 										<option>${city}</option>
 									</c:forEach>
 								</select>
-								<select id="forestSelect" style = "width : 54%">
+								<select id="forestSelect" style = "width : 54%" onchange="forestSelectChange()">
 									<option>산림휴양시설 선택</option>
 								</select>
 							</div>
