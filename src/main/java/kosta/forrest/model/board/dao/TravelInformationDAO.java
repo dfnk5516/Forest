@@ -2,6 +2,7 @@ package kosta.forrest.model.board.dao;
 
 import java.util.List;
 
+import kosta.forrest.model.board.dto.FestivalDTO;
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.dto.VideoDTO;
@@ -13,9 +14,10 @@ public interface TravelInformationDAO
 	List<String> selectCity();
 	List<ForestDTO> selectForest();
 	List<VideoDTO> selectVideo();
-	List<SightsDTO> selectAll();
-	List<String> selectSightsName();
+	List<SightsDTO> selectSightsAll();
 	int insertSights(SightsDTO dto);
+	List<FestivalDTO> festivalSelectAll();
+	List<VideoDTO> videoSelectAll();
 	
 }
 		

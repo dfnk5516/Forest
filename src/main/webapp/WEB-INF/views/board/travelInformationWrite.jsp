@@ -12,76 +12,215 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 <script type="text/javascript">
-	var sightsNameArray = JSON.parse('${sightsNameArray}');
-	console.log(sightsNameArray);
-	var radioCheck = false;
-	
+	//console.log(sightsNameArray);
+	var sightsArray;
+	var festivalArray;
+	var videoArray;
 	
 	function sightsListInit()
 	{
+		sightsArray = JSON.parse('${sightsArray}');
+		
 		var str = "<li style = 'width : 100%;' class = 'clearfix listLi'>";
 		str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
 		str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>관광지명</div></li>";
 		
-		for(var i = 0; i < sightsNameArray.length; ++i)
+		for(var i = 0; i < sightsArray.length; ++i)
 		{
-			str += "<li style = 'width : 100%;' class = 'clearfix listLi'>";
-			str += "<div id = 'sightsIndex"+ i +"' style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
-			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + sightsNameArray[i] + "</div></li>";
-			//str += "<div id = 'sightsIndex" + i  + "' class = 'floatDiv' style = 'width : 30%; height : auto>" + (i + 1) + "</div>";
-			//str += "<div id = 'sightsIndex" + i  + "' style = 'width : 70%; height : auto' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
+			str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+			str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
+			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
 		}
 		document.getElementById("listUl").innerHTML = str;
-		//document.getElementById("tableUl").innerHTML = str;
+	}
+	
+	function sightsSelect()
+	{
+		$.ajax({
+			url: "${path}/sightsSelect", //서버주소
+			type :"post" , //전송방식(get, post, put, delete)
+			data : "${_csrf.parameterName}=${_csrf.token}",
+			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+			success :function(result)
+			{
+				sightsArray = result;
+				addList("sights");
+			} ,
+			error : function(err)
+			{
+				alert("오류발생cc : " + err);
+			}
+		})
+	}
+	
+	function festivalSelect(){
+		$.ajax({
+			url: "${path}/festivalSelect", //서버주소
+			type :"post" , //전송방식(get, post, put, delete)
+			data : "${_csrf.parameterName}=${_csrf.token}",
+			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+			success :function(result)
+			{
+				festivalArray = result;
+				addList("festival");
+			},
+			error : function(err)
+			{
+				alert("오류발생 : " + err);
+			}
+		})
+	}
+	
+	function videoSelect()
+	{
+		$.ajax(
+		{
+			url: "${path}/videoSelect", //서버주소
+			type :"post" , //전송방식(get, post, put, delete)
+			data : "${_csrf.parameterName}=${_csrf.token}",
+			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+			success :function(result)
+			{
+				videoArray = result;
+				addList("video");
+			},
+			error : function(err)
+			{
+				alert("오류발생 : " + err);
+			}
+		})
+	}
+	
+	function addList(data)
+	{
+		var str = "<li style = 'width : 100%;' class = 'clearfix listLi'>";
+		str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
+
+		if(data == "sights")
+		{
+			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>관광지명</div></li>";
+				
+			for(var i = 0; i < sightsArray.length; ++i)
+			{
+				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+				str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
+				str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
+			}
+			document.getElementById("listUl").innerHTML = str;
+		}
+		else if (data == "festival")
+		{
+			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>행사명</div></li>";
+				
+			for(var i = 0; i < festivalArray.length; ++i)
+			{
+				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+				str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
+				str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + festivalArray[i].festivalName + "</div></li>";
+			}
+			document.getElementById("listUl").innerHTML = str;
+		}
+		else if (data == "video")
+		{
+			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>영상명</div></li>";
+				
+			for(var i = 0; i < videoArray.length; ++i)
+			{
+				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+				str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
+				str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + videoArray[i].videoName + "</div></li>";
+			}
+			document.getElementById("listUl").innerHTML = str;
+		}
+		
+		$('input[name="writeType"]').each(function()
+		{
+			$(this).prop('disabled', false);
+		});
+	}
+	
+	function listItemSelect(index)
+	{		
+		if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
+		{
+			$("#sightsName").val(sightsArray[index].sightsName);
+			$("#sightsCity").val(sightsArray[index].city);
+			$("#sightsRegion").val(sightsArray[index].sightsRegion);
+			$("#sightsDescription").val(sightsArray[index].sightsDescription);
+			$("#sightsLocation").val(sightsArray[index].sightsLocation);
+			$("#sightsHomepage").val(sightsArray[index].sightsHomepage);
+			$("#sightsLatitude").val(sightsArray[index].sightsLatitude);
+			$("#sightsLongitude").val(sightsArray[index].sightsLongitude);
+		}
+		else if($('input:radio[name=writeType]:checked').val() == "festivalRadio")
+		{
+			alert(index);
+		}
+		else if($('input:radio[name=writeType]:checked').val() == "videoRadio")
+		{
+			alert(index);
+		}
 	}
 	
 	$(function()
 	{
+		$("#festivalForm").hide();
+		$("#videoForm").hide();
+		
 		$("[name=writeType]").click(function()    
 		{
-			if(radioCheck)
+			$('input[name="writeType"]').each(function()
 			{
-				$("#sightsForm").show();
+			    $(this).prop('disabled', true);
+			});
+			
+			if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
+			{
 				$("#festivalForm").hide();
-				radioCheck = false;
+				$("#videoForm").hide();
+				$("#sightsForm").show();
+				
+				document.getElementById("listUl").innerHTML = "로드중..";
+				sightsSelect();
 			}
-			else
+			else if($('input:radio[name=writeType]:checked').val() == "festivalRadio")
 			{
 				$("#sightsForm").hide();
+				$("#videoForm").hide();
 				$("#festivalForm").show();
-				radioCheck = true;
+				
+				document.getElementById("listUl").innerHTML = "로드중..";
+				festivalSelect();
+			}
+			else if($('input:radio[name=writeType]:checked').val() == "videoRadio")
+			{
+				$("#sightsForm").hide();
+				$("#festivalForm").hide();
+				$("#videoForm").show();
+				
+				document.getElementById("listUl").innerHTML = "로드중..";
+				videoSelect();
 			}
 		})
-		alert($("#sightsCity option:selected").val());
-		$("#festivalForm").hide();
 	});
-	
-	function textCheck(text)
-	{
-		var changedText =  text.replace(/&quot;/gi, '&quot;');
-		changedText = changedText.replace(/&lt;/gi, '&lt;');
-		changedText = changedText.replace(/&gt;/gi, '&gt;');
-		changedText = changedText.replace(/&amp;/gi, '&amp;');
-		
-		return changedText;
-	}
 	
 	function insert()
 	{
 		if($('input:radio[name=writeType]:checked').val()=="sightsRadio")
 		{
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
-			datas += "&&sightsName=" + $("#sightsName").val();
-			datas += "&&city=" + $("#sightsCity option:selected").val();
-			datas += "&&sightsRegion=" + $("#sightsRegion").val();
-			datas += "&&sightsDescription=" + $("#sightsDescription").val();
-			datas += "&&sightsLocation=" + $("#sightsLocation").val();
-			datas += "&&sightsHomepage=" + $("#sightsHomepage").val();
-			datas += "&&sightsLatitude=" + $("#sightsLatitude").val();
-			datas += "&&sightsLongitude=" + $("#sightsLongitude").val();
+			datas += "&&sightsName=" + encodeURIComponent($("#sightsName").val());
+			datas += "&&city=" + encodeURIComponent($("#sightsCity option:selected").val());
+			datas += "&&sightsRegion=" + encodeURIComponent($("#sightsRegion").val());
+			datas += "&&sightsDescription=" + encodeURIComponent($("#sightsDescription").val());
+			datas += "&&sightsLocation=" + encodeURIComponent($("#sightsLocation").val());
+			datas += "&&sightsHomepage=" + encodeURIComponent($("#sightsHomepage").val());
+			datas += "&&sightsLatitude=" + encodeURIComponent($("#sightsLatitude").val());
+			datas += "&&sightsLongitude=" + encodeURIComponent($("#sightsLongitude").val());
 			alert($("#sightsCity option:selected").val())
 			
-			$.ajax({
+			$.ajax(
+			{
 				url: "${path}/sightsInsert", //서버주소
 				type :"post" , //전송방식(get, post, put, delete)
 				data : datas,
@@ -112,6 +251,7 @@
 					<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
 						<input type="radio" name="writeType" id="write1" value="sightsRadio" checked="checked" >관광지
 						<input type="radio" name="writeType" id="write2" value="festivalRadio" >행사
+						<input type="radio" name="writeType" id="write3" value="videoRadio" >영상
 					</div>
 					<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
 					<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
@@ -125,7 +265,7 @@
 							<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
 					</div>
 					<div id = "formContainerDiv" class = "floatDiv" style = "width : 50%; height : 100%;">
-						<form id = "sightsForm" method = "get" action = "${path}/sightsInsert" style = "height : 100%">
+						<form id = "sightsForm" method = "post" action = "${path}/sightsInsert" style = "height : 100%">
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
 								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
@@ -183,7 +323,7 @@
 							</ul>
 						</form>
 						
-						<form id = "festivalForm" method = "get" action = "" style = "height : 100%">
+						<form id = "festivalForm" method = "post" action = "" style = "height : 100%">
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<ul id = "festivalTableUl" style = "width : 100%; height : 100%">
 								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
@@ -262,6 +402,31 @@
 										<input type = "text" id="festivalLongitude" class = "textBox" style = "width : 100%; height : 100%;">
 									</div>
 								</li>
+							</ul>
+						</form>
+						
+						<form id = "videoForm" method = "post" action = "" style = "height : 100%">
+							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+							<ul id = "videoTableUl" style = "width : 100%; height : 100%">
+								<li class = "clearfix" style = "width : 100%; height : 10%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 10%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li class = "clearfix" style = "width : 100%; height : 10%;">
+									<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
+									<div class = "floatDiv" style = "width : 80%; height : 100%">
+										<input type = "text" id="videoLength" class = "textBox" style = "width : 100%; height : 100%;">
+									</div>
+								</li>
+								<li style = "width : 100%; height : 70%;"></li>
 							</ul>
 						</form>
 					</div>

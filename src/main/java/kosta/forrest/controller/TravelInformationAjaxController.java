@@ -4,16 +4,14 @@ package kosta.forrest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-
+import kosta.forrest.model.board.dto.FestivalDTO;
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.dto.SightsDTO;
+import kosta.forrest.model.board.dto.VideoDTO;
 import kosta.forrest.model.board.service.TravelInformationService;
-import net.sf.json.JSONArray;
 
 
 @RestController
@@ -64,5 +62,20 @@ public class TravelInformationAjaxController
 		System.out.println(dto);
 		
 		return service.insertSights(dto);
+	}
+	
+	@RequestMapping("/sightsSelect")
+	public List<SightsDTO> sightsSelect()
+	{
+		return service.selectSightsAll();
+	}
+	@RequestMapping("/festivalSelect")
+	public List<FestivalDTO> festivalSelect(){
+		return service.festivalSelectAll();
+	}
+	@RequestMapping("/videoSelect")
+	public List<VideoDTO> videoSelect()
+	{
+		return service.videoSelectAll();
 	}
 }

@@ -16,27 +16,27 @@
 	</select>
 	
 	<select id="selectCity" resultType="String" >
-	select * from PROVINCE order by city
+		SELECT * from PROVINCE ORDER BY CITY
 	</select>
 	
 	<select id = "selectForest" resultType="forestDTO">
-		select FOREST_NAME, CITY, FOREST_LATITUDE, FOREST_LONGITUDE from forest
+		SELECT FOREST_NAME, CITY, FOREST_LATITUDE, FOREST_LONGITUDE FROM FOREST
 	</select>
 	
 	<select id = "selectVideo" resultType = "videoDTO">
 		SELECT * FROM VIDEO ORDER BY VIDEO_NAME
 	</select>
 	
-	<select id="selectSights" resultType="sightsDTO">
-		select * from sights
-	</select>
-	
-	<select id="selectSightsName" resultType="String">
-		select SIGHTS_NAME from sights ORDER BY SIGHTS_NAME
-	</select>
-	
 	<insert id="sightsInsert" parameterType="sightsDTO">
 		INSERT INTO SIGHTS (SIGHTS_NAME, CITY, SIGHTS_REGION, SIGHTS_DESCRIPTION, SIGHTS_LOCATION, SIGHTS_HOMEPAGE, SIGHTS_LATITUDE, SIGHTS_LONGITUDE)
 		VALUES (#{sightsName},#{city},#{sightsRegion},#{sightsDescription},#{sightsLocation},#{sightsHomepage},#{sightsLatitude},#{sightsLongitude})
 	</insert>
+	
+	<select id="selectSights" resultType="sightsDTO">
+		SELECT * FROM SIGHTS
+	</select>
+	
+	<select id="selectFestival" resultType="festivalDTO">
+		SELECT * FROM FESTIVAL ORDER BY FESTIVAL_NAME
+	</select>
 </mapper>

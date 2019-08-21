@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kosta.forrest.model.board.dao.TravelInformationDAO;
+import kosta.forrest.model.board.dto.FestivalDTO;
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.dto.VideoDTO;
@@ -47,17 +48,22 @@ public class TravelInformationServiceImpl implements TravelInformationService
 	}
 	
 	@Override
-	public List<SightsDTO> selectAll() {
-		return dao.selectAll();
-	}
-
-	@Override
-	public List<String> selectSightsName() {
-		return dao.selectSightsName();
+	public int insertSights(SightsDTO dto) {
+		return dao.insertSights(dto);
 	}
 	
 	@Override
-	public int insertSights(SightsDTO dto) {
-		return dao.insertSights(dto);
+	public List<SightsDTO> selectSightsAll() {
+		return dao.selectSightsAll();
+	}
+	
+	@Override
+	public List<FestivalDTO> festivalSelectAll() {
+		return dao.festivalSelectAll();
+	}
+	@Override
+	public List<VideoDTO> videoSelectAll()
+	{
+		return dao.videoSelectAll();
 	}
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kosta.forrest.model.board.dto.FestivalDTO;
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.dto.VideoDTO;
@@ -64,26 +65,37 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	}
 	
 	@Override
-	public List<SightsDTO> selectAll() {
+	public int insertSights(SightsDTO dto) {
+		
+		int a =  session.insert("travelInformationMapper.sightsInsert", dto);
+		System.out.println(a);
+		return a;
+	}
+	
+	@Override
+	public List<SightsDTO> selectSightsAll() {
 		
 		List<SightsDTO> list = new ArrayList<SightsDTO>();
 		list = session.selectList("travelInformationMapper.selectSights");
 		
 		return list;
 	}
-
+	
 	@Override
-	public List<String> selectSightsName() {
-		List<String> list = new ArrayList<String>();
-		list = session.selectList("travelInformationMapper.selectSightsName");
+	public List<FestivalDTO> festivalSelectAll() {
+		
+		List<FestivalDTO> list = new ArrayList<FestivalDTO>();
+		list = session.selectList("travelInformationMapper.selectFestival");
+		
 		return list;
 	}
 	
 	@Override
-	public int insertSights(SightsDTO dto) {
+	public List<VideoDTO> videoSelectAll()
+	{
+		List<VideoDTO> list = new ArrayList<VideoDTO>();
+		list = session.selectList("travelInformationMapper.selectVideo");
 		
-		int a =  session.insert("travelInformationMapper.sightsInsert", dto);
-		System.out.println(a);
-		return a;
+		return list;
 	}
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kosta.forrest.model.board.dto.SightsDTO;
 import kosta.forrest.model.board.service.TravelInformationService;
 import net.sf.json.JSONArray;
 
@@ -30,8 +31,12 @@ public class TravelInformationController
 	@RequestMapping("/travelInformationWrite")
 	public String write(Model model)
 	{
-		JSONArray sightsNameArray = new JSONArray();
-		model.addAttribute("sightsNameArray",sightsNameArray.fromObject(service.selectSightsName()));
+		JSONArray sightsArray = new JSONArray();
+		for(SightsDTO dto : service.selectSightsAll())
+		{
+			System.out.println(dto);
+		}
+		model.addAttribute("sightsArray",sightsArray.fromObject(service.selectSightsAll()));
 		model.addAttribute("cityList", service.selectCity());
 		
 		return "board/travelInformationWrite";
