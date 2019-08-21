@@ -19,6 +19,11 @@
 	var playIcon = "♪"
 	var nonPlayIcon = "　"
 	var videoListOnOffCheck = false;
+	
+	var delta = 300;
+	var timer1 = null;
+	var sigma = 50;
+	var timer2 = null;
 
 	var mapLevel = 5;
 	var xMaxSize = 70;
@@ -62,6 +67,25 @@
 		alert(3);
 	}
 	
+	function scrollDone()
+	{
+		currentScroll = document.documentElement.scrollTop;
+		
+		var currentScrollPercent = (maxScroll - currentScroll) / maxScroll;
+		
+		$("#ScrollMarginDiv").height(($("#main").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent));
+	}
+	
+	function resizeDone()
+	{
+		$("#videoContainerDiv").height($("#travelInformation").height());
+		maxScroll = $(document).height() - $(window).height();
+		$("#videoControllerDiv").height($("#videoContainer").height());
+		
+		maxScroll = $(document).height() - $(window).height();
+	}
+	
+	
 	
 	
 	$(document).ready(function()
@@ -95,31 +119,15 @@
 		
 		$(window).on('mousewheel',function(e)
 		{ 
-			currentScroll = document.documentElement.scrollTop;
-			
-			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll;
-			
-			$("#ScrollMarginDiv").height(($("#content").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent));
+			clearTimeout( timer2 );
+			timer2 = setTimeout( scrollDone, sigma);
 		});
 		
 		
 		$(window).resize(function ()
 		{
-			if($("#travelInformation").width() < 974)
-			{
-				//alert($("#travelInformation").width());
-				$("#checkBoxGroup1").css("display","block");
-				$("#checkBoxGroup1").width("100%");
-				$("#checkBoxGroup2").width("100%");
-			}
-			else
-			{
-				$("#checkBoxGroup1").css("display","inline-block");
-				$("#checkBoxGroup1").width("49%");
-				$("#checkBoxGroup2").width("49%");
-			}
-			
-			maxScroll = $(document).height() - $(window).height();
+			clearTimeout( timer1 );
+			timer1 = setTimeout( resizeDone, delta);
 		})
 		
 		$("#videoListDiv").slideUp(0, function(){});
@@ -580,7 +588,7 @@
  	
  	function formInit()
 	{
-		$("#videoContainerDiv").height($("#content").height());
+		$("#videoContainerDiv").height($("#travelInformation").height());
 		maxScroll = $(document).height() - $(window).height();
 		$("#videoControllerDiv").height($("#videoContainer").height());
 		videoControllerInit();
@@ -599,17 +607,17 @@
 			var str = "";
 			for(var i = 0; i < videoMax; ++i)
 			{
-				str += "<li onclick = 'videoPlay(" + i + ")'><div class = 'number'>" + (i + 1) + "</div>";
-				str += "<div class = '" + videoArray[i].videoName + "'>" + videoArray[i].videoName + "</div>";
-				str += "<div class = 'length'>" + videoArray[i].videoLength + "</div>";
+				str += "<li class = 'clearfix' onclick = 'videoPlay(" + i + ")'><div class = 'floatDiv'>" + (i + 1) + "</div>";
+				str += "<div class = 'floatDiv'>" + videoArray[i].videoName + "</div>";
+				str += "<div class = 'floatDiv'>" + videoArray[i].videoLength + "</div>";
 				
 				if(currentVideo == i)
 				{
-					str += "<div class = 'icon' name = 'playListIndex" + i + "'>♪</div></li>";
+					str += "<div class = 'floatDiv' name = 'playListIndex" + i + "'>♪</div></li>";
 				}
 				else
 				{
-					str += "<div class = 'icon' name = 'playListIndex" + i + "'></div></li>";
+					str += "<div class = 'floatDiv' name = 'playListIndex" + i + "'></div></li>";
 				}
 				
 				if(i == videoMax - 1)
@@ -669,7 +677,7 @@
  	 			currentScroll = document.documentElement.scrollTop;
  	 			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll;
  	 			
- 	 			var gap = $("#ScrollMarginDiv").height() - ($("#content").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent);
+ 	 			var gap = $("#ScrollMarginDiv").height() - ($("#travelInformation").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent);
  	 			 $("#ScrollMarginDiv").animate({height: "-=" + gap}, 1000);
  	 		}
  		});
@@ -700,33 +708,32 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
-<body id = "tavelInformationBody" onload = "travelInformationInit()">
+<body id = "tavelInformationBody" onload = "travelInformationInit()" >
 	<!-- Main -->
-	<div id="main" class="wrapper style2">
-		<!-- Content -->
-		<div id="content" class="container">
-			<section id = "travelInformationSection">
-				<div id = "videoContainerDiv" class = "containerDiv" style = "vertical-align: top;  width : 20%;" >
-					<div id = "ScrollMarginDiv" style = "line-height : 0;"></div>
-					<div id = "videoControllerDiv" style = "line-height : 0; text-align : center; padding : 0 20px 0 20px; margin-left:5px; margin-right:5px">
-						<div id = "videoController"style = "margin-left: 7.5%;  margin-right:7.5%">
-							<iframe id = "videoFrame" width="100%" height="200" src="" ></iframe>
-							<div style = "display : inline-block; width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
-								<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
+	<div id="main" class="wrapper style2 clearfix">
+				<div id = "videoContainerDiv" class = "floatDiv" style = "width : 20%; height : 100%; vertical-align: top;" >
+					<div id = "ScrollMarginDiv" style = "width : 100%; min-width : 324px;"></div>
+					<div id = "videoControllerDiv" style = "width : 100%; min-width : 324px; text-align : center;">
+						<div id = "videoController" style = "padding-left: 7.5%;  padding-right:7.5%;">
+							<div><iframe id = "videoFrame" style = "width : 100%; height : 200px" src="" ></iframe></div>
+							<div class = "clearfix">
+								<div class = "floatDiv" style = "width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
+									<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
+								</div>
+								<div class = "floatDiv" style = " width : 45%; vertical-align: middle;" id = "middleVideoButtonDiv">
+									<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
+								</div>
+								<div class = "floatDiv" style = " width : 10%; vertical-align: middle;" id = "rightVideoButtonDiv">
+									<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px;">
+								</div>
 							</div>
-							<div style = "display : inline-block; width : 45%; vertical-align: middle;" id = "middleVideoButtonDiv">
-								<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
-							</div>
-							<div style = "display : inline-block; width : 10%; vertical-align: middle;" id = "rightVideoButtonDiv">
-								<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px;">
-							</div>
-							<div id = "videoListDiv" style = "display : block; width : 100%; border: 1px solid #1E1E1E">
+							<div id = "videoListDiv" style = "width : 100%; border: 1px solid #1E1E1E">
 								<ul id = "videoListUl" style = "width : 100%; height : auto;"></ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class = "containerDiv" style = "width : 60%;" id = "travelInformation">
+				<div class = "floatDiv" style = "width : 60%; height : 100%;" id = "travelInformation">
 					<header class="major">
 						<div id = "travelInformationHeader">여행 정보 검색</div>
 					</header>				
@@ -758,21 +765,14 @@
 						</div>
 					</form>
 				
-					<br>
-				
-					<div style = "width : 100%" >
-						<div id = "checkBoxGroup1" style = "display : inline-block; text-align : left; vertical-align: middle; width : 50%;">
+					<div id = "checkBoxTopDiv" style = "width : 100%;" >
+						<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%;">
 							<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
 							<input type="checkbox" id = "sights"/>관광지 보기
 							<input type="checkbox" id = "festival"/>행사 보기
 						</div>
-						<div id = "checkBoxGroup2" style = "display : inline-block; text-align : right; vertical-align: middle; width : 50%;">
-							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
-							<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
-							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
-						</div>
+						
 					</div>
-	
 					<!-- 지도 -->	
 					<div id="container" style = "width: 100%; height: 650px;">
 						<div id="rvWrapper">
@@ -784,11 +784,16 @@
         					<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
     					</div>
 					</div>
+					<div id = "checkBoxBottomDiv" style = "width : 100%;" class = "clearfix" >
+						<div id = "checkBoxGroup2" style = "text-align : right; vertical-align: middle; width : 100%;">
+							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
+							<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
+							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
+						</div>
+					</div>
 				</div>
-				<div class = "containerDiv" style = "width : 20%;" id = "aa"></div>
-			
-			</section>
-		</div>
+				<div class = "floatDiv" style = "width : 20%; height : 100%;" id = "aa"></div>
+
 	</div>
 </body>
 </html>

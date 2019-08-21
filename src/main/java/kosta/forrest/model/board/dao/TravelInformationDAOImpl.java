@@ -23,10 +23,7 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	{
 		List<ForestDTO> list = new ArrayList<ForestDTO>();
 		list = session.selectList("travelInformationMapper.selectForestByCity", city);
-		for(ForestDTO dto : list)
-		{
-			System.out.println(dto);
-		}
+		
 		return list;
 	}
 	
@@ -67,9 +64,9 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	@Override
 	public int insertSights(SightsDTO dto) {
 		
-		int a =  session.insert("travelInformationMapper.sightsInsert", dto);
-		System.out.println(a);
-		return a;
+		int result =  session.insert("travelInformationMapper.sightsInsert", dto);
+		System.out.println(result);
+		return result;
 	}
 	
 	@Override

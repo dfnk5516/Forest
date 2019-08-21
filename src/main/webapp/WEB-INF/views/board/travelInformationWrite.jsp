@@ -143,7 +143,7 @@
 	{		
 		if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
 		{
-			$("#sightsName").val(sightsArray[index].sightsName);
+			$("#sightsName").val(replaceStr(sightsArray[index].sightsName));
 			$("#sightsCity").val(sightsArray[index].city);
 			$("#sightsRegion").val(sightsArray[index].sightsRegion);
 			$("#sightsDescription").val(sightsArray[index].sightsDescription);
@@ -217,7 +217,6 @@
 			datas += "&&sightsHomepage=" + encodeURIComponent($("#sightsHomepage").val());
 			datas += "&&sightsLatitude=" + encodeURIComponent($("#sightsLatitude").val());
 			datas += "&&sightsLongitude=" + encodeURIComponent($("#sightsLongitude").val());
-			alert($("#sightsCity option:selected").val())
 			
 			$.ajax(
 			{
@@ -228,7 +227,7 @@
 				success :function(result)
 				{
 					console.log(result);
-					//${_csrf.parameterName}=${_csrf.token}&&
+					$("[name=writeType]").click();
 				} ,
 				error : function(err)
 				{
@@ -238,11 +237,24 @@
 		}
 	}
 	
+	function replaceStr(string)
+	{
+		var replacedStr;
+		replacedStr = string.replace(/&amp;/gi, '&');
+		replacedStr = replacedStr.replace(/&lt;/gi, '<');
+		replacedStr = replacedStr.replace(/&gt;/gi, '>');
+		replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
+		replacedStr = replacedStr.replace(/&#x27;/gi, '`');
+		replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
+		
+		return replacedStr;
+	}
+	
 </script>
 </head>
 <body id = "ContentBody" onload = "sightsListInit()">
 	<!-- Main -->
-	<div id="main" class="wrapper style2 clearfix"">
+	<div id="main" class="wrapper style2 clearfix">
 
 			<div class = "floatDiv"></div>
 			

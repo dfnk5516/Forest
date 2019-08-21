@@ -1,12 +1,18 @@
 div[id = "main"]
 {
-	margin : 0;
-	padding : 0;
-	background : #F2F2F2;
+	padding-left: 15%;
+	padding-right:15%;
 }
-div[id = "videoListDiv"]
+div[class = "floatDiv"]
 {
-	font-size : 0px;
+	float : left; 
+}
+/* 가로 div class에 floatDiv 붙여주고 그 div들을 포함하고 있는 부모 div에 clearfix class 붙여줄것!*/
+.clearfix:after
+{
+  content:'';
+  display:block;
+  clear:both;
 }
 
 ul[id = "videoListUl"]>li
@@ -17,10 +23,6 @@ ul[id = "videoListUl"]>li
 	padding : 0px;
 	margin : 0;
 	width : 100%;
-}
-ul[id = "videoListUl"]>li>div
-{
-	display : inline-block
 }
 ul[id = "videoListUl"]>li:nth-child(2n-1)>div:nth-child(1)
 {
@@ -102,13 +104,8 @@ select
     font-size : inherit;
 }
 
-div[id = "content"],
-div[class = "containerDiv"]
+div[id = "content"]
 {
-	display : inline-block;
-	line-height : 0;
-	padding : 0;
-	margin : 0;
 	font-size : 0;
 }
 
@@ -161,13 +158,28 @@ input[type = "button"][class = "videoButton"]
 	margin : 0;
 }
 
-div[id = "leftVideoButtonDiv"], div[id = "middleVideoButtonDiv"]
+div[id = "leftVideoButtonDiv"]
 {
 	border-top : 1px solid #F2F2F2;
 	border-right : 0.5px solid #F2F2F2;
 	border-bottom : 1px solid #F2F2F2;
 	border-left : 0px solid #F2F2F2;
 }
+  div[id = "middleVideoButtonDiv"]
+ {
+ 	border-top : 1px solid #F2F2F2;
+	border-right : 0px solid #F2F2F2;
+	border-bottom : 1px solid #F2F2F2;
+	border-left : 0px solid #F2F2F2;
+ }
+ div[id = "rightVideoButtonDiv"]
+ {
+ 	border-top : 1px solid #F2F2F2;
+	border-right : 0px solid #F2F2F2;
+	border-bottom : 1px solid #F2F2F2;
+	border-left : 0px solid #F2F2F2;
+	padding-left : 1px;
+ }
 
 /******************************************************/
 
