@@ -9,12 +9,16 @@
    faq_no, faq_id, faq_title, faq_content, faq_img, faq_date
 </sql>
 
+<!-- 조건검색 -->
 <sql id="faqSearch">
 	<choose>
 	<when test="option=='all'">
 		where faq_title like '%'|| #{keyWord} ||'%'
 		or faq_content like '%'|| #{keyWord} ||'%'
 	</when>
+	<!-- <otherwise>
+		where ${option} like '%'|| #{keyWord} ||'%'
+	</otherwise> -->
 	<when test="option=='title'">
 		where faq_title like '%'|| #{keyWord} ||'%'
 	</when>
@@ -24,12 +28,30 @@
 	</choose>
 </sql>
 
+<!-- 페이징 -->
+<sql id="pagingHeader">
+	select * from (
+		select ROWNUM AS fn, A.* FROM (
+</sql>
+<sql id="pagingFooter">
+		) A
+	) WHERE fn BETWEEN #{start} AND #{end}
+</sql>
+
 
 <select id="selectAll" resultType="faqDTO" parameterType="map">
+	<include refid="pagingHeader"/>
 	select <include refid="faqcolumnName"/> from bbs_faq
 	<include refid="faqSearch"/>
 	order by faq_no desc
+	<include refid="pagingFooter"/>
 </select>
+
+<select id="countArticle" resultType="int">
+	select count(*) from bbs_faq
+	<include refid="faqSearch"/>
+</select>
+
 </mapper>
 
 

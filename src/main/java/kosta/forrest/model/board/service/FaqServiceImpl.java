@@ -15,8 +15,13 @@ public class FaqServiceImpl implements FaqService{
 	private FaqDAO faqDAO;
 
 	@Override
-	public List<FaqDTO> selectAll(String option, String keyWord) {
-		return faqDAO.selectAll(option, keyWord);
+	public List<FaqDTO> selectAll(int start, int end, String option, String keyWord) {
+		return faqDAO.selectAll(start, end, option, keyWord);
+	}
+
+	@Override
+	public int countArticle(String option, String keyWord) {
+		return faqDAO.countArticle(option, keyWord);
 	}
 
 }

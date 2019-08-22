@@ -44,7 +44,7 @@
 							<li><a href="">공지/문의</a>
 								<ul>
 									<li><a href="#">공지 사항</a></li>
-									<li><a href="${pageContext.request.contextPath}/list">자주 묻는 질문</a></li>
+									<li><a href="${pageContext.request.contextPath}/faq">자주 묻는 질문</a></li>
 									<li><a href="#">1 대 1 문의</a></li>
 								</ul>
 							</li>

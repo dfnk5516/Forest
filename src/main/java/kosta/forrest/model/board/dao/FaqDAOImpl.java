@@ -17,12 +17,23 @@ public class FaqDAOImpl implements FaqDAO {
 	private SqlSession session;
 
 	@Override
-	public List<FaqDTO> selectAll(String option, String keyWord) {
+	public List<FaqDTO> selectAll(int start, int end, String option, String keyWord) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("option", option);
+		map.put("keyWord", keyWord);
+		return session.selectList("faqMapper.selectAll", map);
+	}
+
+	@Override
+	public int countArticle(String option, String keyWord) {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("option", option);
 		map.put("keyWord", keyWord);
-		return session.selectList("faqMapper.selectAll", map);
+		return session.selectOne("faqMapper.countArticle", map);
 	}
 	
 }
