@@ -13,15 +13,17 @@ public interface UserService {
 
 	List<UserDTO> findUserListByAddress(String address);
 
-	UserDTO login(UserDTO memberVO);
+	UserDTO login(UserDTO userDTO);
 
 	int getUserCount();
 
-	void updateUser(UserDTO vo);
+	void updateUser(UserDTO userDTO);
 
-	void registerUser(UserDTO vo);
+	void registerUser(UserDTO userDTO);
 
 	String idcheck(String id);
 	
 	List<AuthorityDTO> selectAuthorityByUsername(String username);
+
+	//UserDTO findUserById(String id, String pwd);
 }

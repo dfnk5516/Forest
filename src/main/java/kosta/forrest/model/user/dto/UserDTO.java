@@ -18,10 +18,9 @@ public class UserDTO {
 	private String userEnroll; //가입일
 	private String userTel; //연락처
 	private String userAddr; //주소
-	private String userGrade; //등급(관리자로 등급 올려줄 때 사용)
 	private int qnaNo; //1:1게시판 - 글 번호(qna_no)
 	
-	private String userType;
+	private String userGrade;
 
 	
 }

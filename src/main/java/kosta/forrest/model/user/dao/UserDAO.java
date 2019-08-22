@@ -6,8 +6,6 @@ import kosta.forrest.model.user.dto.UserDTO;
 
 public interface UserDAO {
 
-	UserDTO findUserById(String id);
-
 	List<String> getAddressList();
 
 	List<UserDTO> findUserListByAddress(String address);
@@ -20,6 +18,12 @@ public interface UserDAO {
 
 	void registerUser(UserDTO userDTO);
 
-	int idcheck(String id);
+	String idcheck(String id);
+
+	UserDTO findUserById(String id);
+
+	UserDTO loginConfirm(String id, Object pwd);
+	
+	
 
 }

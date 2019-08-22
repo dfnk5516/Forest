@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kosta.forrest.model.user.dto.UserDTO;
@@ -12,23 +14,23 @@ import kosta.forrest.model.user.dto.UserDTO;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-	@Resource	
-	private SqlSessionTemplate sqlSession;
+	@Autowired	
+	private SqlSession sqlSession;
 	
 	@Override
-	public UserDTO findUserById(String id){
+	public UserDTO findUserById(String id) {
 		return sqlSession.selectOne("userMapper.findUserById", id);
 	}
 	@Override
-	public List<String> getAddressList(){
+	public List<String> getAddressList() {
 		return sqlSession.selectList("userMapper.getAddressList");
 	}
 	@Override
-	public List<UserDTO> findUserListByAddress(String address){
-		return sqlSession.selectList("userMapper.findUserListByAddress",address);
+	public List<UserDTO> findUserListByAddress(String address) {
+		return sqlSession.selectList("userMapper.findUserListByAddress", address);
 	}
 	@Override
-	public UserDTO login(UserDTO userDTO){
+	public UserDTO login(UserDTO userDTO) { 
 		return sqlSession.selectOne("userMapper.login", userDTO);
 	}
 	@Override
@@ -44,8 +46,12 @@ public class UserDAOImpl implements UserDAO {
 		sqlSession.insert("userMapper.registerUser", userDTO);			
 	}
 	@Override
-	public int idcheck(String id) {
+	public String idcheck(String id) {
 		return sqlSession.selectOne("userMapper.idcheck", id);				
+	}
+	@Override
+	public UserDTO loginConfirm(String id, Object pwd) {
+		return null;
 	}
 	
 

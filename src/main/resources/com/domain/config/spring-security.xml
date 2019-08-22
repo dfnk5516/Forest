@@ -16,9 +16,9 @@
 	<!-- <sec:intercept-url pattern="/**"  access="permitAll"/> -->
 	<sec:form-login
 		login-page="/user/loginForm"
-		login-processing-url="/j_spring_security_check"
-		username-parameter="id"
-		password-parameter="password"
+		login-processing-url="/board/hometest"
+		username-parameter="userId"
+		password-parameter="userPwd"
 		default-target-url="/"
 		authentication-failure-handler-ref="userAuthenticationFailureHandler"
 	/>

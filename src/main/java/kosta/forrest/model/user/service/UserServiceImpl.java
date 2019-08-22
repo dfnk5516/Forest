@@ -22,13 +22,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private AuthoritiesDAO authoritiesDAO;
 	/*
-	 * 비밀번호 암호화를 위한 객체를 주입받는다 
-	 */
+	 * 비밀번호 암호화를 위한 객체를 주입받는다 */
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
+	
 	@Override
-	public UserDTO findUserById(String id) {		
+	public UserDTO findUserById(String id) {	 
 		return userDAO.findUserById(id);
 	}
 
@@ -56,34 +56,34 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(UserDTO userDTO) {
 		userDAO.updateUser(userDTO);
 	}
+	
     @Transactional
 	@Override
 	public void registerUser(UserDTO userDTO) {
     	//비밀번호 암호화
-    	//System.out.println("vo.getPassword() : " + vo.getPassword());
+    	//System.out.println("userDTO.getPassword() : " + userDTO.getUserPwd());
         String encodedPassword = passwordEncoder.encode(userDTO.getUserPwd());
         //System.out.println("encodedPassword : " + encodedPassword);
         userDTO.setUserPwd(encodedPassword);
-        userDAO.registerUser(userDTO);		
+        userDAO.registerUser(userDTO);
 		
 		//권한등록
-		/*AuthorityVO authority=new AuthorityVO(vo.getId(),"ROLE_MEMBER");
-		memberDAO.registerRole(authority);*/
+		/*AuthorityDTO authority = new AuthorityDTO(userDTO.getuserId(),"ROLE_MEMBER");
+		userDAO.registerRole(authority);*/
 		authoritiesDAO.insertAuthority(new AuthorityDTO(userDTO.getUserId(), Constants.ROLE_MEMBER));
-		if(userDTO.getUserType().equals("1")) {
+		if(userDTO.getUserGrade().equals("1")) { //권한 부분을 user_type에서 userGrade로 변경
 			authoritiesDAO.insertAuthority(new AuthorityDTO(userDTO.getUserId(), Constants.ROLE_ADMIN));
-		}			
+		}
 	}
 
 	@Override
 	public String idcheck(String id) {
-		int count = userDAO.idcheck(id);
-		return (count==0) ? "ok":"fail"; 	
+		String count = userDAO.idcheck(id); 
+		return (count == null) ? "ok" : "fail"; 	
 	}
 
 	@Override
 	public List<AuthorityDTO> selectAuthorityByUsername(String username) {
-		
 		return authoritiesDAO.selectAuthorityByUserName(username);
 	}
 

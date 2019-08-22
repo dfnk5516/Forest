@@ -1,9 +1,15 @@
 <%@ include file="../include/top.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>For Rest : 휴양림 예약 사이트</title>
+	<script type="text/javascript">
+			function logout() {
+				document.getElementById("logoutFrm").submit();
+			}
+	</script>
 	</head>
 	<body class="homepage">
 		<!-- Header Wrapper -->
@@ -12,8 +18,8 @@
 			<div id="banner">
 				<section class="container">
 					<h2>ForRest</h2>
-					<span style="text-shadow : 2px 2px #6C6517;">휴가 계획을 세우고 계신가요?</span>
-					<p style="text-shadow : 2px 2px #6C6517;">최적의 휴식처를 찾아 드립니다.</p>
+					<span style="text-shadow: 2px 2px #6C6517;">휴가 계획을 세우고 계신가요?</span>
+					<p style="text-shadow: 2px 2px #6C6517;">최적의 휴식처를 찾아 드립니다.</p>
 				</section>
 			</div>
 		</div>
@@ -35,13 +41,11 @@
 					<div class="6u">
 						<h3>전국의 자연 휴양림을 한 곳에서!</h3>
 						<p>자연과 함께하는 힐링 타임! 자연 휴양림 속에서 휴식과 즐거움을 누려보아요. </p>
-						<a href="loginForm" class="button">로그인</a>
-						<a href="loginForm" class="button">회원가입</a>
 					</div>
 				</div>
 			</section>
 		</div>
-		
+	
 		<!-- Section Two -->
 		<div class="wrapper style5">
 			<section id="team" class="container">
@@ -73,7 +77,7 @@
 				</div>
 			</section>
 		</div>
-		
+	
 		<!-- Section Three -->
 		<div class="wrapper style4">
 			<section class="container">
@@ -112,7 +116,7 @@
 				</div>
 			</section>
 		</div>
-		
+	
 		<!-- Section Four -->
 		<div class="wrapper style3">
 			<section class="container">
@@ -136,7 +140,6 @@
 				</div>
 			</section>
 		</div>
-
 	</body>
 </html>
 <%@ include file="../include/footer.jsp"%>
