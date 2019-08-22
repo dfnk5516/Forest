@@ -710,89 +710,89 @@
 </head>
 <body id = "tavelInformationBody" onload = "travelInformationInit()" >
 	<!-- Main -->
-	<div id="main" class="wrapper style2 clearfix">
-				<div id = "videoContainerDiv" class = "floatDiv" style = "width : 20%; height : 100%; vertical-align: top;" >
-					<div id = "ScrollMarginDiv" style = "width : 100%; min-width : 324px;"></div>
-					<div id = "videoControllerDiv" style = "width : 100%; min-width : 324px; text-align : center;">
-						<div id = "videoController" style = "padding-left: 7.5%;  padding-right:7.5%;">
-							<div><iframe id = "videoFrame" style = "width : 100%; height : 200px" src="" ></iframe></div>
-							<div class = "clearfix">
-								<div class = "floatDiv" style = "width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
-									<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
-								</div>
-								<div class = "floatDiv" style = " width : 45%; vertical-align: middle;" id = "middleVideoButtonDiv">
-									<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
-								</div>
-								<div class = "floatDiv" style = " width : 10%; vertical-align: middle;" id = "rightVideoButtonDiv">
-									<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px;">
-								</div>
-							</div>
-							<div id = "videoListDiv" style = "width : 100%; border: 1px solid #1E1E1E">
-								<ul id = "videoListUl" style = "width : 100%; height : auto;"></ul>
-							</div>
+	<div id="main" class="wrapper style2 clearfix" style = "vertical-align: top;">
+		<div id = "videoContainerDiv" class = "floatDiv" style = "width : 20%; height : 100%; vertical-align: top;" >
+			<div id = "ScrollMarginDiv" style = "width : 100%; "></div>
+			<div id = "videoControllerDiv" style = "width : 100%;  text-align : center;">
+				<div id = "videoController" style = "padding-left: 7.5%;  padding-right:7.5%;">
+					<div><iframe id = "videoFrame" style = "width : 100%; height : 200px" src="" ></iframe></div>
+					<div class = "clearfix">
+						<div class = "floatDiv" style = "width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
+							<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
+						</div>
+						<div class = "floatDiv" style = " width : 45%; vertical-align: middle;" id = "middleVideoButtonDiv">
+							<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
+						</div>
+						<div class = "floatDiv" style = " width : 10%; vertical-align: middle;" id = "rightVideoButtonDiv">
+							<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px;">
 						</div>
 					</div>
+					<div id = "videoListDiv" style = "width : 100%; border: 1px solid #1E1E1E">
+						<ul id = "videoListUl" style = "width : 100%; height : auto;"></ul>
+					</div>
 				</div>
-				<div class = "floatDiv" style = "width : 60%; height : 100%;" id = "travelInformation">
-					<header class="major">
-						<div id = "travelInformationHeader">여행 정보 검색</div>
-					</header>				
-					<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
-					<form name="searchForm" id = "searchForm" style = "width : 100%">
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-						<div id = "radioGroup">
-							<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
-							<input type="radio" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
-						</div>
-						<p>
-						<div id = "searchGroup">
-							<div id = "select-box-wrapper" style = "width : 100%">
-								<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
-									<option>시/도 선택</option>
-									<c:forEach items="${cityList}" var="city">
-										<option>${city}</option>
-									</c:forEach>
-								</select>
-								<select id="forestSelect" style = "width : 54%" onchange="forestSelectChange()">
-									<option>산림휴양시설 선택</option>
-								</select>
-							</div>
+			</div>
+		</div>
+		<div class = "floatDiv" style = "width : 60%; height : 100%;" id = "travelInformation">
+			<header class="major">
+				<div id = "travelInformationHeader">여행 정보 검색</div>
+			</header>				
+			<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
+			<form name="searchForm" id = "searchForm" style = "width : 100%">
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				<div id = "radioGroup">
+					<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
+					<input type="radio" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
+				</div>
+				<p>
+				<div id = "searchGroup">
+					<div id = "select-box-wrapper" style = "width : 100%">
+						<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
+							<option>시/도 선택</option>
+							<c:forEach items="${cityList}" var="city">
+								<option>${city}</option>
+							</c:forEach>
+						</select>
+						<select id="forestSelect" style = "width : 54%" onchange="forestSelectChange()">
+							<option>산림휴양시설 선택</option>
+						</select>
+					</div>
 						
-							<div id = "search-box-wrapper" style = "width : 100%">
-								<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
-								<button id = "search-box-button2">&#128269;</button>
-							</div>
-						</div>
-					</form>
+					<div id = "search-box-wrapper" style = "width : 100%">
+						<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
+						<button id = "search-box-button2">&#128269;</button>
+					</div>
+				</div>
+			</form>
 				
-					<div id = "checkBoxTopDiv" style = "width : 100%;" >
-						<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%;">
-							<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
-							<input type="checkbox" id = "sights"/>관광지 보기
-							<input type="checkbox" id = "festival"/>행사 보기
-						</div>
-						
-					</div>
-					<!-- 지도 -->	
-					<div id="container" style = "width: 100%; height: 650px;">
-						<div id="rvWrapper">
-							<div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
-							<div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>
-						</div>
-    					<div id="mapWrapper">
-        					<div id="map" style="width:100%;height:100%;"></div> <!-- 지도를 표시할 div 입니다 -->
-        					<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
-    					</div>
-					</div>
-					<div id = "checkBoxBottomDiv" style = "width : 100%;" class = "clearfix" >
-						<div id = "checkBoxGroup2" style = "text-align : right; vertical-align: middle; width : 100%;">
-							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
-							<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
-							<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
-						</div>
-					</div>
+			<div id = "checkBoxTopDiv" style = "width : 100%;" >
+				<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%;">
+					<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
+					<input type="checkbox" id = "sights"/>관광지 보기
+					<input type="checkbox" id = "festival"/>행사 보기
 				</div>
-				<div class = "floatDiv" style = "width : 20%; height : 100%;" id = "aa"></div>
+						
+			</div>
+					<!-- 지도 -->	
+			<div id="container" style = "width: 100%; height: 650px;">
+				<div id="rvWrapper">
+					<div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+					<div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>
+				</div>
+    			<div id="mapWrapper">
+        			<div id="map" style="width:100%;height:100%;"></div> <!-- 지도를 표시할 div 입니다 -->
+        			<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
+    			</div>
+			</div>
+			<div id = "checkBoxBottomDiv" style = "width : 100%;" class = "clearfix" >
+				<div id = "checkBoxGroup2" style = "text-align : right; vertical-align: middle; width : 100%;">
+					<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
+					<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
+					<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
+				</div>
+			</div>
+		</div>
+		<div class = "floatDiv" style = "width : 20%; height : 100%;" id = "aa"></div>
 
 	</div>
 </body>

@@ -41,11 +41,6 @@ public class TravelInformationServiceImpl implements TravelInformationService
 		return dao.selectForest();
 	}
 	
-	@Override
-	public List<VideoDTO> selectVideo()
-	{
-		return dao.selectVideo();
-	}
 	
 	@Override
 	public int insertSights(SightsDTO dto) {
@@ -53,17 +48,70 @@ public class TravelInformationServiceImpl implements TravelInformationService
 	}
 	
 	@Override
-	public List<SightsDTO> selectSightsAll() {
-		return dao.selectSightsAll();
+	public List<SightsDTO> selectSights()
+	{
+		List<SightsDTO> list = dao.selectSights();
+		for(SightsDTO dto : list)
+		{	
+			dto.setSightsName(toJs(dto.getSightsName()));
+			dto.setSightsRegion(toJs(dto.getSightsRegion()));
+			dto.setSightsLocation(toJs(dto.getSightsLocation()));
+			dto.setSightsDescription(toJs(dto.getSightsDescription()));
+			dto.setSightsHomepage(toJs(dto.getSightsHomepage()));
+			dto.setSightsLatitude(toJs(dto.getSightsLatitude()));
+			dto.setSightsLongitude(toJs(dto.getSightsLongitude()));
+		}
+		
+		return list;
 	}
 	
 	@Override
-	public List<FestivalDTO> festivalSelectAll() {
-		return dao.festivalSelectAll();
-	}
-	@Override
-	public List<VideoDTO> videoSelectAll()
+	public List<FestivalDTO> selectFestival()
 	{
-		return dao.videoSelectAll();
+		List<FestivalDTO> list = dao.selectFestival();
+		for(FestivalDTO dto : list)
+		{
+			dto.setFestivalName(toJs(dto.getFestivalName()));
+			dto.setFestivalLocation(toJs(dto.getFestivalLocation()));
+			dto.setFestivalAddress(toJs(dto.getFestivalAddress()));
+			dto.setFestivalDescription(toJs(dto.getFestivalDescription()));
+			dto.setFestivalStart(toJs(dto.getFestivalStart()));
+			dto.setFestivalEnd(toJs(dto.getFestivalEnd()));
+			dto.setFestivalPhone(toJs(dto.getFestivalPhone()));
+			dto.setFestivalAgency(toJs(dto.getFestivalAgency()));
+			dto.setFestivalHomepage(toJs(dto.getFestivalHomepage()));
+			dto.setFestivalLatitude(toJs(dto.getFestivalLatitude()));
+			dto.setFestivalLongitude(toJs(dto.getFestivalLongitude()));
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<VideoDTO> selectVideo()
+	{
+		List<VideoDTO> list = dao.selectVideo();
+		for(VideoDTO dto : list)
+		{
+			dto.setVideoName(toJs(dto.getVideoName()));
+			dto.setVideoSrc(toJs(dto.getVideoSrc()));
+			dto.setVideoLength(toJs(dto.getVideoLength()));
+		}
+		
+		return list;
+	}
+	
+	public static String toJs(String str)
+	{
+		if(str != null)
+		{
+			return str.replaceAll("&", "&amp;")
+			.replaceAll("<", "&lt;")
+			.replaceAll(">", "&gt;")
+			.replaceAll("((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")", "$1&quot;")
+			.replaceAll("'", "&#x27;")
+			.replaceAll("/", "&#x2F;");
+		}
+		return null;
 	}
 }

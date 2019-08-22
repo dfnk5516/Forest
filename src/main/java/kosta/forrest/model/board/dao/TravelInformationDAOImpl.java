@@ -54,14 +54,6 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	}
 	
 	@Override
-	public List<VideoDTO> selectVideo()
-	{
-		List<VideoDTO> list = new ArrayList<VideoDTO>();
-		list = session.selectList("travelInformationMapper.selectVideo");
-		return list;
-	}
-	
-	@Override
 	public int insertSights(SightsDTO dto) {
 		
 		int result =  session.insert("travelInformationMapper.sightsInsert", dto);
@@ -70,26 +62,17 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	}
 	
 	@Override
-	public List<SightsDTO> selectSightsAll() {
-		
+	public List<SightsDTO> selectSights()
+	{
 		List<SightsDTO> list = new ArrayList<SightsDTO>();
 		list = session.selectList("travelInformationMapper.selectSights");
-		for(SightsDTO dto : list)
-		{
-			dto.setSightsName(toJs(dto.getSightsName()));
-			dto.setSightsRegion(toJs(dto.getSightsRegion()));
-			dto.setSightsLocation(toJs(dto.getSightsLocation()));
-			dto.setSightsDescription(toJs(dto.getSightsDescription()));
-			dto.setSightsHomepage(toJs(dto.getSightsHomepage()));
-			dto.setSightsLatitude(Double.parseDouble((toJs(dto.getSightsLatitude()+""))));
-			dto.setSightsLongitude(Double.parseDouble((toJs(dto.getSightsLongitude()+""))));
-		}
+		
 		return list;
 	}
 	
 	@Override
-	public List<FestivalDTO> festivalSelectAll() {
-		
+	public List<FestivalDTO> selectFestival()
+	{
 		List<FestivalDTO> list = new ArrayList<FestivalDTO>();
 		list = session.selectList("travelInformationMapper.selectFestival");
 		
@@ -97,21 +80,10 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	}
 	
 	@Override
-	public List<VideoDTO> videoSelectAll()
+	public List<VideoDTO> selectVideo()
 	{
 		List<VideoDTO> list = new ArrayList<VideoDTO>();
 		list = session.selectList("travelInformationMapper.selectVideo");
-		
 		return list;
-	}
-	
-	public static String toJs(String str)
-	{
-		return str.replaceAll("&", "&amp;")
-				.replaceAll("<", "&lt;")
-				.replaceAll(">", "&gt;")
-				.replaceAll("((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")", "$1&quot;")
-				.replaceAll("'", "&#x27;")
-				.replaceAll("/", "&#x2F;");
 	}
 }

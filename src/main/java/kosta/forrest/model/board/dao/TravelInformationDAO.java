@@ -14,10 +14,8 @@ public interface TravelInformationDAO
 	List<String> selectCity();
 	List<ForestDTO> selectForest();
 	List<VideoDTO> selectVideo();
-	List<SightsDTO> selectSightsAll();
+	List<SightsDTO> selectSights();
 	int insertSights(SightsDTO dto);
-	List<FestivalDTO> festivalSelectAll();
-	List<VideoDTO> videoSelectAll();
-	
+	List<FestivalDTO> selectFestival();	
 }
 		

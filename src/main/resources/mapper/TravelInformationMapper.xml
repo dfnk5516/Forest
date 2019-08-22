@@ -33,7 +33,7 @@
 	</insert>
 	
 	<select id="selectSights" resultType="sightsDTO">
-		SELECT * FROM SIGHTS
+		SELECT * FROM SIGHTS ORDER BY SIGHTS_NAME
 	</select>
 	
 	<select id="selectFestival" resultType="festivalDTO">

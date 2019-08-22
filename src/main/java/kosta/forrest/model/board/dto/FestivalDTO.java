@@ -22,6 +22,6 @@ public class FestivalDTO {
 	private String festivalPhone;
 	private String festivalAgency;
 	private String festivalHomepage;
-	private double festivalLatitude;
-	private double festivalLongitude;
+	private String festivalLatitude;
+	private String festivalLongitude;
 }

@@ -14,8 +14,7 @@ public interface TravelInformationService
 	public List<String> selectForestByName(String text);
 	public List<ForestDTO> selectForest();
 	List<VideoDTO> selectVideo();
-	public List<SightsDTO> selectSightsAll();
+	public List<SightsDTO> selectSights();
 	int insertSights(SightsDTO dto);
-	List<FestivalDTO> festivalSelectAll();
-	List<VideoDTO> videoSelectAll();
+	List<FestivalDTO> selectFestival();
 }

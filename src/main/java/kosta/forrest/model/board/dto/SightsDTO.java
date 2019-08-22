@@ -18,8 +18,8 @@ public class SightsDTO
 	private String sightsDescription;
 	private String sightsLocation;
 	private String sightsHomepage;
-	private double sightsLatitude;
-	private double sightsLongitude;
+	private String sightsLatitude;
+	private String sightsLongitude;
 }
 
 

@@ -67,15 +67,17 @@ public class TravelInformationAjaxController
 	@RequestMapping("/sightsSelect")
 	public List<SightsDTO> sightsSelect()
 	{
-		return service.selectSightsAll();
+		return service.selectSights();
 	}
+	
 	@RequestMapping("/festivalSelect")
 	public List<FestivalDTO> festivalSelect(){
-		return service.festivalSelectAll();
+		return service.selectFestival();
 	}
+	
 	@RequestMapping("/videoSelect")
 	public List<VideoDTO> videoSelect()
 	{
-		return service.videoSelectAll();
+		return service.selectVideo();
 	}
 }

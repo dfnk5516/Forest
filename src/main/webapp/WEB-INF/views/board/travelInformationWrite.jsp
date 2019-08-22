@@ -19,19 +19,7 @@
 	
 	function sightsListInit()
 	{
-		sightsArray = JSON.parse('${sightsArray}');
-		
-		var str = "<li style = 'width : 100%;' class = 'clearfix listLi'>";
-		str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
-		str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>관광지명</div></li>";
-		
-		for(var i = 0; i < sightsArray.length; ++i)
-		{
-			str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
-			str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
-			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
-		}
-		document.getElementById("listUl").innerHTML = str;
+		$("[name=writeType]").click();
 	}
 	
 	function sightsSelect()
@@ -145,20 +133,35 @@
 		{
 			$("#sightsName").val(replaceStr(sightsArray[index].sightsName));
 			$("#sightsCity").val(sightsArray[index].city);
-			$("#sightsRegion").val(sightsArray[index].sightsRegion);
-			$("#sightsDescription").val(sightsArray[index].sightsDescription);
-			$("#sightsLocation").val(sightsArray[index].sightsLocation);
-			$("#sightsHomepage").val(sightsArray[index].sightsHomepage);
-			$("#sightsLatitude").val(sightsArray[index].sightsLatitude);
-			$("#sightsLongitude").val(sightsArray[index].sightsLongitude);
+			$("#sightsRegion").val(replaceStr(sightsArray[index].sightsRegion));
+			$("#sightsDescription").val(replaceStr(sightsArray[index].sightsDescription));
+			$("#sightsLocation").val(replaceStr(sightsArray[index].sightsLocation));
+			$("#sightsHomepage").val(replaceStr(sightsArray[index].sightsHomepage));
+			$("#sightsLatitude").val(replaceStr(sightsArray[index].sightsLatitude));
+			$("#sightsLongitude").val(replaceStr(sightsArray[index].sightsLongitude));
 		}
 		else if($('input:radio[name=writeType]:checked').val() == "festivalRadio")
 		{
-			alert(index);
+			$("#festivalName").val(replaceStr(festivalArray[index].festivalName));
+			$("#festivalCity").val(festivalArray[index].city);
+			$("#festivalLocation").val(replaceStr(festivalArray[index].festivalLocation));
+			$("#festivalAddress").val(replaceStr(festivalArray[index].festivalAddress));
+			$("#festivalDescription").val(replaceStr(festivalArray[index].festivalDescription));
+			$("#festivalStart").val(replaceStr(festivalArray[index].festivalStart));
+			$("#festivalEnd").val(replaceStr(festivalArray[index].festivalEnd));
+			$("#festivalAgency").val(replaceStr(festivalArray[index].festivalAgency));
+			$("#festivalPhone").val(replaceStr(festivalArray[index].festivalPhone));
+			$("#festivalHomepage").val(replaceStr(festivalArray[index].festivalHomepage));
+			$("#festivalLatitude").val(replaceStr(festivalArray[index].festivalLatitude));
+			$("#festivalLongitude").val(replaceStr(festivalArray[index].festivalLongitude));
 		}
 		else if($('input:radio[name=writeType]:checked').val() == "videoRadio")
 		{
-			alert(index);
+			$("#videoName").val(replaceStr(videoArray[index].videoName));
+			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
+			$("#videoLength").val(replaceStr(videoArray[index].videoLength));
+			document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + videoArray[index].videoSrc + "?autoplay=1&loop=1&rel=0&controls=1";
+			//$("#videoFrame").src(replaceStr(videoArray[index].videoSrc));
 		}
 	}
 	
@@ -420,25 +423,29 @@
 						<form id = "videoForm" method = "post" action = "" style = "height : 100%">
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<ul id = "videoTableUl" style = "width : 100%; height : 100%">
-								<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<li class = "clearfix" style = "width : 100%; height : 15%;">
 									<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
 									<div class = "floatDiv" style = "width : 80%; height : 100%">
 										<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
 									</div>
 								</li>
-								<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<li class = "clearfix" style = "width : 100%; height : 15%;">
 									<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
 									<div class = "floatDiv" style = "width : 80%; height : 100%">
 										<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
 									</div>
 								</li>
-								<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<li class = "clearfix" style = "width : 100%; height : 15%;">
 									<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
 									<div class = "floatDiv" style = "width : 80%; height : 100%">
 										<input type = "text" id="videoLength" class = "textBox" style = "width : 100%; height : 100%;">
 									</div>
 								</li>
-								<li style = "width : 100%; height : 70%;"></li>
+								<li style = "width : 100%; height : 55%;">
+									<div class = "floatDiv" style = "width : 100%; height : 100%">
+									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
+									</div>
+								</li>
 							</ul>
 						</form>
 					</div>
