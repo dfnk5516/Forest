@@ -677,7 +677,10 @@
  	 			var currentScrollPercent = (maxScroll - currentScroll) / maxScroll;
  	 			
  	 			var gap = $("#ScrollMarginDiv").height() - ($("#travelInformation").height() - $("#videoControllerDiv").height()) * (1 - currentScrollPercent);
- 	 			 $("#ScrollMarginDiv").animate({height: "-=" + gap}, 1000);
+ 	 			if($("#videoControllerDiv").height() < $("#main").height())
+ 	 			{
+	 	 			$("#ScrollMarginDiv").animate({height: "-=" + gap}, 1000);
+ 	 			}
  	 		}
  		});
  		
@@ -710,7 +713,7 @@
 <body id = "tavelInformationBody" onload = "travelInformationInit()" >
 	<!-- Main -->
 	<div id="main" class="wrapper style2 clearfix" style = "vertical-align: top;">
-		<div id = "videoContainerDiv" class = "floatDiv" style = "width : 20%; height : 100%; vertical-align: top;" >
+		<div id = "videoContainerDiv" class = "floatDiv" style = "width : 25%; height : 100%; vertical-align: top;" >
 			<div id = "ScrollMarginDiv" style = "width : 100%; "></div>
 			<div id = "videoControllerDiv" style = "width : 100%;  text-align : center;">
 				<div id = "videoController" style = "padding-left: 7.5%;  padding-right:7.5%;">
@@ -732,7 +735,7 @@
 				</div>
 			</div>
 		</div>
-		<div class = "floatDiv" style = "width : 60%; height : 100%;" id = "travelInformation">
+		<div class = "floatDiv" style = "width : 70%; height : 100%;" id = "travelInformation">
 			<header class="major">
 				<div id = "travelInformationHeader">여행 정보 검색</div>
 			</header>				
@@ -791,7 +794,7 @@
 				</div>
 			</div>
 		</div>
-		<div class = "floatDiv" style = "width : 20%; height : 100%;" id = "aa"></div>
+		<div class = "floatDiv" style = "width : 5%; height : 100%;" id = "aa"></div>
 
 	</div>
 </body>

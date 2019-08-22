@@ -18,6 +18,17 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	@Autowired
 	private SqlSession session;
 	
+////////////////////////////////////////////////////////////////////////	
+	@Override
+	public List<String> selectCity()
+	{
+		
+		List<String> list = new ArrayList<String>();
+		list = session.selectList("travelInformationMapper.selectCity");
+		
+		return list;
+	}
+////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<ForestDTO> selectForestByCity(String city)
 	{
@@ -34,17 +45,6 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 		list = session.selectList("travelInformationMapper.selectForestByName", text);
 		return list;
 	}
-	
-	@Override
-	public List<String> selectCity()
-	{
-		
-		List<String> list = new ArrayList<String>();
-		list = session.selectList("travelInformationMapper.selectCity");
-		
-		return list;
-	}
-
 	@Override
 	public List<ForestDTO> selectForest()
 	{
@@ -52,7 +52,7 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 		list = session.selectList("travelInformationMapper.selectForest");
 		return list;
 	}
-	
+////////////////////////////////////////////////////////////////////////
 	@Override
 	public int insertSights(SightsDTO dto) {
 		
@@ -60,7 +60,7 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 		System.out.println(result);
 		return result;
 	}
-	
+////////////////////////////////////////////////////////////////////////	
 	@Override
 	public List<SightsDTO> selectSights()
 	{
@@ -85,5 +85,21 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 		List<VideoDTO> list = new ArrayList<VideoDTO>();
 		list = session.selectList("travelInformationMapper.selectVideo");
 		return list;
+	}
+////////////////////////////////////////////////////////////////////////
+	@Override
+	public int deleteSights(String sightsName)
+	{
+		return session.delete("travelInformationMapper.deleteSights", sightsName);
+	}
+	@Override
+	public int deleteFestival(String festivalName)
+	{
+		return session.delete("travelInformationMapper.deleteFestival", festivalName);
+	}
+	@Override
+	public int deleteVideo(String videoName)
+	{
+		return session.delete("travelInformationMapper.deleteVideo", videoName);
 	}
 }

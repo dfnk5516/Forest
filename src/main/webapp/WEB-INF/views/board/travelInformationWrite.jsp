@@ -17,6 +17,7 @@
 	var festivalArray;
 	var videoArray;
 	var selectedLi;
+	var selectedLiIndex;
 	
 	function sightsListInit()
 	{
@@ -35,9 +36,11 @@
 				if(selectedLi != null)
 				{
 					$(selectedLi).removeClass("selectedLi");
+					selectedLiIndex = null;
 				}
 				sightsArray = result;
 				addList("sights");
+				textBoxInit();
 			} ,
 			error : function(err)
 			{
@@ -57,9 +60,11 @@
 				if(selectedLi != null)
 				{
 					$(selectedLi).removeClass("selectedLi");
+					selectedLiIndex = null;
 				}
 				festivalArray = result;
 				addList("festival");
+				textBoxInit();
 			},
 			error : function(err)
 			{
@@ -81,9 +86,11 @@
 				if(selectedLi != null)
 				{
 					$(selectedLi).removeClass("selectedLi");
+					selectedLiIndex = null;
 				}
 				videoArray = result;
 				addList("video");
+				textBoxInit();
 			},
 			error : function(err)
 			{
@@ -148,14 +155,14 @@
 		if(selectedLi != null)
 		{
 			$(selectedLi).removeClass("selectedLi");
+			selectedLiIndex = null;
 		}
 		selectedLi = selected;
+		selectedLiIndex = index;
 		$(selectedLi).addClass("selectedLi");
 		
 		if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
 		{
-			
-			
 			$("#sightsName").val(replaceStr(sightsArray[index].sightsName));
 			$("#sightsCity").val(sightsArray[index].city);
 			$("#sightsRegion").val(replaceStr(sightsArray[index].sightsRegion));
@@ -186,6 +193,40 @@
 			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
 			$("#videoLength").val(replaceStr(videoArray[index].videoLength));
 			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&version=3&loop=1&playlist=" + replaceStr(videoArray[index].videoSrc);
+		}
+	}
+	
+	function textBoxInit()
+	{
+		{
+			$("#sightsName").val("");
+			$("#sightsCity option:eq(0)").prop("selected", true);
+			$("#sightsRegion").val("");
+			$("#sightsDescription").val("");
+			$("#sightsLocation").val("");
+			$("#sightsHomepage").val("");
+			$("#sightsLatitude").val("");
+			$("#sightsLongitude").val("");
+		}
+		{
+			$("#festivalName").val("");
+			$("#festivalCity option:eq(0)").prop("selected", true);
+			$("#festivalLocation").val("");
+			$("#festivalAddress").val("");
+			$("#festivalDescription").val("");
+			$("#festivalStart").val("");
+			$("#festivalEnd").val("");
+			$("#festivalAgency").val("");
+			$("#festivalPhone").val("");
+			$("#festivalHomepage").val("");
+			$("#festivalLatitude").val("");
+			$("#festivalLongitude").val("");
+		}
+		{
+			$("#videoName").val("");
+			$("#videoSrc").val("");
+			$("#videoLength").val("");
+			document.getElementById("videoFrame").src = "";
 		}
 	}
 	
@@ -264,6 +305,70 @@
 		}
 	}
 	
+	function deleteList()
+	{
+		if($('input:radio[name=writeType]:checked').val()=="sightsRadio"&&selectedLiIndex!=null)
+		{
+			$.ajax(
+			{
+				url: "${path}/sightsDelete", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : "${_csrf.parameterName}=${_csrf.token}&&sightsName=" + encodeURIComponent(replaceStr(sightsArray[selectedLiIndex].sightsName)),
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="festivalRadio"&&selectedLiIndex!=null)
+		{
+			$.ajax(
+			{
+				url: "${path}/festivalDelete", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : "${_csrf.parameterName}=${_csrf.token}&&festivalName=" + encodeURIComponent(replaceStr(festivalArray[selectedLiIndex].festivalName)),
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="videoRadio"&&selectedLiIndex!=null)
+		{
+			$.ajax(
+			{
+				url: "${path}/videoDelete", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : "${_csrf.parameterName}=${_csrf.token}&&videoName=" + encodeURIComponent(replaceStr(videoArray[selectedLiIndex].videoName)),
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+	}
+	
 	function replaceStr(string)
 	{
 		if(string != null)
@@ -291,15 +396,24 @@
 			<div class = "floatDiv" style = "width : 100%;  height : 900px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
 				<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 10%">
 					<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
-						<input type="radio" name="writeType" id="write1" value="sightsRadio" checked="checked" >관광지
-						<input type="radio" name="writeType" id="write2" value="festivalRadio" >행사
-						<input type="radio" name="writeType" id="write3" value="videoRadio" >영상
+						<label class = "radioLable">
+							<input type="radio" name="writeType" id="write1" value="sightsRadio" checked="checked" >
+							관광지<span class = "aa"></span>
+						</label>
+						<label class = "radioLable">
+							<input type="radio" name="writeType" id="write2" value="festivalRadio" >
+							행사<span class = "aa"></span>
+						</label>
+						<label class = "radioLable">
+							<input type="radio" name="writeType" id="write3" value="videoRadio" >
+							영상<span class = "aa"></span>
+						</label>
 					</div>
 					<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
 					<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
 						<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
 						<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33.3%">
-						<input type = "button" value = "삭제" class = "formButton" style = "width : 100%; height : 33.3%">
+						<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%">
 					</div>
 				</div>
 				<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 90%; overflow : hidden;">

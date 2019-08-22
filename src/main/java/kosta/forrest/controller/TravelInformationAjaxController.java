@@ -55,7 +55,7 @@ public class TravelInformationAjaxController
 	{
 		return service.selectForestByName(text);//jakson에 의해 json으로 변환되어 response
 	}
-	
+	/////////////////////////////////////////////
 	@RequestMapping("/sightsInsert")
 	public int sightsInsert(SightsDTO dto)
 	{
@@ -63,21 +63,36 @@ public class TravelInformationAjaxController
 		
 		return service.insertSights(dto);
 	}
-	
+/////////////////////////////////////////////
 	@RequestMapping("/sightsSelect")
 	public List<SightsDTO> sightsSelect()
 	{
 		return service.selectSights();
 	}
-	
 	@RequestMapping("/festivalSelect")
 	public List<FestivalDTO> festivalSelect(){
 		return service.selectFestival();
 	}
-	
 	@RequestMapping("/videoSelect")
 	public List<VideoDTO> videoSelect()
 	{
 		return service.selectVideo();
 	}
+	/////////////////////////////////////////////
+	@RequestMapping("/sightsDelete")
+	public int sightsDelete(String sightsName)
+	{
+		return service.deleteSights(sightsName);
+	}
+	@RequestMapping("/festivalDelete")
+	public int festivalDelete(String festivalName)
+	{
+		return service.deleteFestival(festivalName);
+	}
+	@RequestMapping("/videoDelete")
+	public int videoDelete(String videoName)
+	{
+		return service.deleteVideo(videoName);
+	}
+/////////////////////////////////////////////
 }

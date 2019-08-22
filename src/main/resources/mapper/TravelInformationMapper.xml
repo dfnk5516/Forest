@@ -39,4 +39,13 @@
 	<select id="selectFestival" resultType="festivalDTO">
 		SELECT * FROM FESTIVAL ORDER BY FESTIVAL_NAME
 	</select>
+	<delete id="deleteSights" parameterType="string">
+		DELETE FROM SIGHTS WHERE SIGHTS_NAME = #{_parameter}
+	</delete>
+	<delete id="deleteFestival" parameterType="string">
+		DELETE FROM FESTIVAL WHERE FESTIVAL_NAME = #{_parameter}
+	</delete>
+	<delete id="deleteVideo" parameterType="string">
+		DELETE FROM VIDEO WHERE VIDEO_NAME = #{_parameter}
+	</delete>
 </mapper>

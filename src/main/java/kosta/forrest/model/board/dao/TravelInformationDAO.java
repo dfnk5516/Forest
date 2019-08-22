@@ -9,13 +9,16 @@ import kosta.forrest.model.board.dto.VideoDTO;
 
 public interface TravelInformationDAO
 {
-	List<ForestDTO> selectForestByCity(String city);
-	List<String> selectForestByName(String text);
-	List<String> selectCity();
-	List<ForestDTO> selectForest();
-	List<VideoDTO> selectVideo();
-	List<SightsDTO> selectSights();
-	int insertSights(SightsDTO dto);
-	List<FestivalDTO> selectFestival();	
+	public List<ForestDTO> selectForestByCity(String city);
+	public List<String> selectForestByName(String text);
+	public List<String> selectCity();
+	public List<ForestDTO> selectForest();
+	public List<VideoDTO> selectVideo();
+	public List<SightsDTO> selectSights();
+	public int insertSights(SightsDTO dto);
+	public List<FestivalDTO> selectFestival();
+	public int deleteVideo(String videoName);
+	public int deleteFestival(String festivalName);
+	public int deleteSights(String sightsName);
 }
 		

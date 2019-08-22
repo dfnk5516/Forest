@@ -16,13 +16,13 @@ public class TravelInformationServiceImpl implements TravelInformationService
 {
 	@Autowired
 	private TravelInformationDAO dao;
-
+////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<String> selectCity()
 	{
 		return dao.selectCity();
 	}
-
+////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<ForestDTO> selectForestByCity(String city)
 	{
@@ -40,13 +40,13 @@ public class TravelInformationServiceImpl implements TravelInformationService
 	{
 		return dao.selectForest();
 	}
-	
-	
+////////////////////////////////////////////////////////////////////////
 	@Override
-	public int insertSights(SightsDTO dto) {
+	public int insertSights(SightsDTO dto)
+	{
 		return dao.insertSights(dto);
 	}
-	
+////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<SightsDTO> selectSights()
 	{
@@ -100,7 +100,23 @@ public class TravelInformationServiceImpl implements TravelInformationService
 		
 		return list;
 	}
-	
+////////////////////////////////////////////////////////////////////////
+	@Override
+	public int deleteSights(String sightsName)
+	{
+		return dao.deleteSights(sightsName);
+	}
+	@Override
+	public int deleteFestival(String festivalName)
+	{
+		return dao.deleteFestival(festivalName);
+	}
+	@Override
+	public int deleteVideo(String videoName)
+	{
+		return dao.deleteVideo(videoName);
+	}
+////////////////////////////////////////////////////////////////////////
 	public static String toJs(String str)
 	{
 		if(str != null)
