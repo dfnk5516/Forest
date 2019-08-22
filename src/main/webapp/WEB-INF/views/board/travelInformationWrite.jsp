@@ -16,6 +16,7 @@
 	var sightsArray;
 	var festivalArray;
 	var videoArray;
+	var selectedIndex;
 	
 	function sightsListInit()
 	{
@@ -81,23 +82,25 @@
 	
 	function addList(data)
 	{
-		var str = "<li style = 'width : 100%;' class = 'clearfix listLi'>";
-		str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
+		var str = "<li id = 'ColumnL' style = 'width : 100%;' class = 'clearfix listLi'>";
+
 
 		if(data == "sights")
 		{
-			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>관광지명</div></li>";
+			str += "<div style = 'width : 30%; height : 67.46px; overflow : hidden;' class = 'floatDiv'>순번</div>";
+			str += "<div style = 'width : 70%; height : 67.46px; overflow : hidden;' class = 'floatDiv'>관광지명</div></li>";
 				
 			for(var i = 0; i < sightsArray.length; ++i)
 			{
 				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
-				str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
-				str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
+				str += "<div style = 'width : 30%; height : 33.73px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
+				str += "<div style = 'width : 70%; height : 33.73px; overflow : hidden;' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
 			}
 			document.getElementById("listUl").innerHTML = str;
 		}
 		else if (data == "festival")
 		{
+			str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
 			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>행사명</div></li>";
 				
 			for(var i = 0; i < festivalArray.length; ++i)
@@ -110,6 +113,7 @@
 		}
 		else if (data == "video")
 		{
+			str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
 			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>영상명</div></li>";
 				
 			for(var i = 0; i < videoArray.length; ++i)
@@ -128,7 +132,9 @@
 	}
 	
 	function listItemSelect(index)
-	{		
+	{
+		
+		
 		if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
 		{
 			$("#sightsName").val(replaceStr(sightsArray[index].sightsName));
@@ -160,7 +166,7 @@
 			$("#videoName").val(replaceStr(videoArray[index].videoName));
 			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
 			$("#videoLength").val(replaceStr(videoArray[index].videoLength));
-			document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + videoArray[index].videoSrc + "?autoplay=1&loop=1&rel=0&controls=1";
+			document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&loop=1&rel=0&controls=1";
 			//$("#videoFrame").src(replaceStr(videoArray[index].videoSrc));
 		}
 	}
@@ -242,15 +248,18 @@
 	
 	function replaceStr(string)
 	{
-		var replacedStr;
-		replacedStr = string.replace(/&amp;/gi, '&');
-		replacedStr = replacedStr.replace(/&lt;/gi, '<');
-		replacedStr = replacedStr.replace(/&gt;/gi, '>');
-		replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
-		replacedStr = replacedStr.replace(/&#x27;/gi, '`');
-		replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
-		
-		return replacedStr;
+		if(string != null)
+		{
+			var replacedStr;
+			replacedStr = string.replace(/&amp;/gi, '&');
+			replacedStr = replacedStr.replace(/&lt;/gi, '<');
+			replacedStr = replacedStr.replace(/&gt;/gi, '>');
+			replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
+			replacedStr = replacedStr.replace(/&#x27;/gi, '`');
+			replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
+			return replacedStr;
+		}
+		return null;
 	}
 	
 </script>
@@ -277,14 +286,14 @@
 				</div>
 				<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 90%; overflow : hidden;">
 					<div id = "listDiv" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
-							<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
+						<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
 					</div>
 					<div id = "formContainerDiv" class = "floatDiv" style = "width : 50%; height : 100%;">
 						<form id = "sightsForm" method = "post" action = "${path}/sightsInsert" style = "height : 100%">
 							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 							<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
 								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">관광지명</div>
+									<div id = "sightsNameDiv" class = "floatDiv" style = "width : 20%; height : 100%">관광지명</div>
 									<div class = "floatDiv" style = "width : 80%; height : 100%">
 										<input type = "text" id="sightsName" class = "textBox" style = "width : 100%; height : 100%;">
 									</div>
@@ -350,7 +359,7 @@
 								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
 									<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
 									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<select id="city" class = "textBox" style = "width : 100%; height : 100%;">
+										<select id="festivalCity" class = "textBox" style = "width : 100%; height : 100%;">
 											<c:forEach items="${cityList}" var="city">
 												<option>${city}</option>
 											</c:forEach>

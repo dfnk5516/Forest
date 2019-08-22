@@ -44,4 +44,41 @@ input[type = "button"][class = "formButton"]
  	border : 0rx
  }
  
- 
+ ul[id = "listUl"]>li
+{
+	color : #1E1E1E;
+	border : 0;
+	vertical-align : middle;
+	padding : 0px;
+	margin : 0;
+	width : 100%;
+}
+
+ul[id = "listUl"]>li
+{
+	line-height : 14px;
+	font-size : 14px;
+	vertical-align : middle;
+	background-color : #F2F2F2;
+}
+
+ul[id = "listUl"]>li:focus
+{
+	background-color : #F2F2F2;
+}
+
+ul[id = "listUl"]>li:hover
+{
+	background-color : #8A8A8A;
+}
+
+ul[id = "listUl"]>li>div
+{
+	cursor : pointer;
+}
+
+ul[id = "listUl"]>li#ColumnL,
+ul[id = "listUl"]>li#ColumnL:focus
+{
+	background-color : #F2F2F2;
+}
