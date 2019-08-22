@@ -28,7 +28,7 @@ public class ForestController {
 	@Autowired
 	private LodgeService lodgeService;
 	
-	private String path="C:\\Edu\\springFileSave";
+	private String path="/resources/images/forestImg";
 	
 	@RequestMapping("/list")
 	public ModelAndView selectAll() {
@@ -124,5 +124,14 @@ public class ForestController {
 		System.out.println("ForestController의 delete호출");
 		forestService.delete(forestNo);	
 		return "redirect:list";
+	}
+	
+	//예약하기 폼이동
+	@RequestMapping("/bookingForm")
+	public ModelAndView bookingForm(int forestNo, String lodgeCode) {
+		System.out.println("ForestController의 bookingForm호출");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("forest/booking");
+		return mv;
 	}
 }

@@ -55,7 +55,10 @@
 <script type="text/javascript">
 	$(function() {
 		printLodge();
-
+		$(document).on('click', '#booking', function(){
+			location="${pageContext.request.contextPath}/forest/bookingForm?forestNo="+${dto.forestNo};
+		})
+		
 		function printLodge() {
 			$.ajax({url : "${pageContext.request.contextPath}/forest/lodgeAll",
 					type : "post",
@@ -81,7 +84,7 @@
 										+ '</td>';
 								str += '<td>' + item.lodgeTel
 										+ '</td>';
-								str += '<td><input type="button" class="btn btn-7 btn-7a icon-cog" value="예약하기" name="booking"></td>';
+								str += '<td><input type="button" class="btn btn-7 btn-7a icon-cog" value="예약하기" id="booking"></td>';
 								str += '<td><input type="button" class="btn btn-2 btn-2i" value="삭제" name='+item.lodgeCode+' id="deleteBtn2"></td>';
 								str += '</tr>';
 							});
@@ -95,6 +98,9 @@
 					}
 				})
 		}
+		$("#deleteBtn2").click(function(){
+			alert(1);
+		})
 
 		$("#updateBtn").click(function() {
 			var forestNo = $(this).prev().val();
