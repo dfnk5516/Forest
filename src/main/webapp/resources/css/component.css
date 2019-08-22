@@ -1348,7 +1348,6 @@
 }
 
 .btn-success:after {
-	content: "Success!";
 	-webkit-animation: moveUp 0.5s;
 	-moz-animation: moveUp 0.5s;
 	animation: moveUp 0.5s;

@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,6 +19,12 @@
 	<script src="${pageContext.request.contextPath}/resources/js/modernizr.custom.js"></script> 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -38,7 +46,7 @@
 	cursor: pointer;
 }
 
-ul li {
+#forestList li {
 	width: 50%;
 	float: left;
 	list-style: none;
@@ -50,16 +58,20 @@ a {
 	text-decoration: none !important;
 }
 
-ul:after {
+#forestList:after {
 	content: '';
 	display:block;
 	clear:both;
 }
 
-ul {
+#forestList {
     width: 100%;
     height: auto;
     padding: 0;
+}
+.pagination {
+	margin-left: 45%;
+	font-size: large;
 }
 
 .list_img {
@@ -103,6 +115,9 @@ $(function(){
 	$(".list_img, .list_content").click(function(){
 		var forestNo=$(this).find("[name=forestNo]").val();
 		location="${pageContext.request.contextPath}/forest/read/"+forestNo;
+		/* +"&page=${cri.page}" // 페이지 전달한다.
+		+"&perPageNum=${cri.perPageNum}"
+		; */ // 페이지 당 글수 전달
 	});
 	
 	$("#searchBtn").click(function(){
@@ -123,6 +138,17 @@ $(function(){
 		}
 		
 	})
+	// 표시하는 글수를 바꾸면 이벤트 처리를 해서 다시 리스트를 불러온다.
+	$("#perPageNum").change(function(){
+//		alert("select change!");
+		location="${pageContext.request.contextPath}/forest/list?"
+			+"page=1" // 1페이지 전달한다.
+			+"&perPageNum="+$("#perPageNum").val(); // 페이지 당 글수 전달
+	});
+	
+	$("#reloadBtn").click(function(){
+		location="${pageContext.request.contextPath}/forest/list";
+	});
 	
 	/* $("input[name='daterange']").daterangepicker({
 	    opens: 'left'
@@ -153,13 +179,28 @@ $(function(){
 <c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
 
 <div style="margin-bottom: 10px">
+	
+   	
 	<div align="center">
-		<button type="button" class="btn btn-info" id="insert" style="font-size:large;">
+		
+		<button type="button" class="btn btn-success" id="insert" style="font-size:large;">
 			휴양림정보 등록
 		</button>
+		<button type="button" class="btn btn-secondary" id="reloadBtn" style="font-size:large;">
+			새로고침
+		</button>
+		
 	</div>
 
 	<div align="center" style="padding: 10px 0px;">
+	
+	   	<span style="font-size: 20px">글 목록
+	   	<select name="perPageNum" id="perPageNum">
+	   		<option ${cri.perPageNum == 4?"selected='selected'":"" }>4</option>
+	   		<option ${cri.perPageNum == 6?"selected='selected'":"" }>6</option>
+	   		<option ${cri.perPageNum == 8?"selected='selected'":"" }>8</option>
+	   	</select>개씩 보기<br>
+	   	</span>
 		<select name="keyField" id="keyField"
 			style="height: 32px; display: inline-block; vertical-align: middle;">
 			<option value="0">--선택--</option>
@@ -169,13 +210,13 @@ $(function(){
 		<input type="text" name="keyWord" id="keyWord">
 		<!-- <input type="text" name="daterange" value="날짜선택"/> -->
 			
-		<button type="button" class="btn btn-default" id="searchBtn">
+		<button type="button" class="btn btn-default" id="searchBtn" style="font-size:20px; margin: 0">
 			<i class="glyphicon glyphicon-search"></i>
 		</button>
 	</div>
 </div>
 
-<ul>
+<ul id="forestList">
 	<c:choose>
 		<c:when test="${empty list}">
 			<tr>
@@ -232,6 +273,28 @@ $(function(){
 			
 		</c:otherwise>
 	</c:choose>
+</ul>
+<ul class="pagination">
+	<c:if test="${cri.prev }">
+	  <li>
+		<a href="${path}/forest/list?page=${cri.startPage-1 }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">
+		  <i class="glyphicon glyphicon-step-backward" ></i>
+		</a>
+	  </li>
+	</c:if>
+	<c:forEach begin="${cri.startPage }"
+		 		 end="${cri.endPage }" var="idx">
+		<li ${cri.page==idx?"class='active'":"" }>
+			  	<a href="${path}/forest/list?page=${idx }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">${idx }</a>
+		</li>
+	</c:forEach>
+	<c:if test="${cri.next }">
+		<li>
+		  	<a href="${path}/forest/list?page=${cri.endPage+1 }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">
+		  		<i class="glyphicon glyphicon-step-forward"></i>
+		  	</a>
+	  	</li>
+	</c:if>
 </ul>
 
 </body>
