@@ -235,6 +235,24 @@
 		$("#festivalForm").hide();
 		$("#videoForm").hide();
 		
+		$("#videoSearchForm").on("submit", function(e)
+		{
+			e.preventDefault();
+			var request = gapi.client.youtube.search.list(
+			{
+				part : "snippet",
+				type : "video",
+				q : encodeURIComponent($("#search").val()).replace(/%20/g, "+"),
+				maxResults : 3,
+				order : "viewCount",
+				publishedAfter : "2019-08-23T02:22:22Z"
+			});
+			request.execute(function(response)
+			{
+				console.log(response);
+			});
+		});
+		
 		$("[name=writeType]").click(function()    
 		{
 			$('input[name="writeType"]').each(function()
@@ -295,11 +313,71 @@
 				success :function(result)
 				{
 					console.log(result);
-					$("[name=writeType]").click();
+					$("[name=writeType][value=sightsRadio]").click();
+					textBoxInit();
 				} ,
 				error : function(err)
 				{
 					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="festivalRadio")
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&festivalName=" + encodeURIComponent($("#festivalName").val());
+			datas += "&&city=" + encodeURIComponent($("#festivalCity option:selected").val());
+			datas += "&&festivalLocation=" + encodeURIComponent($("#festivalLocation").val());
+			datas += "&&festivalAddress=" + encodeURIComponent($("#festivalAddress").val());
+			datas += "&&festivalDescription=" + encodeURIComponent($("#festivalDescription").val());
+			datas += "&&festivalStart=" + encodeURIComponent($("#festivalStart").val());
+			datas += "&&festivalEnd=" + encodeURIComponent($("#festivalEnd").val());
+			datas += "&&festivalAgency=" + encodeURIComponent($("#festivalAgency").val());
+			datas += "&&festivalPhone=" + encodeURIComponent($("#festivalPhone").val());
+			datas += "&&festivalHomepage=" + encodeURIComponent($("#festivalHomepage").val());
+			datas += "&&festivalLatitude=" + encodeURIComponent($("#festivalLatitude").val());
+			datas += "&&festivalLongitude=" + encodeURIComponent($("#festivalLongitude").val());
+			
+			$.ajax(
+			{
+				url: "${path}/festivalInsert", //서버주소
+				type :"post", //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=festivalRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생 : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="videoRadio")
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
+			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
+			datas += "&&videoLength=" + encodeURIComponent($("#videoLength").val());
+			
+			$.ajax(
+			{
+				url: "${path}/videoInsert", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=videoRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생 : " + err);
 				}
 			})
 		}
@@ -318,7 +396,7 @@
 				success :function(result)
 				{
 					console.log(result);
-					$("[name=writeType]").click();
+					$("[name=writeType][value=sightsRadio]").click();
 					textBoxInit();
 				} ,
 				error : function(err)
@@ -338,7 +416,7 @@
 				success :function(result)
 				{
 					console.log(result);
-					$("[name=writeType]").click();
+					$("[name=writeType][value=festivalRadio]").click();
 					textBoxInit();
 				} ,
 				error : function(err)
@@ -358,7 +436,7 @@
 				success :function(result)
 				{
 					console.log(result);
-					$("[name=writeType]").click();
+					$("[name=writeType][value=videoRadio]").click();
 					textBoxInit();
 				} ,
 				error : function(err)
@@ -385,218 +463,232 @@
 		return null;
 	}
 	
+	function videoSearchInit()
+	{
+		gapi.client.setApiKey("AIzaSyCMmyUg7rkL6cJrAvvXxpze8Vm0Vz1q8Js");
+		gapi.client.load("youtube", "v3", function()
+		{
+			
+		});
+	}
 </script>
 </head>
 <body id = "ContentBody" onload = "sightsListInit()">
 	<!-- Main -->
 	<div id="main" class="wrapper style2 clearfix">
-
-			<div class = "floatDiv"></div>
+		<div class = "floatDiv"></div>
 			
-			<div class = "floatDiv" style = "width : 100%;  height : 900px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
-				<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 10%">
-					<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
-						<label class = "radioLable">
-							<input type="radio" name="writeType" id="write1" value="sightsRadio" checked="checked" >
-							관광지<span class = "aa"></span>
-						</label>
-						<label class = "radioLable">
-							<input type="radio" name="writeType" id="write2" value="festivalRadio" >
-							행사<span class = "aa"></span>
-						</label>
-						<label class = "radioLable">
-							<input type="radio" name="writeType" id="write3" value="videoRadio" >
-							영상<span class = "aa"></span>
-						</label>
-					</div>
-					<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
-					<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
-						<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
-						<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33.3%">
-						<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%">
-					</div>
+		<div class = "floatDiv" style = "width : 100%;  height : 900px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
+			<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 10%">
+				<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
+					<label class = "radioLable">
+						<input type="radio" name="writeType" value="sightsRadio" checked="checked" >
+						관광지<span class = "aa"></span>
+					</label>
+					<label class = "radioLable">
+						<input type="radio" name="writeType" value="festivalRadio" >
+						행사<span class = "aa"></span>
+					</label>
+					<label class = "radioLable">
+						<input type="radio" name="writeType" value="videoRadio" >
+						영상<span class = "aa"></span>
+					</label>
 				</div>
-				<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 90%; overflow : hidden;">
-					<div id = "listDiv" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
-						<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
-					</div>
-					<div id = "formContainerDiv" class = "floatDiv" style = "width : 50%; height : 100%;">
-						<form id = "sightsForm" method = "post" action = "${path}/sightsInsert" style = "height : 100%">
-							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-							<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div id = "sightsNameDiv" class = "floatDiv" style = "width : 20%; height : 100%">관광지명</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="sightsName" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<select id="sightsCity" class = "textBox" style = "width : 100%; height : 100%;">
-											<c:forEach items="${cityList}" var="city">
-												<option value = "${city}">${city}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id= "sightsRegion" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 41.65%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<textarea id="sightsDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">위치</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="sightsLocation" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="sightsHomepage" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="sightsLatitude" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="sightsLongitude" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-							</ul>
-						</form>
-						
-						<form id = "festivalForm" method = "post" action = "" style = "height : 100%">
-							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-							<ul id = "festivalTableUl" style = "width : 100%; height : 100%">
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalName" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<select id="festivalCity" class = "textBox" style = "width : 100%; height : 100%;">
-											<c:forEach items="${cityList}" var="city">
-												<option>${city}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalLocation" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">주소</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalAddress" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 31.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<textarea id="festivalDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">시작일</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalStart" class ="textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">종료일</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalEnd"class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">주최기관</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalAgency" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">전화번호</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalPhone" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalHomepage" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalLatitude" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="festivalLongitude" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-							</ul>
-						</form>
-						
-						<form id = "videoForm" method = "post" action = "" style = "height : 100%">
-							<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-							<ul id = "videoTableUl" style = "width : 100%; height : 100%">
-								<li class = "clearfix" style = "width : 100%; height : 15%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 15%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li class = "clearfix" style = "width : 100%; height : 15%;">
-									<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
-									<div class = "floatDiv" style = "width : 80%; height : 100%">
-										<input type = "text" id="videoLength" class = "textBox" style = "width : 100%; height : 100%;">
-									</div>
-								</li>
-								<li style = "width : 100%; height : 55%;">
-									<div class = "floatDiv" style = "width : 100%; height : 100%">
-									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
-									</div>
-								</li>
-							</ul>
-						</form>
-					</div>
+				<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
+				<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
+					<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
+					<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33.3%">
+					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%">
 				</div>
 			</div>
+			<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 60%; overflow : hidden;">
+				<div id = "listDiv" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
+					<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
+				</div>
+				<div id = "formContainerDiv" class = "floatDiv" style = "width : 50%; height : 100%;">
+					<form id = "sightsForm" method = "post" action = "${path}/sightsInsert" style = "height : 100%">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div id = "sightsNameDiv" class = "floatDiv" style = "width : 20%; height : 100%">관광지명</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="sightsName" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<select id="sightsCity" class = "textBox" style = "width : 100%; height : 100%;">
+										<c:forEach items="${cityList}" var="city">
+											<option value = "${city}">${city}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id= "sightsRegion" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 41.65%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<textarea id="sightsDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">위치</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="sightsLocation" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="sightsHomepage" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="sightsLatitude" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="sightsLongitude" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+						</ul>
+					</form>
+						
+					<form id = "festivalForm" method = "post" action = "" style = "height : 100%">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<ul id = "festivalTableUl" style = "width : 100%; height : 100%">
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalName" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<select id="festivalCity" class = "textBox" style = "width : 100%; height : 100%;">
+										<c:forEach items="${cityList}" var="city">
+											<option>${city}</option>
+										</c:forEach>
+									</select>
+									</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalLocation" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">주소</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalAddress" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 31.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<textarea id="festivalDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">시작일</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalStart" class ="textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">종료일</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalEnd"class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">주최기관</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalAgency" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">전화번호</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalPhone" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalHomepage" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalLatitude" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="festivalLongitude" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+						</ul>
+					</form>
+						
+					<form id = "videoForm" method = "post" action = "" style = "height : 100%">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<ul id = "videoTableUl" style = "width : 100%; height : 100%">
+							<li class = "clearfix" style = "width : 100%; height : 15%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 15%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 15%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="videoLength" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li style = "width : 100%; height : 55%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
+								</div>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+			<div id = "videoSearchDiv" style = "width : 100%; height : 30%;">
+				<form id = "videoSearchForm" action = "#" style = "width :100%; height : 100%">
+					<p><input type = "text" id = "search" style = "width : 100%; height : 10%;" placeholder = "영상 검색" autocomplete = "off" class = "form-control"/></p>
+					<p><input type = "submit" value = "Search" style = "width : 100%; height : 10%;" class = "form-control btn btn-primary w100"></p>
+				</form>
 			
-			<div class = "floatDiv"></div>
+			</div>
+		</div>
+		<div class = "floatDiv"></div>
 	</div>
-	
-	
+	<script src = "https://code.jquery.com/jquery-2.1.3.min.js"/>
+	<script src = "https://apis.google.com/js/client.js?onload=videoSearchInit()"/>
 </body>
 </html>
 <%@ include file="../include/footer.jsp"%>

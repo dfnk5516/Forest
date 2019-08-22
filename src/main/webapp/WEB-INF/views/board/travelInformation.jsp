@@ -25,10 +25,10 @@
 	var sigma = 50;
 	var timer2 = null;
 
-	var mapLevel = 5;
+	var mapLevel = 12;
 	var xMaxSize = 70;
 	var yMaxSize = 85;
-	var mapCenter = new kakao.maps.LatLng(37.539753 , 128.112484); // 지도의 중심좌표
+	var mapCenter = new kakao.maps.LatLng(36.6393307 , 127.9329846); // 지도의 중심좌표
 	
 	var xSize = xMaxSize - (1 + (3 * (mapLevel - 1)));
 	var ySize = yMaxSize - (1 + (3 * (mapLevel - 1)));

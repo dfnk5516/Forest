@@ -63,6 +63,21 @@ public class TravelInformationAjaxController
 		
 		return service.insertSights(dto);
 	}
+	
+	@RequestMapping("/festivalInsert")
+	public int festivalInsert(FestivalDTO dto)
+	{
+		System.out.println(dto);
+		
+		return service.insertFestival(dto);
+	}
+	@RequestMapping("/videoInsert")
+	public int videoInsert(VideoDTO dto)
+	{
+		System.out.println(dto);
+		
+		return service.insertVideo(dto);
+	}
 /////////////////////////////////////////////
 	@RequestMapping("/sightsSelect")
 	public List<SightsDTO> sightsSelect()

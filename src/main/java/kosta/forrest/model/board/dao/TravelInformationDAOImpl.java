@@ -54,11 +54,19 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	}
 ////////////////////////////////////////////////////////////////////////
 	@Override
-	public int insertSights(SightsDTO dto) {
-		
-		int result =  session.insert("travelInformationMapper.sightsInsert", dto);
-		System.out.println(result);
-		return result;
+	public int insertSights(SightsDTO dto)
+	{
+		return session.insert("travelInformationMapper.insertSights", dto);
+	}
+	@Override
+	public int insertFestival(FestivalDTO dto)
+	{
+		return session.insert("travelInformationMapper.insertFestival", dto);
+	}
+	@Override
+	public int insertVideo(VideoDTO dto)
+	{
+		return session.insert("travelInformationMapper.insertVideo", dto);
 	}
 ////////////////////////////////////////////////////////////////////////	
 	@Override

@@ -46,6 +46,16 @@ public class TravelInformationServiceImpl implements TravelInformationService
 	{
 		return dao.insertSights(dto);
 	}
+	@Override
+	public int insertFestival(FestivalDTO dto)
+	{
+		return dao.insertFestival(dto);
+	}
+	@Override
+	public int insertVideo(VideoDTO dto)
+	{
+		return dao.insertVideo(dto);
+	}
 ////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<SightsDTO> selectSights()

@@ -13,10 +13,12 @@ public interface TravelInformationService
 	public List<ForestDTO> selectForestByCity(String city);
 	public List<String> selectForestByName(String text);
 	public List<ForestDTO> selectForest();
-	public List<VideoDTO> selectVideo();
 	public List<SightsDTO> selectSights();
-	public int insertSights(SightsDTO dto);
 	public List<FestivalDTO> selectFestival();
+	public List<VideoDTO> selectVideo();
+	public int insertSights(SightsDTO dto);
+	public int insertFestival(FestivalDTO dto);
+	public int insertVideo(VideoDTO dto);
 	public int deleteSights(String sightsName);
 	public int deleteFestival(String festivalName);
 	public int deleteVideo(String videoName);

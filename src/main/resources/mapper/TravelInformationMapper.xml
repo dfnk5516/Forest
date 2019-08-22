@@ -27,9 +27,17 @@
 		SELECT * FROM VIDEO ORDER BY VIDEO_NAME
 	</select>
 	
-	<insert id="sightsInsert" parameterType="sightsDTO">
+	<insert id="insertSights" parameterType="sightsDTO">
 		INSERT INTO SIGHTS (SIGHTS_NAME, CITY, SIGHTS_REGION, SIGHTS_DESCRIPTION, SIGHTS_LOCATION, SIGHTS_HOMEPAGE, SIGHTS_LATITUDE, SIGHTS_LONGITUDE)
 		VALUES (#{sightsName},#{city},#{sightsRegion},#{sightsDescription},#{sightsLocation},#{sightsHomepage},#{sightsLatitude},#{sightsLongitude})
+	</insert>
+	<insert id="insertFestival" parameterType="festivalDTO">
+		INSERT INTO FESTIVAL (FESTIVAL_NAME, FESTIVAL_LOCATION, FESTIVAL_START, FESTIVAL_END, FESTIVAL_DESCRIPTION, FESTIVAL_AGENCY, FESTIVAL_PHONE, FESTIVAL_HOMEPAGE, CITY, FESTIVAL_ADDRESS, FESTIVAL_LATITUDE, FESTIVAL_LONGITUDE)
+		VALUES (#{festivalName},#{festivalLocation},#{festivalStart},#{festivalEnd},#{festivalDescription},#{festivalAgency},#{festivalPhone},#{festivalHomepage},#{city},#{festivalAddress},#{festivalLatitude},#{festivalLongitude})
+	</insert>
+	<insert id="insertVideo" parameterType="videoDTO">
+		INSERT INTO VIDEO (VIDEO_NAME, VIDEO_SRC, VIDEO_LENGTH)
+		VALUES (#{videoName},#{videoSrc},#{videoLength})
 	</insert>
 	
 	<select id="selectSights" resultType="sightsDTO">
