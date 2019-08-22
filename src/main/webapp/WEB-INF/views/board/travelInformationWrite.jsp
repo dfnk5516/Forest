@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45666bcb826210a72dbea20e833f5168&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="${path}/resources/js/auth.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformationWrite.css"/>
@@ -235,24 +235,6 @@
 		$("#festivalForm").hide();
 		$("#videoForm").hide();
 		
-		$("#videoSearchForm").on("submit", function(e)
-		{
-			e.preventDefault();
-			var request = gapi.client.youtube.search.list(
-			{
-				part : "snippet",
-				type : "video",
-				q : encodeURIComponent($("#search").val()).replace(/%20/g, "+"),
-				maxResults : 3,
-				order : "viewCount",
-				publishedAfter : "2019-08-23T02:22:22Z"
-			});
-			request.execute(function(response)
-			{
-				console.log(response);
-			});
-		});
-		
 		$("[name=writeType]").click(function()    
 		{
 			$('input[name="writeType"]').each(function()
@@ -463,14 +445,41 @@
 		return null;
 	}
 	
-	function videoSearchInit()
-	{
-		gapi.client.setApiKey("AIzaSyCMmyUg7rkL6cJrAvvXxpze8Vm0Vz1q8Js");
-		gapi.client.load("youtube", "v3", function()
-		{
-			
-		});
-	}
+	function makeRequest(q) {
+        var request = gapi.client.youtube.search.list({
+          q: q,
+          part: 'snippet',
+          maxResults: 3
+        });
+
+        request.execute(function(response) {
+          $('#results').empty();
+          var resultItems = response.result.items;
+          $.each(resultItems, function(index, item) {
+            vidTitle = item.snippet.title;
+            vidThumburl =  item.snippet.thumbnails.default.url;
+            vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:204px;height:128px"></pre>';
+            $('#results').append('<pre>' + vidTitle + vidThumbimg +  '</pre>');
+          });
+        });
+      }
+
+      function init() {
+        gapi.client.setApiKey('AIzaSyCMmyUg7rkL6cJrAvvXxpze8Vm0Vz1q8Js');
+        gapi.client.load('youtube', 'v3', function() {
+          data = jQuery.parseJSON( '{ "data": [{"name":"orsons"}] }' );
+          $.each(data["data"], function(index, value) {
+            makeRequest(value["name"]);
+          });
+        });
+      }
+//{"kind":"youtube#searchListResponse","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/l8TeZ8660h0ZbJLCgcSUMv28FK4\"","nextPageToken":"CAUQAA","regionCode":"KR","pageInfo":{"totalResults":11580,"resultsPerPage":5},"items":[{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/nKPCc2DS28ORkG_Cvga4w2ZAh1c\"","id":{"kind":"youtube#video","videoId":"JEJDcGmCbyE"},"snippet":{"publishedAt":"2015-02-26T04:16:30.000Z","channelId":"UCWJBLAsdmc044JYd8S4uc2g","title":"Davichi - Turtle (다비치-거북이) 가사/듣기/3699fa","description":"거북아 그 속도론 멀리 못 도망가 게다가 그길은 더 멀고 험하잖아 상처가 아물고 다 나으면 떠나가 진심이야 그럼 그 때 보내 줄 테니까 숨지마...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/JEJDcGmCbyE/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/JEJDcGmCbyE/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/JEJDcGmCbyE/hqdefault.jpg","width":480,"height":360}},"channelTitle":"MINSANG","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/oQh-lMKPEoE3X-888F5ExbqMN_I\"","id":{"kind":"youtube#video","videoId":"KuPY3DBtveg"},"snippet":{"publishedAt":"2013-05-01T16:23:47.000Z","channelId":"UCkYiXfJHw9m-SV2w719kPXA","title":"[HD] Davichi (다비치) - Turtle (거북이) @ KPop Collection in Seoul","description":"https://www.facebook.com/pages/The-CCM-World/424562547615124 https://twitter.com/TheCCMWorld.","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/KuPY3DBtveg/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/KuPY3DBtveg/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/KuPY3DBtveg/hqdefault.jpg","width":480,"height":360}},"channelTitle":"T-ara Fansub France","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/L-bvE2O8Lx7yT6_6B0pJ6Cjrhqo\"","id":{"kind":"youtube#video","videoId":"mG59-VflY8M"},"snippet":{"publishedAt":"2013-03-29T02:19:10.000Z","channelId":"UCe52oeb7Xv_KaJsEzcKXJJg","title":"Davichi - Turtle, 다비치 - 거북이, Show champion 20130327","description":"Did you enjoy this video? Plz click \"like\"! ☞ For more awesome videos, subscribe our channels!! Daily update available! ☞ Click here for listening to other K-pop ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/mG59-VflY8M/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/mG59-VflY8M/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/mG59-VflY8M/hqdefault.jpg","width":480,"height":360}},"channelTitle":"MBCkpop","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/rEeE0tQqRYJ6c1WH5l6fPrDh3ro\"","id":{"kind":"youtube#video","videoId":"ykAoxJCZG8w"},"snippet":{"publishedAt":"2013-03-04T03:02:01.000Z","channelId":"UCweOkPb1wVVH0Q0Tlj4a5Pw","title":"[MV] Davichi(다비치)_Turtle(거북이)","description":"[MV] Davichi(다비치)_Turtle(거북이) *English subtitles are now available. :D (Please click on 'CC' button or activate 'Interactive Transcript' function) ** :: iTunes ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/ykAoxJCZG8w/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/ykAoxJCZG8w/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/ykAoxJCZG8w/hqdefault.jpg","width":480,"height":360}},"channelTitle":"1theK (원더케이)","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/-RFfAjSNJDg0YC4858B0VHEoJc8\"","id":{"kind":"youtube#video","videoId":"9yuCGsnsXqQ"},"snippet":{"publishedAt":"2018-05-14T09:03:58.000Z","channelId":"UCACsUruxumQoyZq08UB9RVw","title":"거북이","description":"Provided to YouTube by Interpark Corp 거북이 · 다비치 MYSTIC BALLAD Part.1 ℗ 2018 Interpark Released on: 2013-03-04 Auto-generated by YouTube.","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/9yuCGsnsXqQ/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/9yuCGsnsXqQ/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/9yuCGsnsXqQ/hqdefault.jpg","width":480,"height":360}},"channelTitle":"Davichi - Topic","liveBroadcastContent":"none"}}]}
+//"videoId":"
+//JEJDcGmCbyE
+//KuPY3DBtveg
+//mG59-VflY8M
+//ykAoxJCZG8w
+//9yuCGsnsXqQ
 </script>
 </head>
 <body id = "ContentBody" onload = "sightsListInit()">
@@ -678,17 +687,19 @@
 				</div>
 			</div>
 			<div id = "videoSearchDiv" style = "width : 100%; height : 30%;">
-				<form id = "videoSearchForm" action = "#" style = "width :100%; height : 100%">
-					<p><input type = "text" id = "search" style = "width : 100%; height : 10%;" placeholder = "영상 검색" autocomplete = "off" class = "form-control"/></p>
-					<p><input type = "submit" value = "Search" style = "width : 100%; height : 10%;" class = "form-control btn btn-primary w100"></p>
-				</form>
-			
+				<div id="buttons">
+      				<label> <input id="query" value='cats' type="text"/><button id="search-button" onclick="search()">Search</button></label>
+    			</div>
+   				<div id="search-container"></div>
+   				
+   			
 			</div>
 		</div>
 		<div class = "floatDiv"></div>
 	</div>
-	<script src = "https://code.jquery.com/jquery-2.1.3.min.js"/>
-	<script src = "https://apis.google.com/js/client.js?onload=videoSearchInit()"/>
+	
+    <script src="${path}/resources/js/search.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
 </body>
 </html>
 <%@ include file="../include/footer.jsp"%>
