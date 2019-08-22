@@ -43,11 +43,9 @@ ul li {
 	float: left;
 	list-style: none;
 	padding: 10px;
+	height: 220px;
 }
 
-ol li {
-	color: black;
-}
 a {
 	text-decoration: none !important;
 }
@@ -65,16 +63,21 @@ ul {
 }
 
 .list_img {
-    width: 55%;
+    width: 45%;
     display: inline-block;
 }
 
 .list_content {
-    width: 44%;
+    width: 34%;
     display: inline-block;
     vertical-align: middle;
     padding:0 10px;
 }
+.list_Btn{
+	width: 20%;
+    display: inline-block;
+}
+
 
 div.data{
 	padding:15px;	
@@ -85,6 +88,8 @@ div.data:after {
 	display:block;
 	clear:both;
 }
+
+
 #keyWord{
 	height: 32px; width:100px; display: inline-block; vertical-align: middle; border-color: black;
 }
@@ -95,7 +100,7 @@ div.data:after {
 </style>
 <script type="text/javascript">
 $(function(){
-	$(".data").click(function(){
+	$(".list_img, .list_content").click(function(){
 		var forestNo=$(this).find("[name=forestNo]").val();
 		location="${pageContext.request.contextPath}/forest/read/"+forestNo;
 	});
@@ -109,7 +114,15 @@ $(function(){
 		location="${pageContext.request.contextPath}/forest/write";
 	});
 	
-
+	$(".icon-heart").click(function(){
+		var colors=$(this).css("color");
+		if(colors=="rgb(33, 37, 41)"){
+			$(this).css("color","red");
+		} else {
+			$(this).css("color","rgb(33, 37, 41)");
+		}
+		
+	})
 	
 	/* $("input[name='daterange']").daterangepicker({
 	    opens: 'left'
@@ -178,12 +191,12 @@ $(function(){
 			<c:forEach items="${list}" var="forestDTO">
 				<li>
 				<div class="data" style="width: 100%;border-radius: 50px;" align="center">
-					<input type="hidden" name="forestNo" value="${forestDTO.forestNo}" id="no">
-					<div class = "list_img">
 					
+					<div class = "list_img">
+					<input type="hidden" name="forestNo" value="${forestDTO.forestNo}" id="no">
 					<c:if test="${!empty forestDTO.forestFilename }" >
               		<img class="image" style="width: 100%; height: 100%;border-radius: 50px;"
-              			src="${pageContext.request.contextPath}/resources/images/rest.jpg">
+              			src="${path}/resources/images/forestImg/${forestDTO.forestFilename}.jpg">
               		</c:if>
 	          		<c:if test="${empty forestDTO.forestFilename }" >
 			          <img class="imagenone" src="https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg">
@@ -191,27 +204,29 @@ $(function(){
 						
 					</div>
 					
-				<div class = "list_content">
+					
+					<div class = "list_content">
+						<input type="hidden" name="forestNo" value="${forestDTO.forestNo}" id="no">
 						<%-- <img src="${path}/views/forest/save/${forestDTO.forestFileName}"> --%>
 						<h1>${forestDTO.forestName}</h1>
-					<h3>${forestDTO.forestType}</h3>
-					<br>
-					<div style="font-weight: bold">${forestDTO.forestAddr}</div>
-					<br>
-					<div style="font-weight: bold">${forestDTO.forestTel}</div>
-					<br>
-					<div style="font-weight: bold; width: 100px;">
-					  <a href="${forestDTO.forestUrl}">
-					    <i class='fas fa-home' style="color: red;"></i> 홈페이지로이동
-					  </a>
-					</div>
+						<h3>${forestDTO.forestType}</h3>
+						<br>
+						<div style="font-weight: bold">${forestDTO.forestAddr}</div>
+						<br>
+						<div style="font-weight: bold">${forestDTO.forestTel}</div>
+						<br>
+						<div style="font-weight: bold; width: 100px;">
+						  <a href="${forestDTO.forestUrl}">
+						    <i class='fas fa-home' style="color: red;"></i> 홈페이지로이동
+						  </a>
+						</div>
 					
+					</div>
+					<div class="list_Btn">
+					<button class="btn btn-2 btn-2i icon-heart" style="font-size: 70px;">♥</button>
+					</div>
 				</div>
-				</div>
-				<section id="btn-click" style="text-align: right;">
-				<p>				
-					<button class="btn btn-2 btn-2i icon-heart">찜하기</button>
-				</p></section>
+					
 				</li>
 			</c:forEach>
 			
