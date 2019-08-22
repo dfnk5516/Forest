@@ -51,28 +51,28 @@
 			<section id="team" class="container">
 				<header class="major">
 					<h2>추천 휴양림 Top 4</h2>
-					<span class="byline">pulvinar mollis. Vestibulum sem magna, elementum vestibulum arcu</span>
+					<span class="byline">ForRest 회원님들의 인기 휴양림 Top 4! 지금 바로 예약하세요!</span>
 				</header>
 				<div class="row">
 					<div class="3u">
-						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
-						<h3>Molly Millions</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<a href="#" class="image"><img style="width: 200px; height: 200px;" src="/controller/resources/images/forestImg/휴양림3.jpg" alt=""></a>
+						<h3>박달재 자연 휴양림</h3>
+						<p>충청북도 제천시 백운면 금봉로 228</p>
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
-						<h3>Henry Dorsett Case</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<a href="#" class="image"><img style="width: 200px; height: 200px;" src="/controller/resources/images/forestImg/휴양림4.jpg" alt=""></a>
+						<h3>칼봉산 자연 휴양림</h3>
+						<p>경기도 가평군 가평읍 경반안로 454</p>
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
-						<h3>Willis Corto</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<a href="#" class="image"><img style="width: 200px; height: 200px;" src="/controller/resources/images/forestImg/휴양림5.jpg" alt=""></a>
+						<h3>장태산 자연 휴양림</h3>
+						<p>대전광역시 서구 장안로 461길</p>
 					</div>
 					<div class="3u">
-						<a href="#" class="image"><img src="/controller/resources/images/placeholder.png" alt=""></a>
-						<h3>Linda Lee</h3>
-						<p>In posuere eleifend odio quisque semper augue wisi ligula.</p>
+						<a href="#" class="image"><img style="width: 200px; height: 200px;" src="/controller/resources/images/forestImg/휴양림6.jpg" alt=""></a>
+						<h3>서운산 자연 휴양림</h3>
+						<p>경기도 안성시 금광면 배티로 185-39</p>
 					</div>
 				</div>
 			</section>
@@ -91,7 +91,7 @@
 							<li>
 								<span class="fa fa-leaf"></span>
 								<h3>빠른 여행지 검색</h3>
-								<p>Maecenas pede nisl, elementum eu, ornare ac, malesuada at, erat. Proin gravida orci porttitor.</p>
+								<p>스마트한 검색으로 빠르고 간편한 여행하기. 다가오는 황금연휴에 대비하세요!</p>
 							</li>
 						</ul>
 					</div>
@@ -100,7 +100,7 @@
 							<li>
 								<span class="fa fa-leaf"></span>
 								<h3>다양한 검색 조건</h3>
-								<p>Maecenas pede nisl, elementum eu, ornare ac, malesuada at, erat. Proin gravida orci porttitor.</p>
+								<p>당신의 취향에 맞는 휴양림, 관광지 선택! 다양하게 검색해 보세요!</p>
 							</li>
 						</ul>
 					</div>
@@ -109,7 +109,7 @@
 							<li>
 								<span class="fa fa-leaf"></span>
 								<h3>온라인 숙박 예약</h3>
-								<p>Maecenas pede nisl, elementum eu, ornare ac, malesuada at, erat. Proin gravida orci porttitor.</p>
+								<p>ForRest를 통해 쉽고 편리하게 숙소를 예약하세요! 제휴처 할인 서비스도 꼭 챙기세요!</p>
 							</li>
 						</ul>
 					</div>
