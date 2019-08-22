@@ -627,7 +627,7 @@
 				str += "<li><div class = 'paddingDiv'></div></li>";
 			}
 			document.getElementById("videoListUl").innerHTML = str;
-			document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + videoArray[currentVideo].videoSrc + "?autoplay=1&loop=1&rel=0&controls=1";
+			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + videoArray[currentVideo].videoSrc + "?autoplay=1&version=3&loop=1&playlist=" + videoArray[currentVideo].videoSrc;
 		}		
 	}
 
@@ -635,8 +635,7 @@
  	{
  		document.getElementsByName("playListIndex" + currentVideo)[0].innerText = "";
  		document.getElementsByName("playListIndex" + index)[0].innerText = playIcon;
- 		
- 		document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + videoArray[index].videoSrc + "?autoplay=1&loop=1&rel=0&controls=1";
+ 		document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + videoArray[index].videoSrc + "?autoplay=1&version=3&loop=1&playlist=" + videoArray[index].videoSrc;
  		currentVideo = index;
  	}
 
@@ -715,7 +714,7 @@
 			<div id = "ScrollMarginDiv" style = "width : 100%; "></div>
 			<div id = "videoControllerDiv" style = "width : 100%;  text-align : center;">
 				<div id = "videoController" style = "padding-left: 7.5%;  padding-right:7.5%;">
-					<div><iframe id = "videoFrame" style = "width : 100%; height : 200px" src="" ></iframe></div>
+					<div><iframe id = "videoFrame" style = "width : 100%; height : 200px" src="" allowfullscreen></iframe></div>
 					<div class = "clearfix">
 						<div class = "floatDiv" style = "width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
 							<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">

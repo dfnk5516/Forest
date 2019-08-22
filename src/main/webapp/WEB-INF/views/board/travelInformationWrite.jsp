@@ -16,7 +16,7 @@
 	var sightsArray;
 	var festivalArray;
 	var videoArray;
-	var selectedIndex;
+	var selectedLi;
 	
 	function sightsListInit()
 	{
@@ -32,6 +32,10 @@
 			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
 			success :function(result)
 			{
+				if(selectedLi != null)
+				{
+					$(selectedLi).removeClass("selectedLi");
+				}
 				sightsArray = result;
 				addList("sights");
 			} ,
@@ -50,6 +54,10 @@
 			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
 			success :function(result)
 			{
+				if(selectedLi != null)
+				{
+					$(selectedLi).removeClass("selectedLi");
+				}
 				festivalArray = result;
 				addList("festival");
 			},
@@ -70,6 +78,10 @@
 			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
 			success :function(result)
 			{
+				if(selectedLi != null)
+				{
+					$(selectedLi).removeClass("selectedLi");
+				}
 				videoArray = result;
 				addList("video");
 			},
@@ -92,7 +104,7 @@
 				
 			for(var i = 0; i < sightsArray.length; ++i)
 			{
-				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+				str += "<li onclick = 'listItemSelect(" + i + ", this)' style = 'width : 100%;' class = 'clearfix listLi'>";
 				str += "<div style = 'width : 30%; height : 33.73px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
 				str += "<div style = 'width : 70%; height : 33.73px; overflow : hidden;' class = 'floatDiv'>" + sightsArray[i].sightsName + "</div></li>";
 			}
@@ -105,7 +117,7 @@
 				
 			for(var i = 0; i < festivalArray.length; ++i)
 			{
-				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+				str += "<li onclick = 'listItemSelect(" + i + ", this)' style = 'width : 100%;' class = 'clearfix listLi'>";
 				str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
 				str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + festivalArray[i].festivalName + "</div></li>";
 			}
@@ -118,7 +130,7 @@
 				
 			for(var i = 0; i < videoArray.length; ++i)
 			{
-				str += "<li onclick = 'listItemSelect(" + i + ")' style = 'width : 100%;' class = 'clearfix listLi'>";
+				str += "<li onclick = 'listItemSelect(" + i + ", this)' style = 'width : 100%;' class = 'clearfix listLi'>";
 				str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (i + 1) + "</div>";
 				str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + videoArray[i].videoName + "</div></li>";
 			}
@@ -131,12 +143,19 @@
 		});
 	}
 	
-	function listItemSelect(index)
+	function listItemSelect(index, selected)
 	{
-		
+		if(selectedLi != null)
+		{
+			$(selectedLi).removeClass("selectedLi");
+		}
+		selectedLi = selected;
+		$(selectedLi).addClass("selectedLi");
 		
 		if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
 		{
+			
+			
 			$("#sightsName").val(replaceStr(sightsArray[index].sightsName));
 			$("#sightsCity").val(sightsArray[index].city);
 			$("#sightsRegion").val(replaceStr(sightsArray[index].sightsRegion));
@@ -166,8 +185,7 @@
 			$("#videoName").val(replaceStr(videoArray[index].videoName));
 			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
 			$("#videoLength").val(replaceStr(videoArray[index].videoLength));
-			document.getElementById("videoFrame").src = "https://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&loop=1&rel=0&controls=1";
-			//$("#videoFrame").src(replaceStr(videoArray[index].videoSrc));
+			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&version=3&loop=1&playlist=" + replaceStr(videoArray[index].videoSrc);
 		}
 	}
 	
@@ -255,7 +273,7 @@
 			replacedStr = replacedStr.replace(/&lt;/gi, '<');
 			replacedStr = replacedStr.replace(/&gt;/gi, '>');
 			replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
-			replacedStr = replacedStr.replace(/&#x27;/gi, '`');
+			replacedStr = replacedStr.replace(/&#x27;/gi, '&quot;');
 			replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
 			return replacedStr;
 		}
