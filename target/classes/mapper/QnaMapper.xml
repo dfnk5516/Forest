@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qnaMapper">
+	
+	<!-- QNA 목록 -->
+	<resultMap type="qnaDTO" id="qnalistAssociationMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="qna_place" property="qnaPlace"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_content" property="qnaContent"/>
+		<result column="qna_answer" property="qnaAnswer"/>	
+		<result column="qna_writeday" property="writeDay"/>
+		<association property="userDTO" javaType="UserDTO">
+			<id column="user_id" property="userId" />
+			<result column="user_pwd" property="userPwd"/>
+			<result column="user_name" property="userName"/>
+			<result column="user_email" property="userEmail"/>
+			<result column="user_enroll" property="userEnroll"/>
+			<result column="user_tel" property="userTel"/>	
+			<result column="user_addr" property="userAddr"/>
+			<result column="user_grade" property="userGrade"/>											
+			<result column="user_type" property="userType"/>											
+		</association>
+	</resultMap>
+	
+	<!-- 리스트 출력 -->
+	<select id="selectAll" resultMap="qnalistAssociationMap">
+		select q.qna_no, q.qna_place, s.user_name, q.qna_secret, q.qna_title, q.qna_writeday, q.qna_answer
+		from qna q join security_user s 
+		on q.qna_id=s.user_id 
+	</select>
+ 
+	<!-- 리스트 이름 검색 -->
+	<!-- <select id="selectByQnaName" parameterType="String" resultType="qnalistAssociationMap">
+		SELECT q.qna_no, q.qna_place, s.user_name, q.qna_secret, q.qna_title, q.qna_writeday 
+		FROM qna q JOIN security_user s 
+		<if test="value!=null">
+	    WHERE q.qna_id=s.user_id AND q.qna_name=('%'||#{_parameter}||'%')
+		</if> 
+	</select> -->
+	
+	<!-- 리스트 제목 검색 -->	
+	<!-- <select id="selectByQnaTitle" parameterType="String" resultType="qnalistAssociationMap">
+		SELECT q.qna_no, q.qna_place, s.user_name, q.qna_secret, q.qna_title, q.qna_writeday 
+		FROM qna q JOIN security_user s 
+		<if test="value!=null">
+	    WHERE q.qna_id=s.user_id AND q.qna_title=('%'||#{_parameter}||'%')
+		</if> 
+	</select>
+	 -->
+	<!-- 글 상세보기 -->
+	<!-- <select id="selectOne" parameterType="int" resultMap="qnaAssociationMap">
+		SELECT q.qna_no, q.qna_title, q.qna_writeday, s.user_name, q.qna_place, s.user_email, q.qna_content, q.qna_answer 
+		FROM qna q join security_user s 
+		WHERE q.qna_id=s.user_id AND q.qna_no=#{_parameter}
+	</select>
+	 -->	
+	<!-- 질문 등록 -->	
+	<!-- <insert id="qnaInsert" parameterType="qnaDTO" >
+		INSERT INTO qna (qna_no, qna_id, qna_title, qna_secret, qna_place, qna_content, qna_writeday, qna_answer)
+		VALUES (qna_seq.nextval, #{qnaId}, #{qnaTitle}, #{qnaSecret}, #{qnaPlace}, #{qnaContent}, sysdate, null)
+	</insert>
+	 -->
+	<!-- 답변 등록 -->
+	<!-- <update id="answerUpdate" parameterType="qnaDTO">
+		UPDATE qna
+		SET qna_answer=#{qnaAnswer}
+		WHERE qna_no=#{qnaNo}
+	</update> -->
+
+	<!-- 질문 수정하기 -->
+	<!-- <update id="qnaUpdate" parameterType="qnaDTO">
+	UPDATE qna
+	SET qna_title=#{qnaTitle}, qna_place=#{qnaPlace}, qna_content=#{qnaContent} 
+	WHERE qna_no = #{qnaNo}
+	</update>
+	 -->
+	<!-- 질문 삭제하기 -->	
+	<!-- <delete id="qnaDelete" parameterType="int">
+	DELETE from qna
+	WHERE qna_no=#{_parameter}
+	</delete> 
+ -->
+</mapper>
