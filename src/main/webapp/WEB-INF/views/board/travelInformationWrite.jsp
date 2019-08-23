@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${path}/resources/js/auth.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformationWrite.css"/>
@@ -365,6 +364,102 @@
 		}
 	}
 	
+	function update(){
+		if($('input:radio[name=writeType]:checked').val()=="sightsRadio"&&selectedLiIndex!=null)
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&selectedSightsName=" + encodeURIComponent(replaceStr(sightsArray[selectedLiIndex].sightsName));
+			datas += "&&sightsName=" + encodeURIComponent($("#sightsName").val());
+			datas += "&&city=" + encodeURIComponent($("#sightsCity option:selected").val());
+			datas += "&&sightsRegion=" + encodeURIComponent($("#sightsRegion").val());
+			datas += "&&sightsDescription=" + encodeURIComponent($("#sightsDescription").val());
+			datas += "&&sightsLocation=" + encodeURIComponent($("#sightsLocation").val());
+			datas += "&&sightsHomepage=" + encodeURIComponent($("#sightsHomepage").val());
+			datas += "&&sightsLatitude=" + encodeURIComponent($("#sightsLatitude").val());
+			datas += "&&sightsLongitude=" + encodeURIComponent($("#sightsLongitude").val());
+			
+			$.ajax(
+			{
+				url: "${path}/sightsUpdate", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=sightsRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="festivalRadio"&&selectedLiIndex!=null)
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&selectedFestivalName=" + encodeURIComponent(replaceStr(festivalArray[selectedLiIndex].festivalName));
+			datas += "&&festivalName=" + encodeURIComponent($("#festivalName").val());
+			datas += "&&city=" + encodeURIComponent($("#festivalCity option:selected").val());
+			datas += "&&festivalLocation=" + encodeURIComponent($("#festivalLocation").val());
+			datas += "&&festivalAddress=" + encodeURIComponent($("#festivalAddress").val());
+			datas += "&&festivalDescription=" + encodeURIComponent($("#festivalDescription").val());
+			datas += "&&festivalStart=" + encodeURIComponent($("#festivalStart").val());
+			datas += "&&festivalEnd=" + encodeURIComponent($("#festivalEnd").val());
+			datas += "&&festivalPhone=" + encodeURIComponent($("#festivalPhone").val());
+			datas += "&&festivalAgency=" + encodeURIComponent($("#festivalAgency").val());
+			datas += "&&festivalHomepage=" + encodeURIComponent($("#festivalHomepage").val());
+			datas += "&&festivalLatitude=" + encodeURIComponent($("#festivalLatitude").val());
+			datas += "&&festivalLongitude=" + encodeURIComponent($("#festivalLongitude").val());
+			
+			$.ajax(
+			{
+				url: "${path}/festivalUpdate", //서버주소
+				type :"post", //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=festivalRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="videoRadio"&&selectedLiIndex!=null)
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&selectedVideoName=" + encodeURIComponent(replaceStr(videoArray[selectedLiIndex].videoName));
+			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
+			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
+			datas += "&&videoLength=" + encodeURIComponent($("#videoLength").val());
+	
+			$.ajax(
+			{
+				url: "${path}/videoUpdate", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=videoRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		
+	}
+	
 	function deleteList()
 	{
 		if($('input:radio[name=writeType]:checked').val()=="sightsRadio"&&selectedLiIndex!=null)
@@ -457,7 +552,7 @@
           var resultItems = response.result.items;
           $.each(resultItems, function(index, item) {
             vidTitle = item.snippet.title;
-            vidThumburl =  item.snippet.thumbnails.default.url;
+            vidThumburl =  item.snippet.thumbnails.url;
             vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:204px;height:128px"></pre>';
             $('#results').append('<pre>' + vidTitle + vidThumbimg +  '</pre>');
           });
@@ -506,7 +601,7 @@
 				<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
 				<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
 					<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
-					<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33.3%">
+					<input type = "button" value = "수정" class = "formButton" onclick="update()" style = "width : 100%; height : 33.3%">
 					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%">
 				</div>
 			</div>

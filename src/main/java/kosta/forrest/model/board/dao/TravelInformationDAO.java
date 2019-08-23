@@ -1,6 +1,7 @@
 package kosta.forrest.model.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kosta.forrest.model.board.dto.FestivalDTO;
 import kosta.forrest.model.board.dto.ForestDTO;
@@ -22,6 +23,9 @@ public interface TravelInformationDAO
 	public int deleteVideo(String videoName);
 	public int deleteFestival(String festivalName);
 	public int deleteSights(String sightsName);
+	int updateSights(Map<String, Object> map);
+	int updateFestival(Map<String, Object> map);
+	int updateVideo(Map<String, Object> map);
 	
 }
 		

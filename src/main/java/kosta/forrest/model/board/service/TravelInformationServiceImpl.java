@@ -1,6 +1,8 @@
 package kosta.forrest.model.board.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,5 +141,29 @@ public class TravelInformationServiceImpl implements TravelInformationService
 			.replaceAll("/", "&#x2F;");
 		}
 		return null;
+	}
+////////////////////////////////////////////////////////////////////////
+	@Override
+	public int updateSights(SightsDTO sightsDTO, String selectedSightsName) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sightsDTO", sightsDTO);
+		map.put("selectedSightsName", selectedSightsName);
+		return dao.updateSights(map);
+	}
+	
+	@Override
+	public int updateFestival(FestivalDTO festivalDTO, String selectedFestivalName) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("festivalDTO", festivalDTO);
+		map.put("selectedFestivalName", selectedFestivalName);
+		return dao.updateFestival(map);
+	}
+	
+	@Override
+	public int updateVideo(VideoDTO videoDTO, String selectedVideoName) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("videoDTO", videoDTO);
+		map.put("selectedVideoName", selectedVideoName);
+		return dao.updateVideo(map);
 	}
 }

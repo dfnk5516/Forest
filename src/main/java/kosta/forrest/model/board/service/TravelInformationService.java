@@ -22,4 +22,7 @@ public interface TravelInformationService
 	public int deleteSights(String sightsName);
 	public int deleteFestival(String festivalName);
 	public int deleteVideo(String videoName);
+	int updateSights(SightsDTO dto, String selectedSightsName);
+	int updateVideo(VideoDTO videoDTO, String selectedVideoName);
+	int updateFestival(FestivalDTO festivalDTO, String selectedFestivalName);
 }

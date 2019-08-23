@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="travelInformationMapper">
-	
+
 	<select id="selectForestByCity" resultType="forestDTO">
 		select FOREST_NAME, FOREST_LATITUDE, FOREST_LONGITUDE
 		from forest where city=#{_parameter}
@@ -56,4 +56,43 @@
 	<delete id="deleteVideo" parameterType="string">
 		DELETE FROM VIDEO WHERE VIDEO_NAME = #{_parameter}
 	</delete>
+	
+	<update id="updateSights" parameterType="map">
+		update sights
+		set sights_name=#{sightsDTO.sightsName}, 
+			city=#{sightsDTO.city},
+			sights_region=#{sightsDTO.sightsRegion},
+			sights_description=#{sightsDTO.sightsDescription},
+			sights_location=#{sightsDTO.sightsLocation},
+			sights_homepage=#{sightsDTO.sightsHomepage},
+			sights_latitude=#{sightsDTO.sightsLatitude},
+			sights_longitude=#{sightsDTO.sightsLongitude}
+		where sights_name = #{selectedSightsName}
+	</update>
+	
+	<update id="updateFestival" parameterType="map">
+		update festival
+		set FESTIVAL_NAME=#{festivalDTO.festivalName}, 
+			FESTIVAL_LOCATION=#{festivalDTO.festivalLocation},
+			FESTIVAL_START=#{festivalDTO.festivalStart},
+			FESTIVAL_END=#{festivalDTO.festivalEnd},
+			FESTIVAL_DESCRIPTION=#{festivalDTO.festivalDescription},
+			FESTIVAL_AGENCY=#{festivalDTO.festivalAgency},
+			FESTIVAL_PHONE=#{festivalDTO.festivalPhone},
+			FESTIVAL_HOMEPAGE=#{festivalDTO.festivalHomepage},
+			city=#{festivalDTO.city},
+			FESTIVAL_ADDRESS=#{festivalDTO.festivalAddress},
+			FESTIVAL_LATITUDE=#{festivalDTO.festivalLatitude},
+			FESTIVAL_LONGITUDE=#{festivalDTO.festivalLongitude}
+		where FESTIVAL_NAME = #{selectedFestivalName}
+	</update>
+	
+	<update id="updateVideo" parameterType="map">
+		update video
+		set VIDEO_NAME=#{videoDTO.videoName}, 
+			VIDEO_SRC=#{videoDTO.videoSrc},
+			VIDEO_LENGTH=#{videoDTO.videoLength}
+		where VIDEO_NAME = #{selectedVideoName}
+		
+	</update>
 </mapper>

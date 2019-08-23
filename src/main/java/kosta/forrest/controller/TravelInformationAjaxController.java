@@ -110,4 +110,26 @@ public class TravelInformationAjaxController
 		return service.deleteVideo(videoName);
 	}
 /////////////////////////////////////////////
+	
+	@RequestMapping("/sightsUpdate")
+	public int sightsUpdate(SightsDTO dto, String selectedSightsName) {
+		//System.out.println(selectedSightsName);
+		
+		return service.updateSights(dto, selectedSightsName);
+	}
+	
+	@RequestMapping("/festivalUpdate")
+	public int festivalUpdate(FestivalDTO dto, String selectedFestivalName) {
+		System.out.println(selectedFestivalName);
+		System.out.println(dto);
+		
+		return service.updateFestival(dto, selectedFestivalName);
+	}
+	
+	@RequestMapping("/videoUpdate")
+	public int videoUpdate(VideoDTO dto, String selectedVideoName) {
+		//System.out.println(selectedSightsName);
+		
+		return service.updateVideo(dto, selectedVideoName);
+	}
 }
