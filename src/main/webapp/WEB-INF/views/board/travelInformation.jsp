@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformation.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <script type="text/javascript">
 	var currentScroll;
 	var maxScroll;
@@ -740,8 +741,8 @@
 			<form name="searchForm" id = "searchForm" style = "width : 100%">
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 				<div id = "radioGroup">
-					<input type="radio" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
-					<input type="radio" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
+					<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
+					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
 				</div>
 				<p>
 				<div id = "searchGroup">
