@@ -20,6 +20,9 @@
 	var selectedLi;
 	var selectedLiIndex;
 	
+	var videoSelectedLi;
+	var videoSelectedIndex;
+	
 	function sightsListInit()
 	{
 		$("[name=writeType]").click();

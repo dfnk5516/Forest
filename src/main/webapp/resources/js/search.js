@@ -1,3 +1,4 @@
+//function tplawesome(e,t){res=e;for(var n=0;n<t.length;n++){res=res.replace(/\{\{(.*?)\}\}/g,function(e,r){return t[n][r]})}return res}
 function handleAPILoaded()
 {
 	$('#search-box-button').attr('disabled', false);
@@ -7,7 +8,6 @@ function search()
 {
 	alert(3);
 	var q = $('#searchTextBox').val();
-	var searchVideoArray;
 	var request = gapi.client.youtube.search.list(
 	{
 		part: 'snippet',
@@ -23,17 +23,14 @@ function search()
 		var str = "<li id = 'ColumnL' style = 'width : 100%;' class = 'clearfix listLi'>";
 		str += "<div style = 'width : 30%; height : 72px; overflow : hidden;' class = 'floatDiv'>순번</div>";
 		str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>영상명</div></li>";
-		//$('#search-container').html('<pre>' + str + '</pre>');\
+		
 		$.each(results.items, function(index, item)
 		{
-			var videoMap = new Map();
-			videoMap.put(videoName, item.snippet.title);
-			videoMap.put(videoSrc, item.id.videoId);
-			videoMap.put(videoImageSrc, item.snippet.thumbnails.high.url);
+			//alert(item.snippet.title);
+			//alert(item.id.videoId);
+			//alert(item.snippet.thumbnails.high.url);
 			
-			searchVideoArray.push(videoMap);
-
-			str += "<li onclick = 'searchVideoListItemSelect(" + index + ", this)' style = 'width : 100%;' class = 'clearfix listLi'>";
+			str += "<li onclick = 'videoListItemSelect(" + index + ", this)' style = 'width : 100%;' class = 'clearfix listLi'>";
 			str += "<div style = 'width : 30%; height : 36px; overflow : hidden;' class = 'floatDiv'>" + (index + 1) + "</div>";
 			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + item.snippet.title + "</div></li>";
 		})
