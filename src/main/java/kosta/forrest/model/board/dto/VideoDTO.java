@@ -13,5 +13,5 @@ public class VideoDTO
 {
 	private String videoName;
 	private String videoSrc;
-	private String videoLength;
+	private String videoImageSrc;
 }

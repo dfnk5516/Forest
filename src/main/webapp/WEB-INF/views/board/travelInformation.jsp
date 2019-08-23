@@ -607,7 +607,6 @@
 			{
 				str += "<li class = 'clearfix' onclick = 'videoPlay(" + i + ")'><div class = 'floatDiv'>" + (i + 1) + "</div>";
 				str += "<div class = 'floatDiv'>" + videoArray[i].videoName + "</div>";
-				str += "<div class = 'floatDiv'>" + videoArray[i].videoLength + "</div>";
 				
 				if(currentVideo == i)
 				{

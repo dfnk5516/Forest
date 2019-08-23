@@ -36,8 +36,8 @@
 		VALUES (#{festivalName},#{festivalLocation},#{festivalStart},#{festivalEnd},#{festivalDescription},#{festivalAgency},#{festivalPhone},#{festivalHomepage},#{city},#{festivalAddress},#{festivalLatitude},#{festivalLongitude})
 	</insert>
 	<insert id="insertVideo" parameterType="videoDTO">
-		INSERT INTO VIDEO (VIDEO_NAME, VIDEO_SRC, VIDEO_LENGTH)
-		VALUES (#{videoName},#{videoSrc},#{videoLength})
+		INSERT INTO VIDEO (VIDEO_NAME, VIDEO_SRC, VIDEO_IMAGESRC)
+		VALUES (#{videoName},#{videoSrc},#{videoImageSrc})
 	</insert>
 	
 	<select id="selectSights" resultType="sightsDTO">
@@ -91,7 +91,7 @@
 		update video
 		set VIDEO_NAME=#{videoDTO.videoName}, 
 			VIDEO_SRC=#{videoDTO.videoSrc},
-			VIDEO_LENGTH=#{videoDTO.videoLength}
+			VIDEO_IMAGESRC=#{videoDTO.videoImageSrc}
 		where VIDEO_NAME = #{selectedVideoName}
 		
 	</update>

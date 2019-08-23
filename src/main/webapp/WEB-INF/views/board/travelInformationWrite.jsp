@@ -15,6 +15,8 @@
 	var sightsArray;
 	var festivalArray;
 	var videoArray;
+	var searchVideoArray;
+	
 	var selectedLi;
 	var selectedLiIndex;
 	
@@ -190,7 +192,8 @@
 		{
 			$("#videoName").val(replaceStr(videoArray[index].videoName));
 			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
-			$("#videoLength").val(replaceStr(videoArray[index].videoLength));
+			$("#videoImageSrc").val(replaceStr(videoArray[index].videoImageSrc));
+			document.getElementById("videoImage").src = replaceStr(videoArray[index].videoImageSrc);
 			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&version=3&loop=1&playlist=" + replaceStr(videoArray[index].videoSrc);
 		}
 	}
@@ -224,7 +227,8 @@
 		{
 			$("#videoName").val("");
 			$("#videoSrc").val("");
-			$("#videoLength").val("");
+			$("#videoImageSrc").val("");
+			document.getElementById("videoImage").src = "";
 			document.getElementById("videoFrame").src = "";
 		}
 	}
@@ -342,7 +346,7 @@
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
 			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
 			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
-			datas += "&&videoLength=" + encodeURIComponent($("#videoLength").val());
+			datas += "&&videoImageSrc=" + encodeURIComponent($("#videoImageSrc").val());
 			
 			$.ajax(
 			{
@@ -437,7 +441,7 @@
 			datas += "&&selectedVideoName=" + encodeURIComponent(replaceStr(videoArray[selectedLiIndex].videoName));
 			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
 			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
-			datas += "&&videoLength=" + encodeURIComponent($("#videoLength").val());
+			datas += "&&videoImageSrc=" + encodeURIComponent($("#videoImageSrc").val());
 	
 			$.ajax(
 			{
@@ -753,25 +757,31 @@
 					<form id = "videoForm" method = "post" action = "" style = "height : 100%">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "videoTableUl" style = "width : 100%; height : 100%">
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
+							<li class = "clearfix" style = "width : 100%; height : 10%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
+							<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">영상 경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
+							<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">배너 경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<input type = "text" id="videoLength" class = "textBox" style = "width : 100%; height : 100%;">
+									<input type = "text" id="videoImageSrc" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li style = "width : 100%; height : 55%;">
+							<li class = "clearfix" style = "width : 100%; height : 30%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">배너</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<img id="videoImage" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li style = "width : 100%; height : 40%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
@@ -793,8 +803,8 @@
 						<span>영상 검색</span>
 					</div>
 					<div id = "search-box-wrapper" style = "width : 100%; height : 70%">
-						<input type = "text" id = "searchTextBox" style = "height : 100%" class = "search-box-input" onkeyup="search()" placeholder = "영상 이름 입력"/>
-						<button id = "search-box-button" style = "height : 100%">&#128269;</button>
+						<input type = "text" id = "searchTextBox" style = "height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
+						<button id = "search-box-button" onclick="search()" style = "height : 100%">&#128269;</button>
 					</div>
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
@@ -804,7 +814,7 @@
 			</div>
 			<div id = "" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
 				<div id = "" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
-					<ul id = "" style = "width : 100%; height : auto;"></ul>
+					<ul id = "searchVideoUl" style = "width : 100%; height : auto;"></ul>
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 50%; height : 100%;">
 					<form id = "" method = "post" action = "" style = "height : 100%">

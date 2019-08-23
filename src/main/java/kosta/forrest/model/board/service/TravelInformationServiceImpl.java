@@ -107,7 +107,7 @@ public class TravelInformationServiceImpl implements TravelInformationService
 		{
 			dto.setVideoName(toJs(dto.getVideoName()));
 			dto.setVideoSrc(toJs(dto.getVideoSrc()));
-			dto.setVideoLength(toJs(dto.getVideoLength()));
+			dto.setVideoImageSrc(toJs(dto.getVideoImageSrc()));
 		}
 		
 		return list;
