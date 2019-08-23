@@ -289,7 +289,7 @@ div[id = "search-box-wrapper"]
 	font-size : inherit;
 }
 
-button[id = "search-box-button2"]
+button[id = "search-box-button"]
 {
 	font-size : inherit;
 	border : 4px solid #1E1E1E;
@@ -309,37 +309,10 @@ input[type = "text"]:focus
 	border-color : #1E1E1E;
 }
 
-button[id = "search-box-button2"]:hover,
-button[id = "search-box-button2"]:focus
+button[id = "search-box-button"]:hover,
+button[id = "search-box-button"]:focus
 {
 	border-color : #1E1E1E;
 	background-color : #1E1E1E
 }
-
-button[id = "search-box-button1"]
-{
-	font-size : inherit;
-	border : 4px solid #1E1E1E;
-	border-radius : 5px;
-	background-color : #1E1E1E;
-	height: 40px;
-	padding : 0 0.75em;
-	color : white;
-	font-weight : bold;
-	outline : 0;
-	cursor : pointer;
-	border-left : 0;
-}
-
-table
-{
-	margin:0;
-	padding:0;
-	border:0;
-	font-size:100%;
-	font:inherit;
-	vertical-align:center;
-}
-
-
 

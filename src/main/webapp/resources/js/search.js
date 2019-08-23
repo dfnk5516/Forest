@@ -1,11 +1,11 @@
 function handleAPILoaded()
 {
-	$('#search-button').attr('disabled', false);
+	$('#search-box-button').attr('disabled', false);
 }
 
 function search()
 {
-	var q = $('#query').val();
+	var q = $('#searchTextBox').val();
 	var request = gapi.client.youtube.search.list(
 	{
 		q: q,
@@ -14,7 +14,9 @@ function search()
 
 	request.execute(function(response)
 	{
-		var str = JSON.stringify(response.result);
-		$('#search-container').html('<pre>' + str + '</pre>');
+		var results = response.result;
+		//$('#search-container').html('<pre>' + str + '</pre>');\
+		
+		console.log(str);
 	});
 }
