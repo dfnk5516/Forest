@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${path}/resources/js/auth.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformationWrite.css"/>
@@ -16,6 +15,8 @@
 	var sightsArray;
 	var festivalArray;
 	var videoArray;
+	var searchVideoArray;
+	
 	var selectedLi;
 	var selectedLiIndex;
 	
@@ -191,7 +192,8 @@
 		{
 			$("#videoName").val(replaceStr(videoArray[index].videoName));
 			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
-			$("#videoLength").val(replaceStr(videoArray[index].videoLength));
+			$("#videoImageSrc").val(replaceStr(videoArray[index].videoImageSrc));
+			document.getElementById("videoImage").src = replaceStr(videoArray[index].videoImageSrc);
 			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&version=3&loop=1&playlist=" + replaceStr(videoArray[index].videoSrc);
 		}
 	}
@@ -225,7 +227,8 @@
 		{
 			$("#videoName").val("");
 			$("#videoSrc").val("");
-			$("#videoLength").val("");
+			$("#videoImageSrc").val("");
+			document.getElementById("videoImage").src = "";
 			document.getElementById("videoFrame").src = "";
 		}
 	}
@@ -343,7 +346,7 @@
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
 			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
 			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
-			datas += "&&videoLength=" + encodeURIComponent($("#videoLength").val());
+			datas += "&&videoImageSrc=" + encodeURIComponent($("#videoImageSrc").val());
 			
 			$.ajax(
 			{
@@ -363,6 +366,102 @@
 				}
 			})
 		}
+	}
+	
+	function update(){
+		if($('input:radio[name=writeType]:checked').val()=="sightsRadio"&&selectedLiIndex!=null)
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&selectedSightsName=" + encodeURIComponent(replaceStr(sightsArray[selectedLiIndex].sightsName));
+			datas += "&&sightsName=" + encodeURIComponent($("#sightsName").val());
+			datas += "&&city=" + encodeURIComponent($("#sightsCity option:selected").val());
+			datas += "&&sightsRegion=" + encodeURIComponent($("#sightsRegion").val());
+			datas += "&&sightsDescription=" + encodeURIComponent($("#sightsDescription").val());
+			datas += "&&sightsLocation=" + encodeURIComponent($("#sightsLocation").val());
+			datas += "&&sightsHomepage=" + encodeURIComponent($("#sightsHomepage").val());
+			datas += "&&sightsLatitude=" + encodeURIComponent($("#sightsLatitude").val());
+			datas += "&&sightsLongitude=" + encodeURIComponent($("#sightsLongitude").val());
+			
+			$.ajax(
+			{
+				url: "${path}/sightsUpdate", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=sightsRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="festivalRadio"&&selectedLiIndex!=null)
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&selectedFestivalName=" + encodeURIComponent(replaceStr(festivalArray[selectedLiIndex].festivalName));
+			datas += "&&festivalName=" + encodeURIComponent($("#festivalName").val());
+			datas += "&&city=" + encodeURIComponent($("#festivalCity option:selected").val());
+			datas += "&&festivalLocation=" + encodeURIComponent($("#festivalLocation").val());
+			datas += "&&festivalAddress=" + encodeURIComponent($("#festivalAddress").val());
+			datas += "&&festivalDescription=" + encodeURIComponent($("#festivalDescription").val());
+			datas += "&&festivalStart=" + encodeURIComponent($("#festivalStart").val());
+			datas += "&&festivalEnd=" + encodeURIComponent($("#festivalEnd").val());
+			datas += "&&festivalPhone=" + encodeURIComponent($("#festivalPhone").val());
+			datas += "&&festivalAgency=" + encodeURIComponent($("#festivalAgency").val());
+			datas += "&&festivalHomepage=" + encodeURIComponent($("#festivalHomepage").val());
+			datas += "&&festivalLatitude=" + encodeURIComponent($("#festivalLatitude").val());
+			datas += "&&festivalLongitude=" + encodeURIComponent($("#festivalLongitude").val());
+			
+			$.ajax(
+			{
+				url: "${path}/festivalUpdate", //서버주소
+				type :"post", //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=festivalRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		else if($('input:radio[name=writeType]:checked').val()=="videoRadio"&&selectedLiIndex!=null)
+		{
+			var datas = "${_csrf.parameterName}=${_csrf.token}";
+			datas += "&&selectedVideoName=" + encodeURIComponent(replaceStr(videoArray[selectedLiIndex].videoName));
+			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
+			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
+			datas += "&&videoImageSrc=" + encodeURIComponent($("#videoImageSrc").val());
+	
+			$.ajax(
+			{
+				url: "${path}/videoUpdate", //서버주소
+				type :"post" , //전송방식(get, post, put, delete)
+				data : datas,
+				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+				success :function(result)
+				{
+					console.log(result);
+					$("[name=writeType][value=videoRadio]").click();
+					textBoxInit();
+				} ,
+				error : function(err)
+				{
+					alert("오류발생cc : " + err);
+				}
+			})
+		}
+		
 	}
 	
 	function deleteList()
@@ -457,7 +556,7 @@
           var resultItems = response.result.items;
           $.each(resultItems, function(index, item) {
             vidTitle = item.snippet.title;
-            vidThumburl =  item.snippet.thumbnails.default.url;
+            vidThumburl =  item.snippet.thumbnails.url;
             vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:204px;height:128px"></pre>';
             $('#results').append('<pre>' + vidTitle + vidThumbimg +  '</pre>');
           });
@@ -487,8 +586,8 @@
 	<div id="main" class="wrapper style2 clearfix">
 		<div class = "floatDiv"></div>
 			
-		<div class = "floatDiv" style = "width : 100%;  height : 900px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
-			<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 10%">
+		<div class = "floatDiv" style = "width : 100%;  height : 1620px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
+			<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
 					<label class = "radioLable">
 						<input type="radio" name="writeType" value="sightsRadio" checked="checked" >
@@ -506,11 +605,11 @@
 				<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
 				<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
 					<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
-					<input type = "button" value = "수정" class = "formButton" style = "width : 100%; height : 33.3%">
+					<input type = "button" value = "수정" class = "formButton" onclick="update()" style = "width : 100%; height : 33.3%">
 					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%">
 				</div>
 			</div>
-			<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 60%; overflow : hidden;">
+			<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
 				<div id = "listDiv" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
 					<ul id = "listUl" style = "width : 100%; height : auto;"></ul>
 				</div>
@@ -658,25 +757,31 @@
 					<form id = "videoForm" method = "post" action = "" style = "height : 100%">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "videoTableUl" style = "width : 100%; height : 100%">
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
+							<li class = "clearfix" style = "width : 100%; height : 10%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
+							<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">영상 경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
+							<li class = "clearfix" style = "width : 100%; height : 10%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">배너 경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<input type = "text" id="videoLength" class = "textBox" style = "width : 100%; height : 100%;">
+									<input type = "text" id="videoImageSrc" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li style = "width : 100%; height : 55%;">
+							<li class = "clearfix" style = "width : 100%; height : 30%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">배너</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<img id="videoImage" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li style = "width : 100%; height : 40%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
@@ -686,14 +791,64 @@
 					</form>
 				</div>
 			</div>
-			<div id = "videoSearchDiv" style = "width : 100%; height : 30%;">
-				<div id="buttons">
+			<!-- div id="buttons">
       				<label> <input id="query" value='cats' type="text"/><button id="search-button" onclick="search()">Search</button></label>
     			</div>
-   				<div id="search-container"></div>
-   				
-   			
+   				<div id="search-container"></div-->
+   			<div id = "" style = "width : 100%; height : 5%">
+   			</div>
+   			<div id = "" class = "clearfix" style = "width : 100%; height : 5%">
+				<div id = "" class = "floatDiv" style = "width : 50%; height : 100%">
+					<div style = "width : 100%; height : 30%">
+						<span>영상 검색</span>
+					</div>
+					<div id = "search-box-wrapper" style = "width : 100%; height : 70%">
+						<input type = "text" id = "searchTextBox" style = "height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
+						<button id = "search-box-button" onclick="search()" style = "height : 100%">&#128269;</button>
+					</div>
+				</div>
+				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
+				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
+					<input type = "button" value = "정보 추가" class = "formButton" style = "width : 100%; height : 100%">
+				</div>
 			</div>
+			<div id = "" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
+				<div id = "" class = "floatDiv" style = "width : 50%; height :100%; overflow : auto;">
+					<ul id = "searchVideoUl" style = "width : 100%; height : auto;"></ul>
+				</div>
+				<div id = "" class = "floatDiv" style = "width : 50%; height : 100%;">
+					<form id = "" method = "post" action = "" style = "height : 100%">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+						<ul id = "" style = "width : 100%; height : 100%">
+							<li class = "clearfix" style = "width : 100%; height : 15%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 15%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li class = "clearfix" style = "width : 100%; height : 15%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<input type = "text" id="" class = "textBox" style = "width : 100%; height : 100%;">
+								</div>
+							</li>
+							<li style = "width : 100%; height : 55%;">
+								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
+								<div class = "floatDiv" style = "width : 80%; height : 100%">
+									<iframe id = "" style = "width : 100%; height : 100%" src="" ></iframe>
+								</div>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>	
+  
 		</div>
 		<div class = "floatDiv"></div>
 	</div>

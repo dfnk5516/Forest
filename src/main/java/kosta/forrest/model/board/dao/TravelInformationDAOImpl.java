@@ -2,6 +2,7 @@ package kosta.forrest.model.board.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +110,23 @@ public class TravelInformationDAOImpl implements TravelInformationDAO
 	public int deleteVideo(String videoName)
 	{
 		return session.delete("travelInformationMapper.deleteVideo", videoName);
+	}
+////////////////////////////////////////////////////////////////////////
+	@Override
+	public int updateSights(Map<String, Object> map) {
+		
+		return session.update("travelInformationMapper.updateSights", map);
+	}
+	
+	@Override
+	public int updateFestival(Map<String, Object> map) {
+		
+		return session.update("travelInformationMapper.updateFestival", map);
+	}
+	
+	@Override
+	public int updateVideo(Map<String, Object> map) {
+		
+		return session.update("travelInformationMapper.updateVideo", map);
 	}
 }

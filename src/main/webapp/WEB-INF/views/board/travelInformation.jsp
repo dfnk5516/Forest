@@ -95,26 +95,24 @@
 			if($('input:radio[name=searchType]:checked').val() == "searchByCity")
 			{
 				$("#textBox").hide();
-				$("#search-box-button2").hide();
+				$("#search-box-button").hide();
 				$("#search-box-wrapper").hide();
 				$("#forestSelect").show();
 				$("#citySelect").show();
-				$("#search-box-button1").show();
 				
 			}	
 			else
 			{
 				$("#forestSelect").hide();
 				$("#citySelect").hide();
-				$("#search-box-button1").hide();
 				$("#textBox").show();
-				$("#search-box-button2").show();
+				$("#search-box-button").show();
 				$("#search-box-wrapper").show();
 			}
 		});
 		
 		$("#textBox").hide();
-		$("#search-box-button2").hide();
+		$("#search-box-button").hide();
 		$("#search-box-wrapper").hide();
 		
 		$(window).on('mousewheel',function(e)
@@ -609,7 +607,6 @@
 			{
 				str += "<li class = 'clearfix' onclick = 'videoPlay(" + i + ")'><div class = 'floatDiv'>" + (i + 1) + "</div>";
 				str += "<div class = 'floatDiv'>" + videoArray[i].videoName + "</div>";
-				str += "<div class = 'floatDiv'>" + videoArray[i].videoLength + "</div>";
 				
 				if(currentVideo == i)
 				{
@@ -762,7 +759,7 @@
 						
 					<div id = "search-box-wrapper" style = "width : 100%">
 						<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
-						<button id = "search-box-button2">&#128269;</button>
+						<button id = "search-box-button">&#128269;</button>
 					</div>
 				</div>
 			</form>
