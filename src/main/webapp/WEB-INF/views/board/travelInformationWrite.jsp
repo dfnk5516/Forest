@@ -52,6 +52,11 @@
 			error : function(err)
 			{
 				alert("오류발생cc : " + err);
+				$('input[name="writeType"]').each(function()
+				{
+					$(this).prop('disabled', false);
+					$("#searchVideoInputBtn").prop('disabled', false);
+				});
 			}
 		})
 	}
@@ -77,6 +82,11 @@
 			error : function(err)
 			{
 				alert("오류발생 : " + err);
+				$('input[name="writeType"]').each(function()
+				{
+					$(this).prop('disabled', false);
+					$("#searchVideoInputBtn").prop('disabled', false);
+				});
 			}
 		})
 	}
@@ -118,6 +128,11 @@
 					videoMoveCheck = false;
 				}
 				alert("오류발생 : " + err);
+				$('input[name="writeType"]').each(function()
+				{
+					$(this).prop('disabled', false);
+					$("#searchVideoInputBtn").prop('disabled', false);
+				});
 			}
 		})
 	}
@@ -170,6 +185,7 @@
 		$('input[name="writeType"]').each(function()
 		{
 			$(this).prop('disabled', false);
+			$("#searchVideoInputBtn").prop('disabled', false);
 		});
 	}
 	
@@ -260,6 +276,7 @@
 			$('input[name="writeType"]').each(function()
 			{
 			    $(this).prop('disabled', true);
+				$("#searchVideoInputBtn").prop('disabled', true);
 			});
 			
 			if($('input:radio[name=writeType]:checked').val() == "sightsRadio")
@@ -568,29 +585,24 @@
 	}
 	function search()
 	{
-		//alert(3);
 		var q = $('#searchTextBox').val();
 		var request = gapi.client.youtube.search.list(
 		{
 			part: 'snippet',
 			type : 'video',
 			q: q,
-			maxResults : 10,
+			maxResults : 50,
 			order : 'viewCount',
 		});
 
 		request.execute(function(response)
 		{
+			document.getElementById("searchVideoUl").innerHTML = "검색중..";
 			var results = response.result;
 			var str = "";
 			searchVideoArray = new Array();
-			
 			$.each(results.items, function(index, item)
-			{
-				//alert(item.snippet.title);
-				//alert(item.id.videoId);
-				//alert(item.snippet.thumbnails.high.url);
-				
+			{				
 				videoMap = new Map();
 				videoMap.set('videoName', item.snippet.title);
 				videoMap.set('videoSrc', item.id.videoId);
@@ -602,11 +614,10 @@
 				str += "<div style = 'width : 70%; height : 100%' class = 'floatDiv'>";
 				str += "<div style = 'width : 100%; height : 20%; overflow : hidden;'>" + item.snippet.title + "</div>";
 				str += "<div style = 'width : 100%; height : 80%; overflow : hidden;'>" + item.snippet.description + "</div></div></li>";
-				//alert(searchVideoArray[index].get('videoName'));
 			})
 			document.getElementById("searchVideoUl").innerHTML = str;
 		});
-		
+		alert("검색 완료");
 		return false;
 	}
 	
@@ -625,17 +636,17 @@
 		document.getElementById("searchVideoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[index].get('videoSrc') + "?autoplay=1&version=3&loop=1&playlist=" + searchVideoArray[index].get('videoSrc');
 	}
 	function moveVideoInformation()
-	{
-		if($('input:radio[name=writeType]:checked').val()!="videoRadio")
+	{		
+		if($('input:radio[name=writeType]:checked').val()!="videoRadio" && videoMoveCheck == false)
 		{
 			videoMoveCheck = true;
 			$("[name=writeType][value=videoRadio]").click();
 		}
-		else
+		else if($("#searchVideoName").val() != "" && $("#searchVideoSrc").val() != "")
 		{
 			$("#videoName").val($("#searchVideoName").val());
 			$("#videoSrc").val($("#searchVideoSrc").val());
-			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[videoSelectedLiIndex].get('videoSrc') + "?autoplay=0&version=3&loop=1&playlist=" + searchVideoArray[videoSelectedLiIndex].get('videoSrc');
+			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + $("#searchVideoSrc").val() + "?autoplay=0&version=3&loop=1&playlist=" + $("#searchVideoSrc").val();
 		}
 	}
 
@@ -859,7 +870,7 @@
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
 				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
-					<input type = "button" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%"/>
+					<input type = "button" id = "searchVideoInputBtn" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%"/>
 				</div>
 			</div>
 			<div id = "" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
