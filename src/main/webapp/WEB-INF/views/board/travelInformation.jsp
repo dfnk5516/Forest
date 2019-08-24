@@ -7,13 +7,15 @@
 <script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=45666bcb826210a72dbea20e833f5168&libraries=services,clusterer,drawing"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformation.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <script type="text/javascript">
 	var currentScroll;
 	var maxScroll;
 	
+	var sightsArray;
+	var festivalArray;
 	var videoArray = JSON.parse('${videoArray}');
 	var videoMax = videoArray.length;
 	var currentVideo;
@@ -27,12 +29,20 @@
 	var timer2 = null;
 
 	var mapLevel = 12;
-	var xMaxSize = 70;
-	var yMaxSize = 85;
+	var xMaxSizeOfForestMarker = 70;
+	var yMaxSizeOfForestMarker = 85;
+	var xMaxSizeOfSightsMarker = 80;
+	var yMaxSizeOfSightsMarker = 80;
+	var xMaxSizeOfFestivalMarker = 75;
+	var yMaxSizeOfFestivalMarker = 75;
 	var mapCenter = new kakao.maps.LatLng(36.6393307 , 127.9329846); // 지도의 중심좌표
 	
-	var xSize = xMaxSize - (1 + (3 * (mapLevel - 1)));
-	var ySize = yMaxSize - (1 + (3 * (mapLevel - 1)));
+	var xSizeOfForestMarker = xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
+	var ySizeOfForestMarker = yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
+	var xSizeOfSightsMarker = xMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
+	var ySizeOfSightsMarker = yMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
+	var xSizeOfFestivalMarker = xMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
+	var ySizeOfFestivalMarker = yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
 	var forestMarkers = [];
 	var sightsMarkers = [];
 	var festivalMarkers = [];
@@ -51,7 +61,9 @@
 	var map;
 
 	var forestArray = JSON.parse('${forestArray}');
-	var positions = new Array();
+	var forestPositions = new Array();
+	var sightsPositions = new Array();
+	var festivalPositions = new Array();
 	var zoomControl;
 	
 	var currentTypeId; // 지도에 추가된 지도타입정보를 가지고 있을 변수
@@ -199,24 +211,24 @@
 			
 		for(var i = 0; i < forestArray.length; ++i)
 		{
-			positions[i] =
+			forestPositions[i] =
 			{
 				title: forestArray[i].forestName, 
 				latlng: new kakao.maps.LatLng(forestArray[i].forestLatitude, forestArray[i].forestLongitude)
 			}
 		}
 			
-		for(var i = 0; i < positions.length; ++i)
+		for(var i = 0; i < forestPositions.length; ++i)
 		{
-			var imageSize = new kakao.maps.Size(xSize, ySize);
+			var imageSize = new kakao.maps.Size(xSizeOfForestMarker, ySizeOfForestMarker);
 			// 마커 이미지를 생성합니다    
 			var markerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
 			// 마커를 생성합니다
 			forestMarkers[i] = new kakao.maps.Marker(
 			{
 				map : map, // 마커를 표시할 지도
-				position : positions[i].latlng, // 마커를 표시할 위치
-				title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+				position : forestPositions[i].latlng, // 마커를 표시할 위치
+				title : forestPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 				image : markerImage
 				// 마커 이미지 
 			});
@@ -231,9 +243,9 @@
 		{
 			// 지도의 현재 레벨을 얻어옵니다
 			mapLevel = map.getLevel();
-			xSize = xMaxSize - (1 + (3 * (mapLevel - 1)));
-			ySize = yMaxSize - (1 + (3 * (mapLevel - 1)));
-			var imageSize = new kakao.maps.Size(xSize, ySize);
+			xSizeOfForestMarker = xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
+			ySizeOfForestMarker = yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
+			var imageSize = new kakao.maps.Size(xSizeOfForestMarker, ySizeOfForestMarker);
 			var markerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
 			setMarkersSize(markerImage);
 		})
@@ -270,11 +282,139 @@
 	{
 		if(checkBox.checked == true)
 		{
-			showMarkers(markerArr);
+			if(markerArr == forestMarkers)
+			{
+				showMarkers(markerArr);
+			}
+			else if(markerArr == sightsMarkers)
+			{
+				$(checkBox).prop('disabled', true);
+				
+				$.ajax(
+				{
+					url: "${path}/sightsSelect", //서버주소
+					type :"post" , //전송방식(get, post, put, delete)
+					data : "${_csrf.parameterName}=${_csrf.token}",
+					dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+					success :function(result)
+					{
+						sightsArray = result;
+						createMarkers(sightsArray);
+						showMarkers(markerArr);
+						
+						$('input[name="searchType"]').each(function()
+						{
+							$(checkBox).prop('disabled', false);
+						});
+					} ,
+					error : function(err)
+					{
+						alert("오류발생cc : " + err);
+					}
+				})
+			}
+			else if(markerArr == festivalMarkers)
+			{
+				$(checkBox).prop('disabled', true);
+				
+				$.ajax(
+				{
+					url: "${path}/festivalSelect", //서버주소
+					type :"post" , //전송방식(get, post, put, delete)
+					data : "${_csrf.parameterName}=${_csrf.token}",
+					dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+					success :function(result)
+					{
+						festivalArray = result;
+						createMarkers(festivalArray);
+						showMarkers(markerArr);
+						$('input[name="searchType"]').each(function()
+						{
+							$(checkBox).prop('disabled', false);
+						});
+					} ,
+					error : function(err)
+					{
+						alert("오류발생cc : " + err);
+					}
+				})
+			}
 		}
 		else
 		{
 			hideMarkers(markerArr);
+		}
+	}
+	
+	function createMarkers(Array)
+	{
+		var MarkerImageSrc;
+		var Positions;
+		var xSize;
+		var ySize;
+		
+		
+		if(Array == sightsArray)
+		{
+			for(var i = 0; i < Array.length; ++i)
+			{
+				MarkerImageSrc = sightsMarkerImageSrc;
+				Positions = sightsPositions;
+				xSize = xSizeOfSightsMarker;
+				ySize = ySizeOfSightsMarker;
+				sightsPositions[i] =
+				{
+					title: sightsArray[i].sightsName, 
+					latlng: new kakao.maps.LatLng(sightsArray[i].sightsLatitude, sightsArray[i].sightsLongitude)
+				}
+				console.log(sightsPositions[i]);
+			}
+		}
+		else if(Array == festivalArray)
+		{
+			for(var i = 0; i < Array.length; ++i)
+			{
+				MarkerImageSrc = festivalMarkerImageSrc;
+				Positions = festivalPositions;
+				xSize = xSizeOfFestivalMarker;
+				ySize = ySizeOfFestivalMarker;
+				
+				festivalPositions[i] =
+				{
+					title: festivalArray[i].festivalName, 
+					latlng: new kakao.maps.LatLng(festivalArray[i].festivalLatitude, festivalArray[i].festivalLongitude)
+				}
+			}
+		}
+		
+			
+		for(var i = 0; i < Positions.length; ++i)
+		{
+			var imageSize = new kakao.maps.Size(xSize, ySize);
+			// 마커 이미지를 생성합니다    
+			var markerImage = new kakao.maps.MarkerImage(MarkerImageSrc, imageSize);
+			// 마커를 생성합니다
+			
+			if(Array == sightsArray)
+			{
+				sightsMarkers[i] = new kakao.maps.Marker(
+				{
+					map : map, // 마커를 표시할 지도
+					position : sightsPositions[i].latlng, // 마커를 표시할 위치
+					title : sightsPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+					image : markerImage // 마커 이미지 
+				});
+			}
+			else if(Array == festivalArray)
+			{
+				festivalMarkers[i] = new kakao.maps.Marker(
+				{
+					map : map, // 마커를 표시할 지도
+					position : festivalPositions[i].latlng, // 마커를 표시할 위치
+					title : festivalPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+					image : markerImage // 마커 이미지 
+				});
+			}
 		}
 	}
 
@@ -547,7 +687,6 @@
 		}
 		else if(type == "checkBox")
 		{
-
 			if(checkBox.checked == true)
 			{
 				var arr = document.getElementsByClassName("mapOption");	
@@ -733,14 +872,12 @@
 				</div>
 			</div>
 		</div>
-		<div class = "floatDiv" style = "width : 70%; height : 100%;" id = "travelInformation">
-			<header class="major" style = "width : 100%;">
-				<div id = "travelInformationHeader">여행 정보 검색</div>
-			</header>				
-			<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
-			<form name="searchForm" id = "searchForm" style = "width : 100%">
+		<div class = "floatDiv" style = "width : 70%; height : 1500px;" id = "travelInformation">
+			<div id = "travelInformationHeader" style = "width : 100%; height : auto; margin : 5px 0px;">여행 정보 검색</div>				
+			<div id = "travelInformationExplain" style = "width : 100%;  height : auto; margin : 5px 0px;">휴양림 주변 관광지, 행사 정보 검색</div>
+			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto">
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-				<div id = "radioGroup" style = "width : 100%">
+				<div id = "radioGroup" style = "width : 100%;">
 					<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
 					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
 				</div>
@@ -768,8 +905,8 @@
 			<div id = "checkBoxTopDiv" style = "width : 100%;" >
 				<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%;">
 					<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
-					<input type="checkbox" id = "sights"/>관광지 보기
-					<input type="checkbox" id = "festival"/>행사 보기
+					<input type="checkbox" onchange="markerOnOff(this, markerClassify('sights'))" id = "sights"/>관광지 보기
+					<input type="checkbox" onchange="markerOnOff(this, markerClassify('festival'))" id = "festival"/>행사 보기
 				</div>
 						
 			</div>

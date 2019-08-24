@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="${path}/resources/js/jquery-3.4.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/travelInformationWrite.css"/>
 
@@ -98,9 +99,24 @@
 				videoArray = result;
 				addList("video");
 				textBoxInit();
+				
+				if(videoMoveCheck)
+				{
+					if(videoSelectedLi != null)
+					{
+						$("#searchVideoName").val(replaceStr(searchVideoArray[videoSelectedLiIndex].get('videoName')));
+						$("#searchVideoSrc").val(searchVideoArray[videoSelectedLiIndex].get('videoSrc'));
+						document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[videoSelectedLiIndex].get('videoSrc') + "?autoplay=1&version=3&loop=1&playlist=" + searchVideoArray[videoSelectedLiIndex].get('videoSrc');
+					}
+					videoMoveCheck = false;
+				}
 			},
 			error : function(err)
 			{
+				if(videoMoveCheck)
+				{
+					videoMoveCheck = false;
+				}
 				alert("오류발생 : " + err);
 			}
 		})
@@ -535,7 +551,8 @@
 			replacedStr = string.replace(/&amp;/gi, '&');
 			replacedStr = replacedStr.replace(/&lt;/gi, '<');
 			replacedStr = replacedStr.replace(/&gt;/gi, '>');
-			replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
+			replacedStr = replacedStr.replace(/&#39;/gi, '`');
+			//replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
 			replacedStr = replacedStr.replace(/&#x27;/gi, '&quot;');
 			replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
 			return replacedStr;
@@ -602,6 +619,24 @@
 		videoSelectedLi = list;
 		videoSelectedLiIndex = index;
 		$(videoSelectedLi).addClass("selectedLi");
+		
+		$("#searchVideoName").val(replaceStr(searchVideoArray[index].get('videoName')));
+		$("#searchVideoSrc").val(searchVideoArray[index].get('videoSrc'));
+		document.getElementById("searchVideoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[index].get('videoSrc') + "?autoplay=1&version=3&loop=1&playlist=" + searchVideoArray[index].get('videoSrc');
+	}
+	function moveVideoInformation()
+	{
+		if($('input:radio[name=writeType]:checked').val()!="videoRadio")
+		{
+			videoMoveCheck = true;
+			$("[name=writeType][value=videoRadio]").click();
+		}
+		else
+		{
+			$("#videoName").val($("#searchVideoName").val());
+			$("#videoSrc").val($("#searchVideoSrc").val());
+			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[videoSelectedLiIndex].get('videoSrc') + "?autoplay=1&version=3&loop=1&playlist=" + searchVideoArray[videoSelectedLiIndex].get('videoSrc');
+		}
 	}
 
 </script>
@@ -615,15 +650,15 @@
 			<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
 					<label class = "radioLable">
-						<input type="radio" name="writeType" value="sightsRadio" checked="checked" >
+						<input type="radio" name="writeType" class = "medium" value="sightsRadio" checked="checked" >
 						관광지<span class = "aa"></span>
 					</label>
 					<label class = "radioLable">
-						<input type="radio" name="writeType" value="festivalRadio" >
+						<input type="radio" name="writeType" class = "medium" value="festivalRadio" >
 						행사<span class = "aa"></span>
 					</label>
 					<label class = "radioLable">
-						<input type="radio" name="writeType" value="videoRadio" >
+						<input type="radio" name="writeType" class = "medium" value="videoRadio" >
 						영상<span class = "aa"></span>
 					</label>
 				</div>
