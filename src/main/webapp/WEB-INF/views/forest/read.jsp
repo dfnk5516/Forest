@@ -56,7 +56,9 @@
 	$(function() {
 		printLodge();
 		$(document).on('click', '#booking', function(){
-			location="${pageContext.request.contextPath}/forest/bookingForm?forestNo="+${dto.forestNo};
+			var bookUrl ="${pageContext.request.contextPath}/forest/bookingForm?forestNo="+
+						${dto.forestNo}+"&lodgeCode="+$(this).attr("name");
+			window.open(bookUrl,width="400px", height="400px");
 		})
 		
 		function printLodge() {
@@ -84,13 +86,14 @@
 										+ '</td>';
 								str += '<td>' + item.lodgeTel
 										+ '</td>';
-								str += '<td><input type="button" class="btn btn-7 btn-7a icon-cog" value="예약하기" id="booking"></td>';
+								str += '<td><input type="button" class="btn btn-7 btn-7a icon-cog" name='+item.lodgeCode+' value="예약하기" id="booking"></td>';
 								str += '<td><input type="button" class="btn btn-2 btn-2i" value="삭제" name='+item.lodgeCode+' id="deleteBtn2"></td>';
 								str += '</tr>';
 							});
 						$('#listTable').append(str);
 
 						$("#listTable tr:even").css("background", "#f2f2f2");
+						$("#listTable tr:odd").css("background", "#fafafa");
 						$("th").css("background", "black").css("color","white");
 					},
 					error : function(err) {
@@ -98,6 +101,9 @@
 					}
 				})
 		}
+		
+		
+		
 		$("#deleteBtn2").click(function(){
 			alert(1);
 		})
@@ -142,11 +148,15 @@
 </script>
 </head>
 <body>
-	<div class="panel-heading" align="center"
-		style="background-color: #f2ffe6;">
+
+<%@ include file="background.jsp" %>
+<div id="back">
+
+	<div class="panel-heading" align="center">
 		<section id="btn-click" style="text-align: right;">
 			<span
-				style="float: left; vertical-align: middle; font-size: 50px; padding-top: 25px; padding-left: 50px;">${dto.forestName}
+				style="float: left; vertical-align: middle; font-size: 50px; padding-top: 25px; padding-left: 50px;color: black!important; font-family: cursive!important;">
+				${dto.forestName}
 				상세 정보</span> <input type="hidden" name="forestNo" value="${dto.forestNo}"
 				id="no">
 			<button class="btn btn-2 btn-2i icon-cog" id="updateBtn">UPDATE</button>
@@ -168,7 +178,7 @@
 				<tr>
 					<th>이미지</th>
 					<td colspan="3"><img
-						src="${pageContext.request.contextPath}/resources/images/rest.jpg"
+						src="${pageContext.request.contextPath}/resources/images/forestImg/${dto.forestFilename}.jpg"
 						style="width: 600px; height: 400px;" /><br /> <%-- ${dto.forestFilename } --%>
 					</td>
 				</tr>
@@ -248,10 +258,11 @@
 		</script>
 	</div>
 	<!-- 테이블과 지도 묶기 끝-->
-
-
+<div style="margin:20px 20px;margin-top: 40px">
+<span style="vertical-align: middle; font-size: 45px; text-shadow:3px 3px gray; color: black!important; font-family: cursive!important;">
+		이용가능 숙박</span></div>
 	<table id="listTable" cellspacing="0" border="0">
-		<div style="background-color: #ccffcc;"><h1>이용가능 숙박</h1></div>
+		
 		<tr>
 			<th>숙박이미지</th>
 			<th>숙박이름</th>
@@ -266,5 +277,7 @@
 
 
 	</table>
+
+</div>
 </body>
 </html>

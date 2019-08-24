@@ -16,19 +16,30 @@ $(function(){
 }) 	
 </SCRIPT>
 
-
+<style type="text/css">
+#updateTable th{
+	background-color: black;
+	color: white;
+}
+#updateTable td{
+	background-color: white;
+}
+</style>
 </HEAD>
 <BODY>
+<%@ include file="background.jsp" %>
+<div id="back">
+
+<div style="margin:20px 20px;margin-top: 40px; text-align:center;">
+<span style="vertical-align: middle;  font-size: 60px; text-shadow:3px 3px gray; color: black!important; font-family: cursive!important;">
+휴양림 정보 등록</span></div>
+
 <form name="updateForm" method="post" action="${pageContext.request.contextPath}/forest/update?${_csrf.parameterName}=${_csrf.token}" 
  enctype="multipart/form-data" style="margin-top: 100px;">
 
-<table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
+<table align="center" cellpadding="5" cellspacing="2" width="600" border="1" id="updateTable">
   	<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
-    <tr>
-        <td width="1220" height="20" colspan="2" bgcolor="black">
-            <p align="center"><font color="white" size="6"><b>휴양림 정보수정</b></font></p>
-        </td>
-    </tr>
+    
     <tr>
         <th width="150" height="20" >
             <p align="right"><b><span style="font-size:12pt;">휴양림이름</span></b></p>
@@ -44,56 +55,56 @@ $(function(){
 		<input type=text name="forestType" value="${forestDTO.forestType}" size="30"></span></b></td>
     </tr>
     <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">주요 시설</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20"><b><span style="font-size:12pt;">
 		<input type=text name="forestFacil" value="${forestDTO.forestFacil}" size="30" style="height: 100px"></span></b></td>
     </tr>
 
     <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">휴양림 주소</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20"><b><span style="font-size:12pt;">
 		<input type=text name="forestAddr" value="${forestDTO.forestAddr}" size="30"></span></b></td>
     </tr>
     <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">휴양림전화번호</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20" ><b><span style="font-size:12pt;">
 		<input type=text name="forestTel" value="${forestDTO.forestTel}" size="30"></span></b></td>
     </tr>
     
     <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">지역</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20" ><b><span style="font-size:12pt;">
 		<input type=text name="city" value="city" size="30"></span></b></td>
     </tr>
     
     <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">작성자</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20" ><b><span style="font-size:12pt;">
 		<input type=text name="forestWriter" value="${forestDTO.forestWriter}" size="30"></span></b></td>
     </tr>
     
     <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">원본이미지</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20" ><b><span style="font-size:12pt;">
-		<%-- <img src="${pathContext.request.contextPath}/views/forest/save/${forestDTO.fileName}" width="200" height"180"></span></b></td> --%>
+		<img src="${pageContext.request.contextPath}/resources/images/forestImg/${forestDTO.forestFilename}.jpg" width="200" height"180"></span></b></td>
     </tr>
     
      <tr>
-        <td width="150" height="20">
+        <th width="150" height="20">
             <p align="right"><b><span style="font-size:12pt;">수정이미지 파일</span></b></p>
-        </td>
+        </th>
         <td width="450" height="20">
         	<b><span style="font-size:9pt;">
         		 <input type="file" name="forestFile" maxlength="60" size="40">
@@ -113,5 +124,5 @@ $(function(){
 </form>
 
 <hr>
-
+</div>
 </BODY>

@@ -35,6 +35,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 
+
 /* body>*
 {
 	margin : 0px;
@@ -176,6 +177,9 @@ $(function(){
 </head>
 <body>
 
+<%@ include file="background.jsp" %>
+<div id="back">
+
 <c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
 
 <div style="margin-bottom: 10px">
@@ -296,6 +300,6 @@ $(function(){
 	  	</li>
 	</c:if>
 </ul>
-
+</div>
 </body>
 </html>
