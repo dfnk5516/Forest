@@ -20,16 +20,9 @@ public class TravelInformationAjaxController
 	@Autowired
 	private TravelInformationService service;
 	
-	/**
-	 * array를 json 으로 변환하여 응답하기
-	 * :pom.xml 문서 jackson-databind lib를 추가하면
-	 * @Responsebody로 리턴하는 자바객체를 알아서
-	 * json변환해준다.
-	 */
 	@RequestMapping(value = "/travelInformationAjax/city", produces = {"application/json;charset=UTF-8"})
 	public List<String> selectCity()
 	{
-		System.out.println("sss");
 		return service.selectCity();
 	}
 	
@@ -112,24 +105,20 @@ public class TravelInformationAjaxController
 /////////////////////////////////////////////
 	
 	@RequestMapping("/sightsUpdate")
-	public int sightsUpdate(SightsDTO dto, String selectedSightsName) {
-		//System.out.println(selectedSightsName);
-		
+	public int sightsUpdate(SightsDTO dto, String selectedSightsName)
+	{
 		return service.updateSights(dto, selectedSightsName);
 	}
 	
 	@RequestMapping("/festivalUpdate")
-	public int festivalUpdate(FestivalDTO dto, String selectedFestivalName) {
-		System.out.println(selectedFestivalName);
-		System.out.println(dto);
-		
+	public int festivalUpdate(FestivalDTO dto, String selectedFestivalName)
+	{
 		return service.updateFestival(dto, selectedFestivalName);
 	}
 	
 	@RequestMapping("/videoUpdate")
-	public int videoUpdate(VideoDTO dto, String selectedVideoName) {
-		//System.out.println(selectedSightsName);
-		
+	public int videoUpdate(VideoDTO dto, String selectedVideoName)
+	{
 		return service.updateVideo(dto, selectedVideoName);
 	}
 }

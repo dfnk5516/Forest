@@ -11,7 +11,6 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 <script type="text/javascript">
-	//console.log(sightsNameArray);
 	var sightsArray;
 	var festivalArray;
 	var videoArray;
@@ -21,7 +20,8 @@
 	var selectedLiIndex;
 	
 	var videoSelectedLi;
-	var videoSelectedIndex;
+	var videoSelectedLiIndex;
+	var videoMoveCheck = false;
 	
 	function sightsListInit()
 	{
@@ -30,7 +30,8 @@
 	
 	function sightsSelect()
 	{
-		$.ajax({
+		$.ajax(
+		{
 			url: "${path}/sightsSelect", //서버주소
 			type :"post" , //전송방식(get, post, put, delete)
 			data : "${_csrf.parameterName}=${_csrf.token}",
@@ -54,7 +55,8 @@
 	}
 	
 	function festivalSelect(){
-		$.ajax({
+		$.ajax(
+		{
 			url: "${path}/festivalSelect", //서버주소
 			type :"post" , //전송방식(get, post, put, delete)
 			data : "${_csrf.parameterName}=${_csrf.token}",
@@ -154,14 +156,13 @@
 		});
 	}
 	
-	function listItemSelect(index, selected)
+	function listItemSelect(index, list)
 	{
 		if(selectedLi != null)
 		{
 			$(selectedLi).removeClass("selectedLi");
-			selectedLiIndex = null;
 		}
-		selectedLi = selected;
+		selectedLi = list;
 		selectedLiIndex = index;
 		$(selectedLi).addClass("selectedLi");
 		
@@ -195,8 +196,6 @@
 		{
 			$("#videoName").val(replaceStr(videoArray[index].videoName));
 			$("#videoSrc").val(replaceStr(videoArray[index].videoSrc));
-			$("#videoImageSrc").val(replaceStr(videoArray[index].videoImageSrc));
-			document.getElementById("videoImage").src = replaceStr(videoArray[index].videoImageSrc);
 			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + replaceStr(videoArray[index].videoSrc) + "?autoplay=1&version=3&loop=1&playlist=" + replaceStr(videoArray[index].videoSrc);
 		}
 	}
@@ -230,8 +229,6 @@
 		{
 			$("#videoName").val("");
 			$("#videoSrc").val("");
-			$("#videoImageSrc").val("");
-			document.getElementById("videoImage").src = "";
 			document.getElementById("videoFrame").src = "";
 		}
 	}
@@ -349,7 +346,6 @@
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
 			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
 			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
-			datas += "&&videoImageSrc=" + encodeURIComponent($("#videoImageSrc").val());
 			
 			$.ajax(
 			{
@@ -444,7 +440,6 @@
 			datas += "&&selectedVideoName=" + encodeURIComponent(replaceStr(videoArray[selectedLiIndex].videoName));
 			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
 			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
-			datas += "&&videoImageSrc=" + encodeURIComponent($("#videoImageSrc").val());
 	
 			$.ajax(
 			{
@@ -566,8 +561,10 @@
         });
       }
 
-      function init() {
-        gapi.client.setApiKey('AIzaSyCMmyUg7rkL6cJrAvvXxpze8Vm0Vz1q8Js');
+      function init()
+      {
+		//gapi.client.setApiKey('AIzaSyCMmyUg7rkL6cJrAvvXxpze8Vm0Vz1q8Js');
+        gapi.client.setApiKey('AIzaSyCYGcvsL6xaJ56KYG04pxBQ00xlP5PRM_4');
         gapi.client.load('youtube', 'v3', function() {
           data = jQuery.parseJSON( '{ "data": [{"name":"orsons"}] }' );
           $.each(data["data"], function(index, value) {
@@ -575,13 +572,6 @@
           });
         });
       }
-//{"kind":"youtube#searchListResponse","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/l8TeZ8660h0ZbJLCgcSUMv28FK4\"","nextPageToken":"CAUQAA","regionCode":"KR","pageInfo":{"totalResults":11580,"resultsPerPage":5},"items":[{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/nKPCc2DS28ORkG_Cvga4w2ZAh1c\"","id":{"kind":"youtube#video","videoId":"JEJDcGmCbyE"},"snippet":{"publishedAt":"2015-02-26T04:16:30.000Z","channelId":"UCWJBLAsdmc044JYd8S4uc2g","title":"Davichi - Turtle (다비치-거북이) 가사/듣기/3699fa","description":"거북아 그 속도론 멀리 못 도망가 게다가 그길은 더 멀고 험하잖아 상처가 아물고 다 나으면 떠나가 진심이야 그럼 그 때 보내 줄 테니까 숨지마...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/JEJDcGmCbyE/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/JEJDcGmCbyE/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/JEJDcGmCbyE/hqdefault.jpg","width":480,"height":360}},"channelTitle":"MINSANG","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/oQh-lMKPEoE3X-888F5ExbqMN_I\"","id":{"kind":"youtube#video","videoId":"KuPY3DBtveg"},"snippet":{"publishedAt":"2013-05-01T16:23:47.000Z","channelId":"UCkYiXfJHw9m-SV2w719kPXA","title":"[HD] Davichi (다비치) - Turtle (거북이) @ KPop Collection in Seoul","description":"https://www.facebook.com/pages/The-CCM-World/424562547615124 https://twitter.com/TheCCMWorld.","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/KuPY3DBtveg/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/KuPY3DBtveg/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/KuPY3DBtveg/hqdefault.jpg","width":480,"height":360}},"channelTitle":"T-ara Fansub France","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/L-bvE2O8Lx7yT6_6B0pJ6Cjrhqo\"","id":{"kind":"youtube#video","videoId":"mG59-VflY8M"},"snippet":{"publishedAt":"2013-03-29T02:19:10.000Z","channelId":"UCe52oeb7Xv_KaJsEzcKXJJg","title":"Davichi - Turtle, 다비치 - 거북이, Show champion 20130327","description":"Did you enjoy this video? Plz click \"like\"! ☞ For more awesome videos, subscribe our channels!! Daily update available! ☞ Click here for listening to other K-pop ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/mG59-VflY8M/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/mG59-VflY8M/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/mG59-VflY8M/hqdefault.jpg","width":480,"height":360}},"channelTitle":"MBCkpop","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/rEeE0tQqRYJ6c1WH5l6fPrDh3ro\"","id":{"kind":"youtube#video","videoId":"ykAoxJCZG8w"},"snippet":{"publishedAt":"2013-03-04T03:02:01.000Z","channelId":"UCweOkPb1wVVH0Q0Tlj4a5Pw","title":"[MV] Davichi(다비치)_Turtle(거북이)","description":"[MV] Davichi(다비치)_Turtle(거북이) *English subtitles are now available. :D (Please click on 'CC' button or activate 'Interactive Transcript' function) ** :: iTunes ...","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/ykAoxJCZG8w/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/ykAoxJCZG8w/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/ykAoxJCZG8w/hqdefault.jpg","width":480,"height":360}},"channelTitle":"1theK (원더케이)","liveBroadcastContent":"none"}},{"kind":"youtube#searchResult","etag":"\"8jEFfXBrqiSrcF6Ee7MQuz8XuAM/-RFfAjSNJDg0YC4858B0VHEoJc8\"","id":{"kind":"youtube#video","videoId":"9yuCGsnsXqQ"},"snippet":{"publishedAt":"2018-05-14T09:03:58.000Z","channelId":"UCACsUruxumQoyZq08UB9RVw","title":"거북이","description":"Provided to YouTube by Interpark Corp 거북이 · 다비치 MYSTIC BALLAD Part.1 ℗ 2018 Interpark Released on: 2013-03-04 Auto-generated by YouTube.","thumbnails":{"default":{"url":"https://i.ytimg.com/vi/9yuCGsnsXqQ/default.jpg","width":120,"height":90},"medium":{"url":"https://i.ytimg.com/vi/9yuCGsnsXqQ/mqdefault.jpg","width":320,"height":180},"high":{"url":"https://i.ytimg.com/vi/9yuCGsnsXqQ/hqdefault.jpg","width":480,"height":360}},"channelTitle":"Davichi - Topic","liveBroadcastContent":"none"}}]}
-//"videoId":"
-//JEJDcGmCbyE
-//KuPY3DBtveg
-//mG59-VflY8M
-//ykAoxJCZG8w
-//9yuCGsnsXqQ
 </script>
 </head>
 <body id = "ContentBody" onload = "sightsListInit()">
@@ -760,31 +750,19 @@
 					<form id = "videoForm" method = "post" action = "" style = "height : 100%">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "videoTableUl" style = "width : 100%; height : 100%">
-							<li class = "clearfix" style = "width : 100%; height : 10%;">
+							<li class = "clearfix" style = "width : 100%; height : 20%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 10%;">
+							<li class = "clearfix" style = "width : 100%; height : 20%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">영상 경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 10%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">배너 경로</div>
-								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<input type = "text" id="videoImageSrc" class = "textBox" style = "width : 100%; height : 100%;">
-								</div>
-							</li>
-							<li class = "clearfix" style = "width : 100%; height : 30%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">배너</div>
-								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<img id="videoImage" class = "textBox" style = "width : 100%; height : 100%;">
-								</div>
-							</li>
-							<li style = "width : 100%; height : 40%;">
+							<li style = "width : 100%; height : 60%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
@@ -812,7 +790,7 @@
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
 				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
-					<input type = "button" value = "정보 추가" class = "formButton" style = "width : 100%; height : 100%">
+					<input type = "button" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%"/>
 				</div>
 			</div>
 			<div id = "" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
@@ -823,28 +801,22 @@
 					<form id = "" method = "post" action = "" style = "height : 100%">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "" style = "width : 100%; height : 100%">
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
+							<li class = "clearfix" style = "width : 100%; height : 20%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<input type = "text" id="" class = "textBox" style = "width : 100%; height : 100%;">
+									<input type = "text" id="searchVideoName" class = "textBox" style = "width : 100%; height : 100%;" readonly>
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
+							<li class = "clearfix" style = "width : 100%; height : 20%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<input type = "text" id="" class = "textBox" style = "width : 100%; height : 100%;">
+									<input type = "text" id="searchVideoSrc" class = "textBox" style = "width : 100%; height : 100%;" readonly>
 								</div>
 							</li>
-							<li class = "clearfix" style = "width : 100%; height : 15%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">길이</div>
-								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<input type = "text" id="" class = "textBox" style = "width : 100%; height : 100%;">
-								</div>
-							</li>
-							<li style = "width : 100%; height : 55%;">
+							<li style = "width : 100%; height : 60%;">
 								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
-									<iframe id = "" style = "width : 100%; height : 100%" src="" ></iframe>
+									<iframe id = "searchVideoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
 								</div>
 							</li>
 						</ul>

@@ -8,7 +8,7 @@ function search()
 {
 	alert(3);
 	var q = $('#searchTextBox').val();
-	var request = gapi.client.youtube.search.list(
+	/*var request = gapi.client.youtube.search.list(
 	{
 		part: 'snippet',
 		type : 'video',
@@ -35,5 +35,5 @@ function search()
 			str += "<div style = 'width : 70%; overflow : hidden;' class = 'floatDiv'>" + item.snippet.title + "</div></li>";
 		})
 		document.getElementById("searchVideoUl").innerHTML = str;
-	});
+	});*/
 }

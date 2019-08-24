@@ -44,7 +44,9 @@ input[type = "button"][class = "formButton"]
  	border : 0rx
  }
  
- ul[id = "listUl"]>li
+ 
+ul[id = "listUl"]>li,
+ul[id = "searchVideoUl"]>li
 {
 	color : #1E1E1E;
 	border : 0;
@@ -54,7 +56,8 @@ input[type = "button"][class = "formButton"]
 	width : 100%;
 }
 
-ul[id = "listUl"]>li
+ul[id = "listUl"]>li,
+ul[id = "searchVideoUl"]>li
 {
 	line-height : 14px;
 	font-size : 14px;
@@ -62,17 +65,20 @@ ul[id = "listUl"]>li
 	background-color : #F2F2F2;
 }
 
-ul[id = "listUl"]>li:focus
+ul[id = "listUl"]>li:focus,
+ul[id = "searchVideoUl"]>li:focus
 {
 	background-color : #F2F2F2;
 }
 
-ul[id = "listUl"]>li:hover
+ul[id = "listUl"]>li:hover,
+ul[id = "searchVideoUl"]>li:hover
 {
 	background-color : #8A8A8A;
 }
 
-ul[id = "listUl"]>li
+ul[id = "listUl"]>li,
+ul[id = "searchVideoUl"]>li
 {
 	cursor : pointer;
 }
@@ -80,12 +86,16 @@ ul[id = "listUl"]>li
 ul[id = "listUl"]>li#ColumnL,
 ul[id = "listUl"]>li#ColumnL:focus
 {
+	cursor : default;
 	background-color : #F2F2F2;
 }
 
 ul[id = "listUl"]>li.selectedLi,
 ul[id = "listUl"]>li.selectedLi:hover,
-ul[id = "listUl"]>li.selectedLi:focus
+ul[id = "listUl"]>li.selectedLi:focus,
+ul[id = "searchVideoUl"]>li.selectedLi,
+ul[id = "searchVideoUl"]>li.selectedLi:hover,
+ul[id = "searchVideoUl"]>li.selectedLi:focus
 {
 	background-color : #8A8A8A;
 }
