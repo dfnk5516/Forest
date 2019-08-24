@@ -46,7 +46,11 @@
 					<nav id="nav">
 						<ul>
 							<li class="active"><a href="hometest">Home</a></li>
-							<li><a href="#">통합 예약</a></li>
+							<li><a href="#">통합 예약</a>
+								<ul>
+									<li><a href="${pageContext.request.contextPath}/forest/list">통합 예약</a></li>
+								</ul>
+							</li>
 							<li><a href="#">여행 정보</a>
 								<ul>
 									<li><a href="${pageContext.request.contextPath}/travelInformation">여행 정보</a></li>
