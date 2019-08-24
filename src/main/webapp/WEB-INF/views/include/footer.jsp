@@ -6,7 +6,8 @@
 </head>
 <body>
 	<!-- Footer -->
-	<div id="footer">
+	<hr>
+	<div id="footer" style="color:black;">
 		<section class="container">
 			<header class="major">
 				<h2>Connect with us</h2>
@@ -15,7 +16,7 @@
 		</section>	
 		<!-- Copyright -->
 		<div id="copyright">					
-			<a href="http://templated.co">개인정보처리방침</a> | <a href="http://unsplash.com">홈페이지이용약관</a> | <a href="http://unsplash.com/cc0">민감정보수집및동의</a>
+			<a href="">개인정보처리방침</a> | <a href="">홈페이지이용약관</a> | <a href="">민감정보수집및동의</a>
 		</div>			
 	</div>
 </body>
