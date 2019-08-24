@@ -11,6 +11,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/booking.css" />
+
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.min.js"></script>
 <title>Insert title here</title>
 <c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
@@ -23,7 +26,9 @@ $(function(){
 </SCRIPT>
 
 <style type="text/css">
-
+li {
+	margin:30px 0px;
+}
 </style>
 
 </HEAD>
@@ -54,30 +59,50 @@ $(function(){
             <div class="stayroom charge_wrap">
                 <div class="stay_left">
                     <div class="stay_border"><div class="stay_info">
-                        <div class="st_img">
-                        	<img src="https://image.foresttrip.go.kr//ino/goods/2017_07_28_13_41_250.jpg" alt="야영데크(101)" onerror="this.src = '/images/common/no_img.gif'; this.alt = '표시할 이미지 없습니다';">    
-                        </div>    
-                    	<div class="st_con">
-                    		<div class="con_tp">
-                    			<ul>
-									<li>
-										<div class="st_tit">산림휴양시설</div>
-										<span class="st_txt">대관령 자연휴양림</span>
-									</li>
-									<li>
-									    <span class="st_tit">시설</span>
-									    <span class="st_txt">야영데크(101)(13㎡) 기준:1인 최대:4인</span>
-									</li>
-									<li>
-									    <span class="st_tit">숙박기간</span>    
-									    <span class="st_txt">2019.09.16 ~ 2019.09.17 (1박2일)</span>
-									</li>
-									<li>
-										<span class="st_tit">편의시설</span>
-										<span class="st_txt">샤워장,화장실,온수샤워장,취사대,음수대</span>
-									</li>
-								</ul>
-							</div>
+        <h2>{휴양림 이름}</h2>	
+		<table class="table" border="1" style="height: 600px;">
+			<colgroup>
+				<col width="250px">
+				<col width="250px">
+			</colgroup>
+			<tbody>
+
+				<tr>
+					<td colspan="2">
+					<%-- <img src="${pageContext.request.contextPath}/resources/images/forestImg/${dto.forestFilename}.jpg"
+						style="width: 600px; height: 400px;" /><br /> --%> <%-- ${dto.forestFilename } --%>
+					<img src="https://image.foresttrip.go.kr//ino/goods/2017_07_28_13_41_250.jpg">
+					</td>
+				</tr>
+				<tr>
+					<td>${dto.forestName }</td>
+
+					<td>${dto.forestType }</td>
+				</tr>
+				<tr>
+					<td colspan="3">${dto.forestFacil}<br><p></td>
+				</tr>
+				<tr>
+					<td colspan="3">${dto.forestAddr}</td>
+				</tr>
+				<tr>
+					<td>${dto.forestWriter }</td>
+
+					<td>${dto.forestTel }</td>
+				</tr>
+			</tbody>
+			<tfoot>
+			</tfoot>
+		</table>
+		<div class="regend_icGroup">
+		    <span class="ti"><b>범례 : </b></span>
+		    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_2.png" alt=""> 에어컨</span>
+		    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_3.png" alt=""> 반려견</span>
+		    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt=""> 전기</span>
+		    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt=""> 온수</span>
+		    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_6.png" alt=""> 장애인시설</span>
+		    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_7.png" alt=""> 바우처 </span>
+		</div> 
 						</div>
 					</div>
 				</div>
@@ -85,22 +110,28 @@ $(function(){
 
 
 
-<div class="regend_icGroup">
-    <span class="ti"><b>범례 : </b></span>
-    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_2.png" alt=""> 에어컨</span>
-    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_3.png" alt=""> 반려견</span>
-    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_4.png" alt=""> 전기</span>
-    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_5.png" alt=""> 온수</span>
-    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_6.png" alt=""> 장애인시설</span>
-    <span><img src="https://image.foresttrip.go.kr/portal/images/content/ic_7.png" alt=""> 바우처 </span>
-</div> 
+
 
                     </div>
                 </div>
                 <div class="stay_right">
                     <div class="stay_result_border complete">
-                        <strong>예약선택</strong>
-                        <div class="money_wrap mb_40"><ul><li><b>이용일</b>2019.09.16~2019.09.17(1박2일)</li><li><b>기준인원</b>1명</li><li><b>시설</b>야영데크(101),4인실(13㎡)</li></ul></div>
+                        <h2><i class='fas fa-bed' style='font-size:36px'></i>{숙박이름} 예약선택</h2>
+                        <div class="money_wrap mb_40">
+                        <ul>
+                          <li>
+                            <b>숙박 이용일</b><br>
+                            <i class='far fa-calendar-alt' style='font-size:30px'></i>체크인 날짜 &nbsp;&nbsp;&nbsp;&nbsp;- <input type="date"><br>
+                            <i class='fas fa-calendar-alt' style='font-size:30px'></i>체크아웃 날짜 - <input type="date">
+                          </li>
+                          <li>
+                            <b>기준인원</b><br>
+                            <i class='fas fa-user-check' style='font-size:25px'></i> &nbsp;<input type="number" name="quantity" min="1" max="100"> 명 
+                          </li>
+                          <li><b>시설</b>야영데크(101),4인실(13㎡)
+                          </li>
+                        </ul>
+                     	</div>
                         <strong>예약금액</strong>
                         <div class="result_total"><div class="days_ch"><span class="d_left">2019.09.16(비수기/평일)<span class="d_right">7,000원</span></span></div></div>
                         <div class="total">
@@ -143,30 +174,20 @@ $(function(){
                             <div class="form_style">
                                 <input type="text" id="cmdogTwoRgno" name="cmdogTwoRgno" value="" title="반려견 등록번호 2" maxlength="15" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
                             </div>
-                        </div>
+                        </div><br>
+                        <hr>
                         <!--  반려견 등록번호 입력(2019.07.19) -->
                         
-						<div class="agree_btc mt_40">
-						    <p class="center war_tit">유의사항 및 이용약관을 확인하신 후<br> 동의하시면 체크해주세요.</p>
-						    <div class="mt_10 agree_ra_bt">
-						        <label for="arr_01">
-						            <input id="arr_01" type="checkbox" name="agree" lang="required" title="이용약관 동의"> <span>약관에 동의합니다.</span>
-						        </label>
-						    </div>
-						</div>
+						
                         
-                        <div class="total_go">
-                            <button type="button" id="btnRsrvt" onclick="fn_clickRsrvtRqest(); return false;">예약</button>
-                            <button type="button" id="btnWtng" onclick="fn_clickWtngRqest(); return false;" style="display:none;">대기신청</button>
-                            
-                        </div>
+                        
                     </div>
                 </div>
             </div>
             
             
             
-                
+                <div style="text-align: center;">
                     <div style="margin-top:50px;">
                         <div class="agree_wrap basic type02 fold_list">
                 
@@ -176,8 +197,23 @@ $(function(){
                 
                         </div>
                     </div>
-                
-                
+                    <hr>
+                <div class="agree_btc mt_40">
+				    <p class="center war_tit">※유의사항 및 이용약관을 확인하신 후 동의하시면 체크해주세요.</p>
+				    <div class="mt_10 agree_ra_bt">
+				        <label for="arr_01">
+				            <input id="arr_01" type="checkbox" name="agree" lang="required" title="이용약관 동의"> <span>약관에 동의합니다.</span>
+				        </label>
+				    </div>
+				</div>
+                <div class="total_go">
+	                <button type="button" class="btn btn-success" id="insert" style="font-size:large;">
+						예약완료
+					</button>
+                </div>
+                </div> 
+                <hr>
+                <br>
 <div class="container">
   <h2><b>위약금 정책</b></h2>
   <br>            
