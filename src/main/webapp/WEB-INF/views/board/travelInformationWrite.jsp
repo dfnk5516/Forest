@@ -22,6 +22,7 @@
 	var videoSelectedLi;
 	var videoSelectedLiIndex;
 	var videoMoveCheck = false;
+	var apiKey = "AIzaSyCYGcvsL6xaJ56KYG04pxBQ00xlP5PRM_4";
 	
 	function sightsListInit()
 	{
@@ -541,37 +542,66 @@
 		}
 		return null;
 	}
-	
-	function makeRequest(q) {
-        var request = gapi.client.youtube.search.list({
-          q: q,
-          part: 'snippet',
-          maxResults: 3
-        });
 
-        request.execute(function(response) {
-          $('#results').empty();
-          var resultItems = response.result.items;
-          $.each(resultItems, function(index, item) {
-            vidTitle = item.snippet.title;
-            vidThumburl =  item.snippet.thumbnails.url;
-            vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:204px;height:128px"></pre>';
-            $('#results').append('<pre>' + vidTitle + vidThumbimg +  '</pre>');
-          });
-        });
-      }
-
-      function init()
-      {
+	function init()
+	{
 		//gapi.client.setApiKey('AIzaSyCMmyUg7rkL6cJrAvvXxpze8Vm0Vz1q8Js');
-        gapi.client.setApiKey('AIzaSyCYGcvsL6xaJ56KYG04pxBQ00xlP5PRM_4');
-        gapi.client.load('youtube', 'v3', function() {
-          data = jQuery.parseJSON( '{ "data": [{"name":"orsons"}] }' );
-          $.each(data["data"], function(index, value) {
-            makeRequest(value["name"]);
-          });
-        });
-      }
+		gapi.client.setApiKey('AIzaSyCYGcvsL6xaJ56KYG04pxBQ00xlP5PRM_4');
+		gapi.client.load('youtube', 'v3', function() {});
+	}
+	function search()
+	{
+		//alert(3);
+		var q = $('#searchTextBox').val();
+		var request = gapi.client.youtube.search.list(
+		{
+			part: 'snippet',
+			type : 'video',
+			q: q,
+			maxResults : 10,
+			order : 'viewCount',
+		});
+
+		request.execute(function(response)
+		{
+			var results = response.result;
+			var str = "";
+			searchVideoArray = new Array();
+			
+			$.each(results.items, function(index, item)
+			{
+				//alert(item.snippet.title);
+				//alert(item.id.videoId);
+				//alert(item.snippet.thumbnails.high.url);
+				
+				videoMap = new Map();
+				videoMap.set('videoName', item.snippet.title);
+				videoMap.set('videoSrc', item.id.videoId);
+				searchVideoArray.push(videoMap);
+				
+				str += "<li onclick = 'videoListItemSelect(" + index + ", this)' style = 'width : 100%; height : auto;' class = 'clearfix listLi'>";
+				str += "<div style = 'width : 30%; height : 100%; overflow : hidden;' class = 'floatDiv'>";
+				str += "<img style = 'width : 100%; height : 100%;' src = '" + item.snippet.thumbnails.high.url +"'/></div>";
+				str += "<div style = 'width : 70%; height : 100%' class = 'floatDiv'>";
+				str += "<div style = 'width : 100%; height : 20%; overflow : hidden;'>" + item.snippet.title + "</div>";
+				str += "<div style = 'width : 100%; height : 80%; overflow : hidden;'>" + item.snippet.description + "</div></div></li>";
+				//alert(searchVideoArray[index].get('videoName'));
+			})
+			document.getElementById("searchVideoUl").innerHTML = str;
+		});
+	}
+	
+	function videoListItemSelect(index, list)
+	{
+		if(videoSelectedLi != null)
+		{
+			$(videoSelectedLi).removeClass("selectedLi");
+		}
+		videoSelectedLi = list;
+		videoSelectedLiIndex = index;
+		$(videoSelectedLi).addClass("selectedLi");
+	}
+
 </script>
 </head>
 <body id = "ContentBody" onload = "sightsListInit()">
@@ -783,10 +813,12 @@
 					<div style = "width : 100%; height : 30%">
 						<span>영상 검색</span>
 					</div>
-					<div id = "search-box-wrapper" style = "width : 100%; height : 70%">
-						<input type = "text" id = "searchTextBox" style = "height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
-						<button id = "search-box-button" onclick="search()" style = "height : 100%">&#128269;</button>
-					</div>
+					<form style = "width : 100%; height : 70%" action="#" onSubmit="return search()">
+						<div id = "search-box-wrapper" style = "width : 100%; height : 100%">
+							<input type = "text" id = "searchTextBox" style = "height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
+							<button id = "search-box-button" style = "height : 100%">&#128269;</button>
+						</div>
+					</form>
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
 				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
@@ -827,8 +859,6 @@
 		</div>
 		<div class = "floatDiv"></div>
 	</div>
-	
-    <script src="${path}/resources/js/search.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
 </body>
 </html>
