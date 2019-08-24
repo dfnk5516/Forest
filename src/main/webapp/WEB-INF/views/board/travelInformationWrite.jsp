@@ -104,9 +104,9 @@
 				{
 					if(videoSelectedLi != null)
 					{
-						$("#searchVideoName").val(replaceStr(searchVideoArray[videoSelectedLiIndex].get('videoName')));
-						$("#searchVideoSrc").val(searchVideoArray[videoSelectedLiIndex].get('videoSrc'));
-						document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[videoSelectedLiIndex].get('videoSrc') + "?autoplay=1&version=3&loop=1&playlist=" + searchVideoArray[videoSelectedLiIndex].get('videoSrc');
+						$("#videoName").val($("#searchVideoName").val());
+						$("#videoSrc").val($("#searchVideoSrc").val());
+						document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + $("#searchVideoSrc").val() + "?autoplay=0&version=3&loop=1&playlist=" + $("#searchVideoSrc").val();
 					}
 					videoMoveCheck = false;
 				}
@@ -551,9 +551,9 @@
 			replacedStr = string.replace(/&amp;/gi, '&');
 			replacedStr = replacedStr.replace(/&lt;/gi, '<');
 			replacedStr = replacedStr.replace(/&gt;/gi, '>');
-			replacedStr = replacedStr.replace(/&#39;/gi, '`');
+			replacedStr = replacedStr.replace(/&#39;/gi, "'");
 			//replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
-			replacedStr = replacedStr.replace(/&#x27;/gi, '&quot;');
+			replacedStr = replacedStr.replace(/&#x27;/gi, "'");
 			replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
 			return replacedStr;
 		}
@@ -635,7 +635,7 @@
 		{
 			$("#videoName").val($("#searchVideoName").val());
 			$("#videoSrc").val($("#searchVideoSrc").val());
-			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[videoSelectedLiIndex].get('videoSrc') + "?autoplay=1&version=3&loop=1&playlist=" + searchVideoArray[videoSelectedLiIndex].get('videoSrc');
+			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + searchVideoArray[videoSelectedLiIndex].get('videoSrc') + "?autoplay=0&version=3&loop=1&playlist=" + searchVideoArray[videoSelectedLiIndex].get('videoSrc');
 		}
 	}
 
