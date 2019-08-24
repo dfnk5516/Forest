@@ -589,6 +589,8 @@
 			})
 			document.getElementById("searchVideoUl").innerHTML = str;
 		});
+		
+		return false;
 	}
 	
 	function videoListItemSelect(index, list)
@@ -606,10 +608,10 @@
 </head>
 <body id = "ContentBody" onload = "sightsListInit()">
 	<!-- Main -->
-	<div id="main" class="wrapper style2 clearfix">
+	<div id="main" class="wrapper style2 clearfix" style = "width : 100%">
 		<div class = "floatDiv"></div>
 			
-		<div class = "floatDiv" style = "width : 100%;  height : 1620px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
+		<div id = "tableDiv" class = "floatDiv" style = "width : 100%;  height : 1620px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
 			<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
 					<label class = "radioLable">
@@ -806,8 +808,8 @@
       				<label> <input id="query" value='cats' type="text"/><button id="search-button" onclick="search()">Search</button></label>
     			</div>
    				<div id="search-container"></div-->
-   			<div id = "" style = "width : 100%; height : 5%">
-   			</div>
+   			<div id = "" style = "width : 100%; height : 5%"></div>
+   			
    			<div id = "" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "" class = "floatDiv" style = "width : 50%; height : 100%">
 					<div style = "width : 100%; height : 30%">
@@ -815,7 +817,7 @@
 					</div>
 					<form style = "width : 100%; height : 70%" action="#" onSubmit="return search()">
 						<div id = "search-box-wrapper" style = "width : 100%; height : 100%">
-							<input type = "text" id = "searchTextBox" style = "height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
+							<input type = "text" id = "searchTextBox" style = "width : 100%; height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
 							<button id = "search-box-button" style = "height : 100%">&#128269;</button>
 						</div>
 					</form>

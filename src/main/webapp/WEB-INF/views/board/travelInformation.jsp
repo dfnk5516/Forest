@@ -708,9 +708,9 @@
 
 <title>For Rest : 휴양림 예약 사이트</title>
 </head>
-<body id = "tavelInformationBody" onload = "travelInformationInit()" >
+<body id = "tavelInformationBody" style = "width : 100%;" onload = "travelInformationInit()" >
 	<!-- Main -->
-	<div id="main" class="wrapper style2 clearfix" style = "vertical-align: top;">
+	<div id="main" class="wrapper style2 clearfix" style = "width : 100%; vertical-align: top;">
 		<div id = "videoContainerDiv" class = "floatDiv" style = "width : 25%; height : 100%; vertical-align: top;" >
 			<div id = "ScrollMarginDiv" style = "width : 100%; "></div>
 			<div id = "videoControllerDiv" style = "width : 100%;  text-align : center;">
@@ -734,18 +734,18 @@
 			</div>
 		</div>
 		<div class = "floatDiv" style = "width : 70%; height : 100%;" id = "travelInformation">
-			<header class="major">
+			<header class="major" style = "width : 100%;">
 				<div id = "travelInformationHeader">여행 정보 검색</div>
 			</header>				
 			<span id = "travelInformationExplain" class="byline">휴양림 주변 관광지, 행사 정보 검색</span>
 			<form name="searchForm" id = "searchForm" style = "width : 100%">
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-				<div id = "radioGroup">
+				<div id = "radioGroup" style = "width : 100%">
 					<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
 					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
 				</div>
 				<p>
-				<div id = "searchGroup">
+				<div id = "searchGroup" style = "width : 100%">
 					<div id = "select-box-wrapper" style = "width : 100%">
 						<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
 							<option>시/도 선택</option>
@@ -759,7 +759,7 @@
 					</div>
 						
 					<div id = "search-box-wrapper" style = "width : 100%">
-						<input type = "text" id = "textBox" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
+						<input type = "text" id = "textBox" style = "width : 100%" class = "search-box-input" onkeyup="searchByName(this)" placeholder = "휴양림 이름 입력"/>
 						<button id = "search-box-button">&#128269;</button>
 					</div>
 				</div>

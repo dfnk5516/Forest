@@ -1,7 +1,10 @@
 div[id = "main"]
 {
-	padding-left: 15%;
-	padding-right:15%;
+	padding-top : 3%;
+	padding-bottom : 3%;
+	font-size : 20px;
+	line-height : 20px;
+	background-color : #F2F2F2;
 }
 div[class = "floatDiv"]
 {

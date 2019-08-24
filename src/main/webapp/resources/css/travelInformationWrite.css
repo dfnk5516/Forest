@@ -1,7 +1,12 @@
 div#main
 {
-	padding-left: 15%;
-	padding-right:15%;
+	padding-left: 5%;
+	padding-right:5%;
+	padding-top: 3%;
+	padding-bottom:3%;
+	font-size : 20px;
+	line-height : 20px;
+	background-color : #F2F2F2;
 }
 
 div[class = "floatDiv"]
@@ -24,7 +29,7 @@ input[type = "button"][class = "formButton"]
 	border : 1px solid #000000;
 	padding : 0;
 	vertical-align : middle;
-	font-size :14px;
+	font-size :20px;
 }
  
  ul,input[type = "text"],input[type = "text"]:focus
@@ -35,14 +40,11 @@ input[type = "button"][class = "formButton"]
 .textBox,
 .textBox:focus
  {
- 	border : 1px solid #1E1E1E;
+ 	border : 0px solid #1E1E1E;
  	padding : 0px;
+ 	background-color : #F2F2F2;
  }
  
- #aa
- {
- 	border : 0rx
- }
  
  
 ul[id = "listUl"]>li,
@@ -59,8 +61,8 @@ ul[id = "searchVideoUl"]>li
 ul[id = "listUl"]>li,
 ul[id = "searchVideoUl"]>li
 {
-	line-height : 14px;
-	font-size : 14px;
+	line-height : 20px;
+	font-size : 20px;
 	vertical-align : middle;
 	background-color : #F2F2F2;
 }
@@ -150,7 +152,7 @@ input[type="text"][id = "searchTextBox"]
 	line-height: normal;
 	padding : 0.2em 0.2em;
 	border : 4px solid #1E1E1E;
-    background-color: #FFFFFF;
+    background-color: #F2F2F2;
     outline : 0;
 }
 
