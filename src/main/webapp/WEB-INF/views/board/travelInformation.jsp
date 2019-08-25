@@ -16,6 +16,7 @@
 	
 	var suggestArray;
 	
+	var forestArray = JSON.parse('${forestArray}');
 	var sightsArray;
 	var festivalArray;
 	var videoArray = JSON.parse('${videoArray}');
@@ -29,40 +30,51 @@
 	var timer1 = null;
 	var sigma = 50;
 	var timer2 = null;
-
+	
+	var map;
+	var mapContainer;
 	var mapLevel = 12;
+	var mapCenter = new kakao.maps.LatLng(36.6393307 , 127.9329846); // 지도의 중심좌표
+	var mapOption =
+	{
+		center : mapCenter, // 지도의 중심좌표
+		level : mapLevel // 지도의 확대 레벨
+	};
+	var selectedMarker = null;
+	var selectedMarkerImg = null;
+	
 	var xMaxSizeOfForestMarker = 70;
 	var yMaxSizeOfForestMarker = 85;
 	var xMaxSizeOfSightsMarker = 80;
 	var yMaxSizeOfSightsMarker = 80;
 	var xMaxSizeOfFestivalMarker = 75;
 	var yMaxSizeOfFestivalMarker = 75;
-	var mapCenter = new kakao.maps.LatLng(36.6393307 , 127.9329846); // 지도의 중심좌표
 	
-	var xSizeOfForestMarker = xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
+	/*var xSizeOfForestMarker = xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
 	var ySizeOfForestMarker = yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
 	var xSizeOfSightsMarker = xMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
 	var ySizeOfSightsMarker = yMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
 	var xSizeOfFestivalMarker = xMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
-	var ySizeOfFestivalMarker = yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
-	var forestMarkers = [];
-	var sightsMarkers = [];
-	var festivalMarkers = [];
+	var ySizeOfFestivalMarker = yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));*/
 	
 	var forestMarkerImageSrc = "${pageContext.request.contextPath}/resources/images/travelInformation/greenHouse.png";	
 	var sightsMarkerImageSrc = "${pageContext.request.contextPath}/resources/images/travelInformation/blueMarker.png";	
 	var festivalMarkerImageSrc = "${pageContext.request.contextPath}/resources/images/travelInformation/redMarker.png";
 	
-	var mapContainer;
-	var mapOption =
-	{
-		center : mapCenter, // 지도의 중심좌표
-		level : mapLevel // 지도의 확대 레벨
-	};
-
-	var map;
-
-	var forestArray = JSON.parse('${forestArray}');
+	var currentForestMarkerImg = new kakao.maps.MarkerImage(forestMarkerImageSrc, new kakao.maps.Size(xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1))), yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)))));
+	var currentSightsMarkerImg = new kakao.maps.MarkerImage(sightsMarkerImageSrc, new kakao.maps.Size(xMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1))), yMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)))));
+	var currentFestivalMarkerImg = new kakao.maps.MarkerImage(festivalMarkerImageSrc, new kakao.maps.Size(xMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1))), yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)))));
+	
+	
+	var forestOverMarkerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, new kakao.maps.Size((xMaxSizeOfForestMarker + 15) - (1 + (3 * (mapLevel - 1))), (yMaxSizeOfForestMarker + 15) - (1 + (3 * (mapLevel - 1)))));
+	var sightsOverMarkerImage = new kakao.maps.MarkerImage(sightsMarkerImageSrc, new kakao.maps.Size((xMaxSizeOfSightsMarker + 15) - (1 + (3 * (mapLevel - 1))), (yMaxSizeOfSightsMarker + 15) - (1 + (3 * (mapLevel - 1)))));
+	var festivalOverMarkerImage = new kakao.maps.MarkerImage(festivalMarkerImageSrc, new kakao.maps.Size((xMaxSizeOfFestivalMarker + 15) - (1 + (3 * (mapLevel - 1))), (yMaxSizeOfFestivalMarker + 15) - (1 + (3 * (mapLevel - 1)))));
+	
+	var forestMarkers = [];
+	var sightsMarkers = [];
+	var festivalMarkers = [];
+	
+	
 	var forestPositions = new Array();
 	var sightsPositions = new Array();
 	var festivalPositions = new Array();
@@ -180,7 +192,7 @@
    
 	function citySelectChange(city) // select1 change event
 	{
-		var str = "<option>산림휴양시설 선택</option>";
+		var str = "<option value = 'default'>산림휴양시설 선택</option>";
 		for(var i = 0; i < forestArray.length; ++i)
 		{
 			if(forestArray[i].city == city)
@@ -191,7 +203,8 @@
 		document.getElementById("forestSelect").innerHTML = str;
 	}
 	
-	function forestSelectChange(){
+	function forestSelectChange()
+	{
 		var target= document.getElementById("forestSelect");
 		var index = target.options[target.selectedIndex].value;
 		var latitude = forestArray[index].forestLatitude;
@@ -217,19 +230,18 @@
 		}
 			
 		for(var i = 0; i < forestPositions.length; ++i)
-		{
-			var imageSize = new kakao.maps.Size(xSizeOfForestMarker, ySizeOfForestMarker);
-			// 마커 이미지를 생성합니다    
-			var markerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
+		{			
 			// 마커를 생성합니다
-			forestMarkers[i] = new kakao.maps.Marker(
+			/*forestMarkers[i] = new kakao.maps.Marker(
 			{
 				map : map, // 마커를 표시할 지도
 				position : forestPositions[i].latlng, // 마커를 표시할 위치
 				title : forestPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 				image : markerImage
 				// 마커 이미지 
-			});
+			});*/
+			
+			forestMarkers.push(addMarker(forestPositions[i], currentForestMarkerImg, "forest"));
 		}
 
 		//지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
@@ -241,55 +253,175 @@
 		{
 			// 지도의 현재 레벨을 얻어옵니다
 			mapLevel = map.getLevel();
-			xSizeOfForestMarker = xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
-			ySizeOfForestMarker = yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
-			xSizeOfSightsMarker = xMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
-			ySizeOfSightsMarker = yMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
-			xSizeOfFestivalMarker = xMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
-			ySizeOfFestivalMarker = yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
 			
-			var imageSize = new kakao.maps.Size(xSizeOfForestMarker, ySizeOfForestMarker);
-			var forestMarkerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
-			
-			var sightsMarkerImage;
-			var festivalMarkerImage;
+			currentForestMarkerImg = new kakao.maps.MarkerImage(forestMarkerImageSrc, new kakao.maps.Size(xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1))), yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)))));
+			forestOverMarkerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, new kakao.maps.Size((xMaxSizeOfForestMarker + 15) - (1 + (3 * (mapLevel - 1))), (yMaxSizeOfForestMarker + 15) - (1 + (3 * (mapLevel - 1)))));
 			
 			if(sightsMarkers.length != 0)
 			{
-				imageSize = new kakao.maps.Size(xSizeOfSightsMarker, ySizeOfSightsMarker);
-				sightsMarkerImage = new kakao.maps.MarkerImage(sightsMarkerImageSrc, imageSize);
-			}
-			else
-			{
-				sightsMarkerImage = null;
+				currentSightsMarkerImg = new kakao.maps.MarkerImage(sightsMarkerImageSrc, new kakao.maps.Size(xMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1))), yMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)))));
+				sightsOverMarkerImage = new kakao.maps.MarkerImage(sightsMarkerImageSrc, new kakao.maps.Size((xMaxSizeOfSightsMarker + 15) - (1 + (3 * (mapLevel - 1))), (yMaxSizeOfSightsMarker + 15) - (1 + (3 * (mapLevel - 1)))));
 			}
 			if(festivalMarkers.length != 0)
 			{
-				imageSize = new kakao.maps.Size(xSizeOfFestivalMarker, ySizeOfFestivalMarker);
-				festivalMarkerImage = new kakao.maps.MarkerImage(festivalMarkerImageSrc, imageSize);
-			}
-			else
-			{
-				festivalMarkerImage = null;
+				currentFestivalMarkerImg = new kakao.maps.MarkerImage(festivalMarkerImageSrc, new kakao.maps.Size(xMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1))), yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)))));
+				festivalOverMarkerImage = new kakao.maps.MarkerImage(festivalMarkerImageSrc, new kakao.maps.Size((xMaxSizeOfFestivalMarker + 15) - (1 + (3 * (mapLevel - 1))), (yMaxSizeOfFestivalMarker + 15) - (1 + (3 * (mapLevel - 1)))));
 			}
 			
-			setMarkersSize(forestMarkerImage, sightsMarkerImage, festivalMarkerImage);
+			setMarkersSize();
 		})
 	}
 	/////////////	function mapInit() end
+	function addMarker(Position, markerImage, option)
+	{
+		// 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
+		var marker = new kakao.maps.Marker(
+		{
+	        map: map,
+	        position: Position.latlng,
+	        title : Position.title,
+	        image: markerImage
+	    });			
+		
+		kakao.maps.event.addListener(marker, 'mouseover', function()
+		{
+	        // 클릭된 마커가 없고, mouseover된 마커가 클릭된 마커가 아니면
+	        // 마커의 이미지를 오버 이미지로 변경합니다
+	        if (!selectedMarker || selectedMarker !== marker)
+	        {
+	        	if(option  == "forest")
+	        	{						
+		            marker.setImage(forestOverMarkerImage);
+	        	}
+	        	else if(option == "sights")
+	        	{
+	        		marker.setImage(sightsOverMarkerImage);
+	        	}
+	        	else if(option == "festival")
+	        	{
+	        		marker.setImage(festivalOverMarkerImage);
+	        	}
+	        }
+	    });
+		
+		 // 마커에 mouseout 이벤트를 등록합니다
+	    kakao.maps.event.addListener(marker, 'mouseout', function()
+	    {
+	        // 클릭된 마커가 없고, mouseout된 마커가 클릭된 마커가 아니면
+	        // 마커의 이미지를 기본 이미지로 변경합니다
+	        if (!selectedMarker || selectedMarker !== marker)
+	        {
+	        	if(option  == "forest")
+	            {
+	        		marker.setImage(currentForestMarkerImg);
+	            }
+	        	else if(option == "sights")
+	        	{
+	        		marker.setImage(currentSightsMarkerImg);
+	        	}
+	        	else if(option == "festival")
+	        	{
+	        		marker.setImage(currentFestivalMarkerImg);
+	        	}
+	        }
+	    });
+
+	    // 마커에 click 이벤트를 등록합니다
+   		kakao.maps.event.addListener(marker, 'click', function()
+   		{
+   			panTo(marker.getPosition().getLat(), marker.getPosition().getLng())
+   			
+       		// 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+       		// 마커의 이미지를 클릭 이미지로 변경합니다
+       		if (!selectedMarker || selectedMarker !== marker)
+       		{
+       			if(option  == "forest")
+       			{
+       				changeBackSelectedMarkerImg(); // 클릭된 마커 객체가 null이 아니면 클릭된 마커의 이미지를 기본 이미지로 변경하고
+            		marker.setImage(forestOverMarkerImage); // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+            		selectedMarkerImg = "forest";
+       			}
+       			else if(option == "sights")
+	        	{
+       				changeBackSelectedMarkerImg();
+            		marker.setImage(sightsOverMarkerImage);
+            		selectedMarkerImg = "sights";
+	        	}
+       			else if(option == "festival")
+       			{
+       				changeBackSelectedMarkerImg();
+            		marker.setImage(festivalOverMarkerImage);
+            		selectedMarkerImg = "festival";
+       			}
+				
+       			// 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+       	    	selectedMarker = marker;
+       		}
+       		else if(selectedMarker == marker)
+       		{
+       			marker.setImage(currentForestMarkerImg);
+       			selectedMarker = null;
+       		}
+   		});
+	    
+		return marker;
+	}
+	
+	function changeBackSelectedMarkerImg()
+	{
+		if(selectedMarker != null)
+		{
+			if(selectedMarkerImg == "forest")
+			{
+				selectedMarker.setImage(currentForestMarkerImg);
+			}
+			else if(selectedMarkerImg == "sights")
+			{
+				selectedMarker.setImage(currentSightsMarkerImg);
+			}
+			else if(selectedMarkerImg == "festival")
+			{
+				selectedMarker.setImage(currentFestivalMarkerImg);
+			}
+		}
+	}
+	
+	
+	
 	function setMarkersSize(forestMarkerImage, sightsMarkerImage, festivalMarkerImage)
 	{
 		for(var i = 0; i < forestMarkers.length; ++i)
 		{
-			forestMarkers[i].setImage(forestMarkerImage);
+			if(forestMarkers[i] != selectedMarker)
+			{
+				forestMarkers[i].setImage(currentForestMarkerImg);
+			}
+			else
+			{
+				forestMarkers[i].setImage(forestOverMarkerImage);
+			}
 		}
 		for(var i = 0; i < sightsMarkers.length; ++i)
 		{
-			sightsMarkers[i].setImage(sightsMarkerImage);
+			if(sightsMarkers[i] != selectedMarker)
+			{
+				sightsMarkers[i].setImage(currentSightsMarkerImg);
+			}
+			else
+			{
+				sightsMarkers[i].setImage(sightsOverMarkerImage);
+			}
 		}
 		for(var i = 0; i < festivalMarkers.length; ++i)
 		{
-			festivalMarkers[i].setImage(festivalMarkerImage);
+			if(festivalMarkers[i] != selectedMarker)
+			{
+				festivalMarkers[i].setImage(currentFestivalMarkerImg);
+			}
+			else
+			{
+				festivalMarkers[i].setImage(festivalOverMarkerImage);
+			}
 		}
 	}
 
@@ -402,14 +534,13 @@
 			{
 				MarkerImageSrc = sightsMarkerImageSrc;
 				Positions = sightsPositions;
-				xSize = xSizeOfSightsMarker;
-				ySize = ySizeOfSightsMarker;
+				
 				sightsPositions[i] =
 				{
 					title: sightsArray[i].sightsName, 
 					latlng: new kakao.maps.LatLng(sightsArray[i].sightsLatitude, sightsArray[i].sightsLongitude)
 				}
-				console.log(sightsPositions[i]);
+				sightsMarkers.push(addMarker(sightsPositions[i], currentSightsMarkerImg, "sights"));
 			}
 		}
 		else if(Array == festivalArray)
@@ -418,19 +549,17 @@
 			{
 				MarkerImageSrc = festivalMarkerImageSrc;
 				Positions = festivalPositions;
-				xSize = xSizeOfFestivalMarker;
-				ySize = ySizeOfFestivalMarker;
 				
 				festivalPositions[i] =
 				{
 					title: festivalArray[i].festivalName, 
 					latlng: new kakao.maps.LatLng(festivalArray[i].festivalLatitude, festivalArray[i].festivalLongitude)
 				}
+				festivalMarkers.push(addMarker(festivalPositions[i], currentFestivalMarkerImg, "festival"));
 			}
 		}
-		
 			
-		for(var i = 0; i < Positions.length; ++i)
+		/*for(var i = 0; i < Positions.length; ++i)
 		{
 			var imageSize = new kakao.maps.Size(xSize, ySize);
 			// 마커 이미지를 생성합니다    
@@ -457,7 +586,7 @@
 					image : markerImage // 마커 이미지 
 				});
 			}
-		}
+		}*/
 	}
 
 	//"마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
@@ -875,7 +1004,24 @@
  		}
  	}
  	
- 	function panTo(latitude, longitude) {
+ 	function forestSelectChange()
+	{
+ 		
+		var target= document.getElementById("forestSelect");
+		var index = target.options[target.selectedIndex].value;
+		if(index == "default")
+		{
+			return;
+		}
+		
+		var latitude = forestArray[index].forestLatitude;
+		var longitude = forestArray[index].forestLongitude;
+		
+		panTo(latitude, longitude);
+	}
+ 	
+ 	function panTo(latitude, longitude)
+ 	{
  	    // 이동할 위도 경도 위치를 생성합니다 
  	    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
  	    
@@ -960,7 +1106,7 @@
 							</c:forEach>
 						</select>
 						<select id="forestSelect" style = "width : 54%" onchange="forestSelectChange()">
-							<option>산림휴양시설 선택</option>
+							<option value = "default">산림휴양시설 선택</option>
 						</select>
 					</div>
 						

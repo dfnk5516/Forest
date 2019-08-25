@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kosta.forrest.model.board.dto.FestivalDTO;
@@ -20,12 +19,6 @@ public class TravelInformationAjaxController
 {
 	@Autowired
 	private TravelInformationService service;
-	
-	@RequestMapping(value = "/travelInformationAjax/city", produces = {"application/json;charset=UTF-8"})
-	public List<String> selectCity()
-	{
-		return service.selectCity();
-	}
 	
 	@RequestMapping(value = "/travelInformationAjax/forest", produces = {"application/json;charset=UTF-8"})
 	public List<ForestDTO> selectForestByCity(String city)
@@ -43,12 +36,6 @@ public class TravelInformationAjaxController
 //		
 //		return service.selectForest();
 //	}
-	
-	@RequestMapping("/travelInformationAjax/suggest")
-	public List<String> selectForestByName(String text)
-	{
-		return service.selectForestByName(text);//jakson에 의해 json으로 변환되어 response
-	}
 	/////////////////////////////////////////////
 	@RequestMapping("/sightsInsert")
 	public int sightsInsert(SightsDTO dto)
@@ -104,7 +91,6 @@ public class TravelInformationAjaxController
 		return service.deleteVideo(videoName);
 	}
 /////////////////////////////////////////////
-	
 	@RequestMapping("/sightsUpdate")
 	public int sightsUpdate(SightsDTO dto, String selectedSightsName)
 	{

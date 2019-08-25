@@ -585,6 +585,11 @@
 	}
 	function search()
 	{
+		if($('#searchTextBox').val() == "")
+		{
+			return false;
+		}
+		
 		var q = $('#searchTextBox').val();
 		var request = gapi.client.youtube.search.list(
 		{
