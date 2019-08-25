@@ -863,7 +863,7 @@
    			<div id = "" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "" class = "floatDiv" style = "width : 50%; height : 100%">
 					<div style = "width : 30%; height : 100%; margin-right : 2%" class = "floatDiv">
-						<img style = "width :  100%; height : 100%;" src = "${path}/resources/images/travelInformation/youtubeLogo.png">
+						<a target = "_blank" href = "https://www.youtube.com/"><img style = "width :  100%; height : 100%;" src = "${path}/resources/images/travelInformation/youtubeLogo.png"></a>
 					</div>
 					<div style = "width : 68%; height : 100%" class = "floatDiv">
 						<form style = "width : 100%; height : 100%" action="#" onSubmit="return search()">

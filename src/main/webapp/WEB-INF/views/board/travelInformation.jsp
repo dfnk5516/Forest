@@ -89,7 +89,7 @@
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScm1bh7y8oTi0E9xiVOliZ4C&autoplay=1&loop=1&rel=0",
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScmjbhykFpKWfITwCU3qq8NV&autoplay=1&loop=1&rel=0"
    
-        		
+	var overlay = null;
         		
 	function test()
 	{
@@ -113,9 +113,6 @@
 		
 		maxScroll = $(document).height() - $(window).height();
 	}
-	
-	
-	
 	
 	$(document).ready(function()
 	{ 	
@@ -197,21 +194,13 @@
 		{
 			if(forestArray[i].city == city)
 			{
-				str += "<option value = '" + i +"'>" + forestArray[i].forestName + "</option>";			
+				str += "<option value = '" + forestArray[i].forestName +"'>" + forestArray[i].forestName + "</option>";			
 			}
 		}
 		document.getElementById("forestSelect").innerHTML = str;
 	}
 	
-	function forestSelectChange()
-	{
-		var target= document.getElementById("forestSelect");
-		var index = target.options[target.selectedIndex].value;
-		var latitude = forestArray[index].forestLatitude;
-		var longitude = forestArray[index].forestLongitude;
-		
-		panTo(latitude, longitude);
-	}
+	
 	
 	
 	////////////////////////////////////////////////// Map
@@ -329,6 +318,58 @@
 	    // 마커에 click 이벤트를 등록합니다
    		kakao.maps.event.addListener(marker, 'click', function()
    		{
+   			closeOverlay();
+   			
+   			var content = '<div class="overlaybox">' +
+   		    '    <div class="boxtitle">금주 영화순위</div>' +
+   		    '    <div class="first">' +
+   		 	'        <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+   		    '        <div class="movietitle text">드래곤 길들이기2</div>' +
+   		    '    </div>' +
+   		    '    <ul>' +
+   		    '        <li class="up">' +
+   		    '            <span class="number">2</span>' +
+   		    '            <span class="title">명량</span>' +
+   		    '            <span class="arrow up"></span>' +
+   		    '            <span class="count">2</span>' +
+   		    '        </li>' +
+   		    '        <li>' +
+   		    '            <span class="number">3</span>' +
+   		    '            <span class="title">해적(바다로 간 산적)</span>' +
+   		    '            <span class="arrow up"></span>' +
+   		    '            <span class="count">6</span>' +
+   		    '        </li>' +
+   		    '        <li>' +
+   		    '            <span class="number">4</span>' +
+   		    '            <span class="title">해무</span>' +
+   		    '            <span class="arrow up"></span>' +
+   		    '            <span class="count">3</span>' +
+   		    '        </li>' +
+   		    '        <li>' +
+   		    '            <span class="number">5</span>' +
+   		    '            <span class="title">안녕, 헤이즐</span>' +
+   		    '            <span class="arrow down"></span>' +
+   		    '            <span class="count">1</span>' +
+   		    '        </li>' +
+   		    '    </ul>' +
+   		    '</div>';
+   		
+			overlay = new kakao.maps.CustomOverlay(
+			{
+				content: content,
+				map: map,
+				position: marker.getPosition(),
+				position : new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng()),
+				xAnchor: 0.2,
+				yAnchor: 1.15
+			});
+			
+
+			overlay.setMap(map);
+
+   			
+   			
+   			
    			panTo(marker.getPosition().getLat(), marker.getPosition().getLng())
    			
        		// 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
@@ -361,6 +402,7 @@
        		{
        			marker.setImage(currentForestMarkerImg);
        			selectedMarker = null;
+       			overlay.setMap(null);
        		}
    		});
 	    
@@ -587,6 +629,20 @@
 				});
 			}
 		}*/
+	}
+	
+	function forestSearch()
+	{
+		for(var i = 0; i < forestArray.length; ++i)
+		{
+			if($("#textBox").val() == forestArray[i].forestName)
+			{
+				panTo(forestArray[i].forestLatitude, forestArray[i].forestLongitude);
+				kakao.maps.event.trigger(forestMarkers[i], 'click', ''); // 사용자 이벤트가 발생했습니다.
+				break;
+			}
+		}
+		return false; 
 	}
 
 	//"마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
@@ -1006,7 +1062,16 @@
  	
  	function forestSelectChange()
 	{
- 		
+		var target= document.getElementById("forestSelect");
+		var index = target.options[target.selectedIndex].value;
+		var latitude = forestArray[index].forestLatitude;
+		var longitude = forestArray[index].forestLongitude;
+		
+		panTo(latitude, longitude);
+	}
+ 	
+ 	function forestSelectChange()
+	{
 		var target= document.getElementById("forestSelect");
 		var index = target.options[target.selectedIndex].value;
 		if(index == "default")
@@ -1014,10 +1079,15 @@
 			return;
 		}
 		
-		var latitude = forestArray[index].forestLatitude;
-		var longitude = forestArray[index].forestLongitude;
-		
-		panTo(latitude, longitude);
+		for(var i = 0; i < forestArray.length; ++i)
+		{
+			if(index == forestArray[i].forestName)
+			{
+				panTo(forestArray[i].forestLatitude, forestArray[i].forestLongitude);
+				kakao.maps.event.trigger(forestMarkers[i], 'click', ''); // 사용자 이벤트가 발생했습니다.
+				break;
+			}
+		}
 	}
  	
  	function panTo(latitude, longitude)
@@ -1054,7 +1124,16 @@
 			}
 		})
  	}
-	//////////////////////////////////////////////////
+ 	
+	// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+ 	function closeOverlay()
+ 	{
+		if(overlay != null)
+		{
+ 	    	overlay.setMap(null);
+		}
+ 	}
+///////////////////////////////////////////////////////////////////////////////////
 </script>
 
 <title>For Rest : 휴양림 예약 사이트</title>
@@ -1096,7 +1175,7 @@
 					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기				
 				</label>
 			</div>
-			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto;" action = "#" onSubmit = "return false">
+			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto;" action = "#" onSubmit = "return forestSearch()">
 				<div id = "searchGroup" style = "width : 100%">
 					<div id = "select-box-wrapper" style = "width : 100%">
 						<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
