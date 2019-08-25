@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kosta.forrest.model.board.dto.FestivalDTO;
@@ -120,5 +121,13 @@ public class TravelInformationAjaxController
 	public int videoUpdate(VideoDTO dto, String selectedVideoName)
 	{
 		return service.updateVideo(dto, selectedVideoName);
+	}
+/////////////////////////////////////////////	
+	@RequestMapping("/tTest")
+	public String tTest()
+	{
+		String aa= service.tTest();
+		System.out.println(aa);
+		return aa;
 	}
 }

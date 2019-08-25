@@ -677,7 +677,7 @@
 				<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
 					<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
 					<input type = "button" value = "수정" class = "formButton" onclick="update()" style = "width : 100%; height : 33.3%">
-					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%; border-bottom : 3px solid #56be8e;">
+					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%; border-bottom : 3px solid #1E1E1E;">
 				</div>
 			</div>
 			<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
@@ -689,13 +689,13 @@
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div id = "sightsNameDiv" class = "floatDiv" style = "width : 20%; height : 100%">관광지명</div>
+								<div id = "sightsNameDiv" class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">관광지명</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="sightsName" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">시/도</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<select id="sightsCity" class = "textBox" style = "width : 100%; height : 100%;">
 										<c:forEach items="${cityList}" var="city">
@@ -705,37 +705,37 @@
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">지역</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id= "sightsRegion" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 41.65%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
+								<div class = "floatDiv" style = "width : 20%; height : 100%;">설명</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<textarea id="sightsDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">위치</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">위치</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="sightsLocation" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">홈페이지</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="sightsHomepage" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">위도</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="sightsLatitude" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 8.33%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">경도</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="sightsLongitude" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
@@ -747,13 +747,13 @@
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "festivalTableUl" style = "width : 100%; height : 100%">
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">이름</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalName" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">시/도</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">시/도</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<select id="festivalCity" class = "textBox" style = "width : 100%; height : 100%;">
 										<c:forEach items="${cityList}" var="city">
@@ -763,61 +763,61 @@
 									</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">지역</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">지역</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalLocation" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">주소</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">주소</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalAddress" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 31.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">설명</div>
+								<div class = "floatDiv" style = "width : 20%; height : 100%;">설명</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<textarea id="festivalDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">시작일</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">시작일</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalStart" class ="textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">종료일</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">종료일</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalEnd"class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">주최기관</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">주최기관</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalAgency" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">전화번호</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">전화번호</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalPhone" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">홈페이지</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">홈페이지</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalHomepage" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">위도</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">위도</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalLatitude" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 6.25%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">경도</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">경도</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="festivalLongitude" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
@@ -829,19 +829,19 @@
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 						<ul id = "videoTableUl" style = "width : 100%; height : 100%">
 							<li class = "clearfix" style = "width : 100%; height : 20%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">이름</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">이름</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoName" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 20%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">영상 경로</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">영상 경로</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="videoSrc" class = "textBox" style = "width : 100%; height : 100%;">
 								</div>
 							</li>
 							<li style = "width : 100%; height : 60%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">영상</div>
+								<div class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">영상</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<iframe id = "videoFrame" style = "width : 100%; height : 100%" src="" ></iframe>
 								</div>
@@ -854,23 +854,24 @@
       				<label> <input id="query" value='cats' type="text"/><button id="search-button" onclick="search()">Search</button></label>
     			</div>
    				<div id="search-container"></div-->
-   			<div id = "" style = "width : 100%; height : 5%"></div>
-   			
+   			<div id = "" style = "width : 100%; height : 5%"></div>  			
    			<div id = "" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "" class = "floatDiv" style = "width : 50%; height : 100%">
-					<div style = "width : 100%; height : 30%">
-						<span>영상 검색</span>
+					<div style = "width : 30%; height : 100%; margin-right : 2%" class = "floatDiv">
+						<img style = "width :  100%; height : 100%;" src = "${path}/resources/images/travelInformation/youtubeLogo.png">
 					</div>
-					<form style = "width : 100%; height : 70%" action="#" onSubmit="return search()">
-						<div id = "search-box-wrapper" style = "width : 100%; height : 100%">
-							<input type = "text" id = "searchTextBox" style = "width : 100%; height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
-							<button id = "search-box-button" style = "height : 100%">&#128269;</button>
-						</div>
-					</form>
+					<div style = "width : 68%; height : 100%" class = "floatDiv">
+						<form style = "width : 100%; height : 100%" action="#" onSubmit="return search()">
+							<div id = "search-box-wrapper" style = "width : 100%; height : 100%">
+								<input type = "text" id = "searchTextBox" style = "width : 100%; height : 100%" class = "search-box-input" placeholder = "영상 이름 입력"/>
+								<button id = "search-box-button" style = "height : 100%">&#128269;</button>
+							</div>
+						</form>
+					</div>
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
 				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
-					<input type = "button" id = "searchVideoInputBtn" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%; border-bottom : 3px solid #56be8e;"/>
+					<input type = "button" id = "searchVideoInputBtn" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%; border-bottom : 3px solid #1E1E1E;"/>
 				</div>
 			</div>
 			<div id = "" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">

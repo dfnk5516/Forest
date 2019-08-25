@@ -67,7 +67,7 @@
 	var zoomControl;
 	
 	var currentTypeId; // 지도에 추가된 지도타입정보를 가지고 있을 변수
-	
+	var searchPictureArray;
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1",
 		//"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1",
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"		
@@ -75,6 +75,8 @@
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScm1bh7y8oTi0E9xiVOliZ4C&autoplay=1&loop=1&rel=0",
         //"https://www.youtube.com/embed/videoseries?list=PLoH9j-nRRScmjbhykFpKWfITwCU3qq8NV&autoplay=1&loop=1&rel=0"
    
+        		
+        		
 	function test()
 	{
 		alert(3);
@@ -245,17 +247,53 @@
 			mapLevel = map.getLevel();
 			xSizeOfForestMarker = xMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
 			ySizeOfForestMarker = yMaxSizeOfForestMarker - (1 + (3 * (mapLevel - 1)));
+			xSizeOfSightsMarker = xMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
+			ySizeOfSightsMarker = yMaxSizeOfSightsMarker - (1 + (3 * (mapLevel - 1)));
+			xSizeOfFestivalMarker = xMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
+			ySizeOfFestivalMarker = yMaxSizeOfFestivalMarker - (1 + (3 * (mapLevel - 1)));
+			
 			var imageSize = new kakao.maps.Size(xSizeOfForestMarker, ySizeOfForestMarker);
-			var markerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
-			setMarkersSize(markerImage);
+			var forestMarkerImage = new kakao.maps.MarkerImage(forestMarkerImageSrc, imageSize);
+			
+			var sightsMarkerImage;
+			var festivalMarkerImage;
+			
+			if(sightsMarkers.length != 0)
+			{
+				imageSize = new kakao.maps.Size(xSizeOfSightsMarker, ySizeOfSightsMarker);
+				sightsMarkerImage = new kakao.maps.MarkerImage(sightsMarkerImageSrc, imageSize);
+			}
+			else
+			{
+				sightsMarkerImage = null;
+			}
+			if(festivalMarkers.length != 0)
+			{
+				imageSize = new kakao.maps.Size(xSizeOfFestivalMarker, ySizeOfFestivalMarker);
+				festivalMarkerImage = new kakao.maps.MarkerImage(festivalMarkerImageSrc, imageSize);
+			}
+			else
+			{
+				festivalMarkerImage = null;
+			}
+			
+			setMarkersSize(forestMarkerImage, sightsMarkerImage, festivalMarkerImage);
 		})
 	}
 	/////////////	function mapInit() end
-	function setMarkersSize(Image)
+	function setMarkersSize(forestMarkerImage, sightsMarkerImage, festivalMarkerImage)
 	{
-		for (var i = 0; i < forestMarkers.length; i++)
+		for(var i = 0; i < forestMarkers.length; ++i)
 		{
-			forestMarkers[i].setImage(Image);
+			forestMarkers[i].setImage(forestMarkerImage);
+		}
+		for(var i = 0; i < sightsMarkers.length; ++i)
+		{
+			sightsMarkers[i].setImage(sightsMarkerImage);
+		}
+		for(var i = 0; i < festivalMarkers.length; ++i)
+		{
+			festivalMarkers[i].setImage(festivalMarkerImage);
 		}
 	}
 
@@ -842,6 +880,30 @@
  	    map.panTo(moveLatLon);            
  	}         
 	
+ 	function tTest()
+ 	{
+ 		$.ajax(
+ 		{
+			url: "${path}/tTest", //서버주소
+			type :"post" , //전송방식(get, post, put, delete)
+			data :"${_csrf.parameterName}=${_csrf.token}", //서버에게 전송할 parameter정보
+			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
+			success :function(result)
+			{
+				searchPictureArray = new Array();
+				for(var i = 0; i <result.items.length; ++i)
+				{
+					searchPictureArray.push(result.items[i].link);
+				}
+				console.log(searchPictureArray);
+				
+			} ,
+			error : function(err)
+			{
+				alert("오류발생cc : " + err);
+			}
+		})
+ 	}
 	//////////////////////////////////////////////////
 </script>
 
@@ -875,16 +937,16 @@
 		<div class = "floatDiv" style = "width : 70%; height : 1500px;" id = "travelInformation">
 			<div id = "travelInformationHeader" style = "width : 100%; height : auto; margin : 5px 0px;">여행 정보 검색</div>				
 			<div id = "travelInformationExplain" style = "width : 100%;  height : auto; margin : 5px 0px;">휴양림 주변 관광지, 행사 정보 검색</div>
-			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto" action = "#" onSubmit = "return false">
-				<div id = "radioGroup" style = "width : 100%;">
-					<label class = "radioLabel">
-						<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
-					</label>
-					<label class = "radioLabel">
-						<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기				
-					</label>
-				</div>
-				<p>
+			
+			<div id = "radioGroup" style = "width : 100%; height : auto;">
+				<label class = "radioLabel">
+					<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
+				</label>
+				<label class = "radioLabel">
+					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기				
+				</label>
+			</div>
+			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto;" action = "#" onSubmit = "return false">
 				<div id = "searchGroup" style = "width : 100%">
 					<div id = "select-box-wrapper" style = "width : 100%">
 						<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
@@ -943,9 +1005,27 @@
 					</label>
 				</div>
 			</div>
+			<div id = "searchResultDiv" class = "clearfix" style = "width : 100%; height : 500px; border : 4px solid #1E1E1E; border-radius : 4px; background-color : #FFFFFF">
+				<div id = "naverSearchResultDiv" class = "floatDiv" style = "width : 30%; height : 100%; overflow : auto" >
+					<div style = "width : 100%; height : auto"><img id = "searchImg1" style = "width : 100%; height : auto" src = "http://image.aladin.co.kr/scm/editor/2015/0828/scm3855923816575.jpg"></div>
+					<div style = "width : 100%; height : auto"><img id = "searchImg1" style = "width : 100%; height : auto" src = "http://www.chungnam.net/export/media/article_image/20130527/IM0000559186.jpg"></div>
+					<div style = "width : 100%; height : auto"><img id = "searchImg1" style = "width : 100%; height : auto"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
+				</div>
+				<div id = "dBSearchResultDiv" class = "floatDiv" style = "width : 70%; height : 100%;">
+					<input type ="button" onclick = "tTest()">
+				</div>
+			</div>
 		</div>
+		
+		
 		<div class = "floatDiv" style = "width : 5%; height : 100%;" id = "aa"></div>
-
 	</div>
 </body>
 </html>
