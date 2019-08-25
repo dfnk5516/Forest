@@ -18,6 +18,19 @@ div[class = "floatDiv"]
   clear:both;
 }
 
+.radioLabel,
+[name = "searchType"],
+#citySelect,
+#forestSelect,
+.checkBoxLabel,
+#forest,
+#sights,
+#festival,
+.mapOption
+{
+	cursor : pointer;
+}
+
 ul[id = "videoListUl"]>li
 {
 	color : #FFFFFF;
@@ -42,6 +55,7 @@ ul[id = "videoListUl"]>li:nth-child(2n-1)>div:nth-child(3)
 ul[id = "videoListUl"]>li:nth-child(2n-1)>div
 {
 	line-height : 14px;
+	padding : 6px 0px;
 	height : 20px;
 	font-size : 14px;
 	vertical-align : middle;
@@ -164,22 +178,21 @@ div[id = "leftVideoButtonDiv"]
 	border-bottom : 1px solid #F2F2F2;
 	border-left : 0px solid #F2F2F2;
 }
-  div[id = "middleVideoButtonDiv"]
- {
- 	border-top : 1px solid #F2F2F2;
+div[id = "middleVideoButtonDiv"]
+{
+	border-top : 1px solid #F2F2F2;
 	border-right : 0px solid #F2F2F2;
 	border-bottom : 1px solid #F2F2F2;
 	border-left : 0px solid #F2F2F2;
- }
- div[id = "rightVideoButtonDiv"]
- {
+}
+div[id = "rightVideoButtonDiv"]
+{
  	border-top : 1px solid #F2F2F2;
 	border-right : 0px solid #F2F2F2;
 	border-bottom : 1px solid #F2F2F2;
 	border-left : 0px solid #F2F2F2;
 	padding-left : 1px;
- }
-
+}
 /******************************************************/
 
 input[type = "checkbox"]

@@ -592,7 +592,7 @@
 			type : 'video',
 			q: q,
 			maxResults : 50,
-			order : 'viewCount',
+			order : 'viewCount'
 		});
 
 		request.execute(function(response)
@@ -657,7 +657,7 @@
 	<div id="main" class="wrapper style2 clearfix" style = "width : 100%">
 		<div class = "floatDiv"></div>
 			
-		<div id = "tableDiv" class = "floatDiv" style = "width : 100%;  height : 1620px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
+		<div id = "tableDiv" class = "floatDiv" style = "width : 100%;  height : 1652px"><!-- main 바로 밑 div 중 가장 큰 영역의 세로높이가 곧 main의 세로길이 + padding 길이가 됨 -->
 			<div id = "headerDiv" class = "clearfix" style = "width : 100%; height : 5%">
 				<div id = "checkBoxDiv" class = "floatDiv" style = "width : 50%; height : 100%">
 					<label class = "radioLable">
@@ -677,7 +677,7 @@
 				<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
 					<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
 					<input type = "button" value = "수정" class = "formButton" onclick="update()" style = "width : 100%; height : 33.3%">
-					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%">
+					<input type = "button" value = "삭제" class = "formButton" onclick ="deleteList()" style = "width : 100%; height : 33.3%; border-bottom : 3px solid #56be8e;">
 				</div>
 			</div>
 			<div id = "contentDiv" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">
@@ -870,7 +870,7 @@
 				</div>
 				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
 				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
-					<input type = "button" id = "searchVideoInputBtn" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%"/>
+					<input type = "button" id = "searchVideoInputBtn" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%; border-bottom : 3px solid #56be8e;"/>
 				</div>
 			</div>
 			<div id = "" class = "clearfix" style = "width : 100%; height : 42.5%; overflow : hidden;">

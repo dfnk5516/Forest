@@ -746,7 +746,7 @@
 			for(var i = 0; i < videoMax; ++i)
 			{
 				str += "<li class = 'clearfix' onclick = 'videoPlay(" + i + ")'><div class = 'floatDiv'>" + (i + 1) + "</div>";
-				str += "<div class = 'floatDiv'>" + videoArray[i].videoName + "</div>";
+				str += "<div class = 'floatDiv' style = 'overflow : hidden'>" + videoArray[i].videoName + "</div>";
 				
 				if(currentVideo == i)
 				{
@@ -856,14 +856,14 @@
 				<div id = "videoController" style = "padding-left: 7.5%;  padding-right:7.5%;">
 					<div><iframe id = "videoFrame" style = "width : 100%; height : 200px" src="" allowfullscreen></iframe></div>
 					<div class = "clearfix">
-						<div class = "floatDiv" style = "width : 45%;vertical-align: middle;" id = "leftVideoButtonDiv">
-							<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px;">
+						<div class = "floatDiv" style = "width : 45%;vertical-align: middle; cursor : pointer" id = "leftVideoButtonDiv">
+							<input type="button" class = "videoButton" onclick = "nextVideoPlay()" value = "다음 재생" style = "width : 100%; height : 30px; cursor : pointer;">
 						</div>
 						<div class = "floatDiv" style = " width : 45%; vertical-align: middle;" id = "middleVideoButtonDiv">
-							<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px;">
+							<input type="button" class = "videoButton" onclick = "randomVideoPlay()" value = "무작위 재생" style = "width : 100%; height : 30px; cursor : pointer;">
 						</div>
 						<div class = "floatDiv" style = " width : 10%; vertical-align: middle;" id = "rightVideoButtonDiv">
-							<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px;">
+							<input type="button" class = "videoButton" onclick = "videoListOnOff(this)" value = "■" style = "width : 100%; height : 30px; cursor : pointer;">
 						</div>
 					</div>
 					<div id = "videoListDiv" style = "width : 100%; border: 1px solid #1E1E1E">
@@ -875,11 +875,14 @@
 		<div class = "floatDiv" style = "width : 70%; height : 1500px;" id = "travelInformation">
 			<div id = "travelInformationHeader" style = "width : 100%; height : auto; margin : 5px 0px;">여행 정보 검색</div>				
 			<div id = "travelInformationExplain" style = "width : 100%;  height : auto; margin : 5px 0px;">휴양림 주변 관광지, 행사 정보 검색</div>
-			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto">
-				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto" action = "#" onSubmit = "return false">
 				<div id = "radioGroup" style = "width : 100%;">
-					<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
-					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기
+					<label class = "radioLabel">
+						<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
+					</label>
+					<label class = "radioLabel">
+						<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기				
+					</label>
 				</div>
 				<p>
 				<div id = "searchGroup" style = "width : 100%">
@@ -904,9 +907,15 @@
 				
 			<div id = "checkBoxTopDiv" style = "width : 100%;" >
 				<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%;">
-					<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
-					<input type="checkbox" onchange="markerOnOff(this, markerClassify('sights'))" id = "sights"/>관광지 보기
-					<input type="checkbox" onchange="markerOnOff(this, markerClassify('festival'))" id = "festival"/>행사 보기
+					<label class = "checkBoxLabel">
+						<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
+					</label>
+					<label class = "checkBoxLabel">
+						<input type="checkbox" onchange="markerOnOff(this, markerClassify('sights'))" id = "sights"/>관광지 보기
+					</label>
+					<label class = "checkBoxLabel">
+						<input type="checkbox" onchange="markerOnOff(this, markerClassify('festival'))" id = "festival"/>행사 보기
+					</label>
 				</div>
 						
 			</div>
@@ -923,9 +932,15 @@
 			</div>
 			<div id = "checkBoxBottomDiv" style = "width : 100%;" class = "clearfix" >
 				<div id = "checkBoxGroup2" style = "text-align : right; vertical-align: middle; width : 100%;">
-					<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
-					<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
-					<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
+					<label class = "checkBoxLabel">
+						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
+					</label>
+					<label class = "checkBoxLabel">
+						<input type = "checkbox" class = "mapOption" onclick="setRoadviewRoad('checkBox')" id = "roadView" />로드뷰 보기
+					</label>
+					<label class = "checkBoxLabel">
+						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "bicycle" />자전거도로 보기
+					</label>
 				</div>
 			</div>
 		</div>
