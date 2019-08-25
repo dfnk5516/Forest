@@ -14,6 +14,8 @@
 	var currentScroll;
 	var maxScroll;
 	
+	var suggestArray;
+	
 	var sightsArray;
 	var festivalArray;
 	var videoArray = JSON.parse('${videoArray}');
@@ -160,26 +162,20 @@
    
 	function searchByName(text)
 	{
-		$(document).ready(function()
-		{	
-			$.ajax({
-				url: "travelInformationAjax/suggest", //서버주소
-				type :"post" , //전송방식(get, post, put, delete)
-				data :"${_csrf.parameterName}=${_csrf.token}&&text=" + text.value , //서버에게 전송할 parameter정보
-				dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
-				success :function(result)
-				{
-					$(text).autocomplete(
-					{
-						source: result
-					});  
-				} ,
-				error : function(err)
-				{
-					alert("오류발생cc : " + err);
-				}
-			})
-		})
+		suggestArray = new Array();
+		
+		for(var i = 0; i < forestArray.length; ++i)
+		{
+			if(forestArray[i].forestName.match(text.value))
+			{
+				suggestArray.push(forestArray[i].forestName);
+			}
+		}
+		
+		$(text).autocomplete(
+		{
+			source: suggestArray
+		});  
 	}
    
 	function citySelectChange(city) // select1 change event
@@ -348,6 +344,10 @@
 					error : function(err)
 					{
 						alert("오류발생cc : " + err);
+						$('input[name="searchType"]').each(function()
+						{
+							$(checkBox).prop('disabled', false);
+						});
 					}
 				})
 			}
@@ -374,6 +374,10 @@
 					error : function(err)
 					{
 						alert("오류발생cc : " + err);
+						$('input[name="searchType"]').each(function()
+						{
+							$(checkBox).prop('disabled', false);
+						});
 					}
 				})
 			}
