@@ -171,13 +171,13 @@ public class TravelInformationServiceImpl implements TravelInformationService
 		return dao.updateVideo(map);
 	}
 	@Override
-	public String tTest()
+	public String searchImage(String keyword)
 	{
 		String clientId = "kDVo8uBXspw_GzF7ECYH";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "ZZZytqspU2";//애플리케이션 클라이언트 시크릿값";
         try
         {
-            String text = URLEncoder.encode("공주 무령왕릉", "UTF-8");
+            String text = URLEncoder.encode(keyword, "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/search/image?query="+ text; // json 결과
             //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
             URL url = new URL(apiURL);

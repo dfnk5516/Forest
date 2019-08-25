@@ -25,5 +25,5 @@ public interface TravelInformationService
 	int updateSights(SightsDTO dto, String selectedSightsName);
 	int updateVideo(VideoDTO videoDTO, String selectedVideoName);
 	int updateFestival(FestivalDTO festivalDTO, String selectedFestivalName);
-	public String tTest();
+	public String searchImage(String keyword);
 }

@@ -109,11 +109,9 @@ public class TravelInformationAjaxController
 		return service.updateVideo(dto, selectedVideoName);
 	}
 /////////////////////////////////////////////	
-	@RequestMapping("/tTest")
-	public String tTest()
+	@RequestMapping("/searchImage")
+	public String searchImage(String keyword)
 	{
-		String aa= service.tTest();
-		System.out.println(aa);
-		return aa;
+		return service.searchImage(keyword);
 	}
 }

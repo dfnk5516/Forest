@@ -81,7 +81,7 @@
 	var zoomControl;
 	
 	var currentTypeId; // 지도에 추가된 지도타입정보를 가지고 있을 변수
-	var searchPictureArray;
+	var searchImageArray;
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1",
 		//"https://www.youtube.com/embed/knV-5VciTTQ?autoplay=1",
 		//"https://www.youtube.com/embed/oSmUI3m2kLk?autoplay=1"		
@@ -320,53 +320,10 @@
    		{
    			closeOverlay();
    			
-   			var content = '<div class="overlaybox">' +
-   		    '    <div class="boxtitle">금주 영화순위</div>' +
-   		    '    <div class="first">' +
-   		 	'        <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-   		    '        <div class="movietitle text">드래곤 길들이기2</div>' +
-   		    '    </div>' +
-   		    '    <ul>' +
-   		    '        <li class="up">' +
-   		    '            <span class="number">2</span>' +
-   		    '            <span class="title">명량</span>' +
-   		    '            <span class="arrow up"></span>' +
-   		    '            <span class="count">2</span>' +
-   		    '        </li>' +
-   		    '        <li>' +
-   		    '            <span class="number">3</span>' +
-   		    '            <span class="title">해적(바다로 간 산적)</span>' +
-   		    '            <span class="arrow up"></span>' +
-   		    '            <span class="count">6</span>' +
-   		    '        </li>' +
-   		    '        <li>' +
-   		    '            <span class="number">4</span>' +
-   		    '            <span class="title">해무</span>' +
-   		    '            <span class="arrow up"></span>' +
-   		    '            <span class="count">3</span>' +
-   		    '        </li>' +
-   		    '        <li>' +
-   		    '            <span class="number">5</span>' +
-   		    '            <span class="title">안녕, 헤이즐</span>' +
-   		    '            <span class="arrow down"></span>' +
-   		    '            <span class="count">1</span>' +
-   		    '        </li>' +
-   		    '    </ul>' +
-   		    '</div>';
-   		
-			overlay = new kakao.maps.CustomOverlay(
-			{
-				content: content,
-				map: map,
-				position: marker.getPosition(),
-				position : new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng()),
-				xAnchor: 0.2,
-				yAnchor: 1.15
-			});
-			
-
-			overlay.setMap(map);
-
+   			searchImage(Position.title, marker);
+   			
+			//$("#overlayImg").css("background", "url('" + searchImageArray[0] + "') no-repeat;");
+			//console.log(searchImageArray[0]);
    			
    			
    			
@@ -1100,23 +1057,69 @@
  	    map.panTo(moveLatLon);            
  	}         
 	
- 	function tTest()
+ 	function searchImage(keyword, marker)
  	{
  		$.ajax(
  		{
-			url: "${path}/tTest", //서버주소
+			url: "${path}/searchImage", //서버주소
 			type :"post" , //전송방식(get, post, put, delete)
-			data :"${_csrf.parameterName}=${_csrf.token}", //서버에게 전송할 parameter정보
+			data :"${_csrf.parameterName}=${_csrf.token}&&keyword=" + keyword, //서버에게 전송할 parameter정보
 			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
 			success :function(result)
 			{
-				searchPictureArray = new Array();
+				searchImageArray = new Array();
 				for(var i = 0; i <result.items.length; ++i)
 				{
-					searchPictureArray.push(result.items[i].link);
+					searchImageArray.push(result.items[i].link);
 				}
-				console.log(searchPictureArray);
+				console.log(searchImageArray);
 				
+				var content = '<div class="overlaybox">' +
+	   		    '    <div class="boxtitle">금주 영화순위</div>' +
+	   		 	'        <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+	   		    '    <div class="first" style = "background: url(' + searchImageArray[0] + ') no-repeat;">' +
+	   		    '        <div class="movietitle text">드래곤 길들이기2</div>' +
+	   		    '    </div>' +
+	   		    '    <ul>' +
+	   		    '        <li class="up">' +
+	   		    '            <span class="number">2</span>' +
+	   		    '            <span class="title">명량</span>' +
+	   		    '            <span class="arrow up"></span>' +
+	   		    '            <span class="count">2</span>' +
+	   		    '        </li>' +
+	   		    '        <li>' +
+	   		    '            <span class="number">3</span>' +
+	   		    '            <span class="title">해적(바다로 간 산적)</span>' +
+	   		    '            <span class="arrow up"></span>' +
+	   		    '            <span class="count">6</span>' +
+	   		    '        </li>' +
+	   		    '        <li>' +
+	   		    '            <span class="number">4</span>' +
+	   		    '            <span class="title">해무</span>' +
+	   		    '            <span class="arrow up"></span>' +
+	   		    '            <span class="count">3</span>' +
+	   		    '        </li>' +
+	   		    '        <li>' +
+	   		    '            <span class="number">5</span>' +
+	   		    '            <span class="title">안녕, 헤이즐</span>' +
+	   		    '            <span class="arrow down"></span>' +
+	   		    '            <span class="count">1</span>' +
+	   		    '        </li>' +
+	   		    '    </ul>' +
+	   		    '</div>';
+	   		
+				overlay = new kakao.maps.CustomOverlay(
+				{
+					content: content,
+					map: map,
+					position: marker.getPosition(),
+					position : new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng()),
+					xAnchor: 0.2,
+					yAnchor: 1.15
+				});
+				
+
+				overlay.setMap(map);
 			} ,
 			error : function(err)
 			{
