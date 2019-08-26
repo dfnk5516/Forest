@@ -320,7 +320,7 @@
    		{
    			closeOverlay();
    			
-   			searchImage(Position.title, marker);
+   			
    			
 			//$("#overlayImg").css("background", "url('" + searchImageArray[0] + "') no-repeat;");
 			//console.log(searchImageArray[0]);
@@ -333,6 +333,8 @@
        		// 마커의 이미지를 클릭 이미지로 변경합니다
        		if (!selectedMarker || selectedMarker !== marker)
        		{
+       			searchImage(Position.title, marker);
+       			
        			if(option  == "forest")
        			{
        				changeBackSelectedMarkerImg(); // 클릭된 마커 객체가 null이 아니면 클릭된 마커의 이미지를 기본 이미지로 변경하고
@@ -1050,7 +1052,7 @@
  	function panTo(latitude, longitude)
  	{
  	    // 이동할 위도 경도 위치를 생성합니다 
- 	    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+ 	    var moveLatLon = new kakao.maps.LatLng(latitude + 0.4, longitude);
  	    
  	    // 지도 중심을 부드럽게 이동시킵니다
  	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -1120,6 +1122,8 @@
 				
 
 				overlay.setMap(map);
+				
+				return overlay;
 			} ,
 			error : function(err)
 			{
