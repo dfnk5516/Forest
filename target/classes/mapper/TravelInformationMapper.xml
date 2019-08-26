@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id = "selectForest" resultType="forestDTO">
-		SELECT FOREST_NAME, CITY, FOREST_LATITUDE, FOREST_LONGITUDE FROM FOREST
+		SELECT FOREST_NAME, CITY, FOREST_ADDR, FOREST_LATITUDE, FOREST_LONGITUDE FROM FOREST
 	</select>
 	
 	<select id = "selectVideo" resultType = "videoDTO">

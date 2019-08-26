@@ -30,6 +30,10 @@
 	var timer1 = null;
 	var sigma = 50;
 	var timer2 = null;
+	var alpha = 5000;
+	var timer3 = null;
+	
+	var currentImageIndex = null;
 	
 	var map;
 	var mapContainer;
@@ -333,7 +337,9 @@
        		// 마커의 이미지를 클릭 이미지로 변경합니다
        		if (!selectedMarker || selectedMarker !== marker)
        		{
-       			searchImage(Position.title, marker);
+       			clearInterval(timer3);
+       			timer3 = null;
+       			searchImage(Position.title, marker, option);
        			
        			if(option  == "forest")
        			{
@@ -356,12 +362,15 @@
 				
        			// 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
        	    	selectedMarker = marker;
+       	    	
        		}
        		else if(selectedMarker == marker)
        		{
        			marker.setImage(currentForestMarkerImg);
        			selectedMarker = null;
        			overlay.setMap(null);
+       			clearInterval(timer3);
+       			timer3 = null;
        		}
    		});
 	    
@@ -1058,9 +1067,29 @@
  	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
  	    map.panTo(moveLatLon);            
  	}         
-	
- 	function searchImage(keyword, marker)
+ 	
+ 	function imageLoof()
  	{
+ 		if(currentImageIndex == null)
+ 		{
+ 			currentImageIndex = 0;
+ 		}
+ 		else if(currentImageIndex == 9)
+ 		{
+ 			currentImageIndex = 0;
+ 		}
+ 		else
+ 		{
+ 			++currentImageIndex;
+ 		}
+ 		//$("#searchImageDiv").css("background","url('" + searchImageArray[currentImageIndex] + "') no-repeat")
+ 		document.getElementById("searchImg").src = searchImageArray[currentImageIndex];
+ 	}
+	
+ 	function searchImage(keyword, marker, option)
+ 	{
+ 		
+ 		
  		$.ajax(
  		{
 			url: "${path}/searchImage", //서버주소
@@ -1069,6 +1098,9 @@
 			dataType : "json", //서버가 보내오는 데이터타입(text,html,xml,json)
 			success :function(result)
 			{
+				//clearTimeout(timer3);
+				timer3 = setInterval(imageLoof, alpha);
+				
 				searchImageArray = new Array();
 				for(var i = 0; i <result.items.length; ++i)
 				{
@@ -1076,36 +1108,77 @@
 				}
 				console.log(searchImageArray);
 				
-				var content = '<div class="overlaybox">' +
-	   		    '    <div class="boxtitle">금주 영화순위</div>' +
+				var str;
+				var addr;
+				
+				if(option == "forest")
+				{
+					str = "휴양림 정보";
+					for(var i = 0; i < forestArray.length; ++i)
+					{
+						if(forestArray[i].forestName == keyword)
+						{
+							if(forestArray[i].forestAddr == null)
+							{
+								addr = "";
+							}
+							else
+							{
+								addr = forestArray[i].forestAddr;
+							}
+							break;
+						}
+					}
+				}
+				else if(option == "sights")
+				{
+					str = "관광지 정보";
+					for(var i = 0; i < sightsArray.length; ++i)
+					{
+						if(sightsArray[i].sightsName == keyword)
+						{
+							if(sightsArray[i].sightsLocation == null)
+							{
+								addr = "";
+							}
+							else
+							{
+								addr = sightsArray[i].sightsLocation;
+							}
+							break;
+						}
+					}
+				}
+				else if(option == "festival" )
+				{
+					str = "행사 정보";
+					for(var i = 0; i < festivalArray.length; ++i)
+					{
+						if(festivalArray[i].festivalName == keyword)
+						{
+							if(festivalArray[i].festivalAddress == null)
+							{
+								addr = "";
+							}
+							else
+							{
+								addr = festivalArray[i].festivalAddress;
+							}
+							break;
+						}
+					}
+				}
+				
+				var content = '<div class="overlaybox" style = "border-radius : 4px 4px 0 0">' +
+	   		    '    <div class="boxtitle">' + str + '</div>' +
 	   		 	'        <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-	   		    '    <div class="first" style = "background: url(' + searchImageArray[0] + ') no-repeat;">' +
-	   		    '        <div class="movietitle text">드래곤 길들이기2</div>' +
-	   		    '    </div>' +
-	   		    '    <ul>' +
+	   		    '    <div id="searchImageDiv" class="first" style = "background: url(' + searchImageArray[0] + ') no-repeat;">' +
+	   		    '	 <img id = "searchImg" style="width : 100%; height : 100%;">' +
+	   		    '        <div class="movietitle text">' + keyword + '</div>' +
+	   		    '    </div>'+
+	   			'	 <ul>' +
 	   		    '        <li class="up">' +
-	   		    '            <span class="number">2</span>' +
-	   		    '            <span class="title">명량</span>' +
-	   		    '            <span class="arrow up"></span>' +
-	   		    '            <span class="count">2</span>' +
-	   		    '        </li>' +
-	   		    '        <li>' +
-	   		    '            <span class="number">3</span>' +
-	   		    '            <span class="title">해적(바다로 간 산적)</span>' +
-	   		    '            <span class="arrow up"></span>' +
-	   		    '            <span class="count">6</span>' +
-	   		    '        </li>' +
-	   		    '        <li>' +
-	   		    '            <span class="number">4</span>' +
-	   		    '            <span class="title">해무</span>' +
-	   		    '            <span class="arrow up"></span>' +
-	   		    '            <span class="count">3</span>' +
-	   		    '        </li>' +
-	   		    '        <li>' +
-	   		    '            <span class="number">5</span>' +
-	   		    '            <span class="title">안녕, 헤이즐</span>' +
-	   		    '            <span class="arrow down"></span>' +
-	   		    '            <span class="count">1</span>' +
+	   		    '            <div style = "overflow : hidden" class="number">' + addr + '</div>' +
 	   		    '        </li>' +
 	   		    '    </ul>' +
 	   		    '</div>';
