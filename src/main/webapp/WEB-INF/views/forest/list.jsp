@@ -181,24 +181,20 @@ $(function(){
 <div id="back">
 
 <c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
+<span style="float: left; vertical-align: middle; font-size: 50px; padding-top: 25px;text-shadow:2px 2px gray; padding-left: 50px;color: black!important; font-family: cursive!important;">
+<i class="fa fa-tree" style="font-size:50px; text-shadow:2px 2px gray; color: green"></i>&nbsp;자연 휴양림 안내</span>
+<div style="margin-bottom: 10px">	
 
-<div style="margin-bottom: 10px">
-	
-   	
-	<div align="center">
-		
-		<button type="button" class="btn btn-success" id="insert" style="font-size:large;">
+	<div align="right" style="padding: 10px 0px; margin-right: 10%;">
+	  <div style="display: block;">
+		<button type="button" class="btn btn-success" id="insert" style="font-size:large; margin-right: 0px;">
 			휴양림정보 등록
 		</button>
-		<button type="button" class="btn btn-secondary" id="reloadBtn" style="font-size:large;">
+		<button type="button" class="btn btn-secondary" id="reloadBtn" style="font-size:large;margin-right: 0">
 			새로고침
 		</button>
-		
-	</div>
-
-	<div align="center" style="padding: 10px 0px;">
-	
-	   	<span style="font-size: 20px">글 목록
+	  </div>
+	   	<span style="font-size: 20px; display: inline-block; vertical-align: middle;">글 목록
 	   	<select name="perPageNum" id="perPageNum">
 	   		<option ${cri.perPageNum == 4?"selected='selected'":"" }>4</option>
 	   		<option ${cri.perPageNum == 6?"selected='selected'":"" }>6</option>
@@ -256,7 +252,7 @@ $(function(){
 						<h1>${forestDTO.forestName}</h1>
 						<h3>${forestDTO.forestType}</h3>
 						<br>
-						<div style="font-weight: bold">${forestDTO.forestAddr}</div>
+						<div style="font-weight: bold; font-size: 15px;">${forestDTO.forestAddr}</div>
 						<br>
 						<div style="font-weight: bold">${forestDTO.forestTel}</div>
 						<br>
@@ -267,8 +263,9 @@ $(function(){
 						</div>
 					
 					</div>
-					<div class="list_Btn">
-					<button class="btn btn-2 btn-2i icon-heart" style="font-size: 70px;">♥</button>
+					<div class="list_Btn"">
+					<span style="font-size: 20px; color: red; text-shadow: 0px 0px">찜하기</span>
+					<button class="btn btn-2 btn-2i icon-heart" style="font-size: 70px; padding: 0px">♥</button>
 					</div>
 				</div>
 					
@@ -282,7 +279,7 @@ $(function(){
 	<c:if test="${cri.prev }">
 	  <li>
 		<a href="${path}/forest/list?page=${cri.startPage-1 }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">
-		  <i class="glyphicon glyphicon-step-backward" ></i>
+		  <i class="glyphicon glyphicon-step-backward" ></i>Previous
 		</a>
 	  </li>
 	</c:if>
@@ -295,11 +292,13 @@ $(function(){
 	<c:if test="${cri.next }">
 		<li>
 		  	<a href="${path}/forest/list?page=${cri.endPage+1 }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">
-		  		<i class="glyphicon glyphicon-step-forward"></i>
+		  		Next<i class="glyphicon glyphicon-step-forward"></i>
 		  	</a>
 	  	</li>
 	</c:if>
 </ul>
+
 </div>
+<%@ include file="../include/footer.jsp" %>
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kosta.forrest.model.board.dto.BookingDTO;
 import kosta.forrest.model.board.dto.Criteria;
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.dto.LodgeDTO;
@@ -130,10 +131,13 @@ public class ForestController {
 	
 	//예약하기 폼이동
 	@RequestMapping("/bookingForm")
-	public ModelAndView bookingForm(int forestNo, String lodgeCode) {
+	public ModelAndView bookingForm(String lodgeCode) {
 		System.out.println("ForestController의 bookingForm호출");
+		BookingDTO bookingDTO = lodgeService.selectBookInfo(lodgeCode);
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("bookingDTO", bookingDTO);
 		mv.setViewName("forest/booking");
 		return mv;
 	}
+	
 }

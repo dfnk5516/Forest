@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kosta.forrest.model.board.dao.LodgeDAO;
+import kosta.forrest.model.board.dto.BookingDTO;
 import kosta.forrest.model.board.dto.LodgeDTO;
 
 @Service
@@ -33,10 +34,11 @@ public class LodgeServiceImpl implements LodgeService {
 		return 0;
 	}
 
-	@Override
-	public int update(LodgeDTO LodgeDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+	@Override 
+	public BookingDTO selectBookInfo(String lodgeCode) {
+		BookingDTO bookingDTO = lodgeDAO.selectBookInfo(lodgeCode);
+		return bookingDTO;
 	}
+
 
 }

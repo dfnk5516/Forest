@@ -32,7 +32,7 @@ $(function(){
 
 <div style="margin:20px 20px;margin-top: 40px; text-align:center;">
 <span style="vertical-align: middle;  font-size: 60px; text-shadow:3px 3px gray; color: black!important; font-family: cursive!important;">
-휴양림 정보 등록</span></div>
+휴양림 정보 수정</span></div>
 
 <form name="updateForm" method="post" action="${pageContext.request.contextPath}/forest/update?${_csrf.parameterName}=${_csrf.token}" 
  enctype="multipart/form-data" style="margin-top: 100px;">
@@ -125,4 +125,6 @@ $(function(){
 
 <hr>
 </div>
+
+<%@ include file="../include/footer.jsp" %>
 </BODY>

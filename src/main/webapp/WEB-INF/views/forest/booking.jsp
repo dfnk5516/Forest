@@ -18,9 +18,46 @@
 <title>Insert title here</title>
 <c:set var="path" value="${pageContext.request.contextPath}" scope="application"/>
 <SCRIPT type="text/javascript">
+
 $(function(){
+
+	$("#selectDate").click(function(){
+		var startDate=$("#startDate").val();
+		var endDate=$("#endDate").val();
+		
+		if(startDate!="" && endDate!=""){
+			var arr1 = startDate.split("-");
+			var arr2 = endDate.split("-");
+			var dif = Number(arr2[2])-Number(arr1[2]);
+			//alert( dif);
+			var lodgePrice=Number($("#lodgePrice").val());
+			$("#checkPrice").val(lodgePrice*dif);
+			$("#totalPrice").val(lodgePrice*dif);
+			
+		} else {
+			alert("날짜를 선택해주세요");
+		}
+	})
+	
+	
+	$("#peopleNum").change(function(){
+		var checkPrice = Number($("#checkPrice").val());
+		if($(this).val()>4){
+			
+			var result = checkPrice + Number($(this).val()-4)*10000;
+			$("#totalPrice").val("");
+			$("#totalPrice").val(result);
+		} else if($(this).val()<5){
+			$("#totalPrice").val("");
+			$("#totalPrice").val(checkPrice);
+		}
+	})
+	
 	$("#cancleBtn").click(function(){
-		history.back();
+		if (confirm("완료되지 않은 예약정보는 저장되지 않습니다. 취소하시겠습니까?")) {
+			window.close();
+		}
+		
 	})
 }) 	
 </SCRIPT>
@@ -33,34 +70,20 @@ li {
 
 </HEAD>
 <BODY>
+<%@ include file="background.jsp" %>
+<div id="back">
+<form name="updateForm" method="post">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 <div id="container" class="layout">
     
     <h2 class="container_title">예약 정보</h2>
-    <form id="frm" name="frm" method="post" action="">
-        <input type="hidden" name="egovframework.double.submit.preventer.parameter.name" value="E2C8BF58-C699-4E23-A1F6-240A24AE78F4">
-        <input type="hidden" name="_csrf" value="10914b9a-016f-4938-b903-f21fe2cca7e3">
-        <input type="hidden" id="insttId" name="insttId" value="0111">
-        <input type="hidden" id="goodsId" name="goodsId" value="G01110200200300139">
-        <input type="hidden" id="s_rsrvtBgDt" name="rsrvtBgDt" value="20190916">
-        <input type="hidden" id="s_rsrvtEdDt" name="rsrvtEdDt" value="20190917">
-        <input type="hidden" id="stngNofpr" name="stngNofpr" value="2">
-        <input type="hidden" id="sthngCnt" name="sthngCnt" value="">
-        <input type="hidden" id="rsrvtTpcd" name="rsrvtTpcd" value="01">
-        <input type="hidden" id="rsrvtTpeCd" name="rsrvtTpeCd" value="04">
-        <input type="hidden" id="rsrvtWtngSctin" name="rsrvtWtngSctin" value="01">
-        <input type="hidden" id="srchPrd" name="srchPrd" value="">
-        <input type="hidden" id="srchInsttArcd" name="srchInsttArcd" value="">
-        <input type="hidden" id="srchFcfrsFclNm" name="srchFcfrsFclNm" value="">
-        <input type="hidden" id="houseCampSctin" name="houseCampSctin" value="">
-        <input type="hidden" name="hmpgId" value="FRIP">
-        <input type="hidden" id="goodsClsscHouseCdArr" name="goodsClsscHouseCdArr" value="">
-    
+      
         <div id="txt">
             <div class="stayroom charge_wrap">
-                <div class="stay_left">
+                <div class="stay_left" style="background-color: white;">
                     <div class="stay_border"><div class="stay_info">
-        <h2>{휴양림 이름}</h2>	
-		<table class="table" border="1" style="height: 600px;">
+        <h2>${bookingDTO.forestName}</h2>	
+		<table class="table" border="1" style="height: 300px;">
 			<colgroup>
 				<col width="250px">
 				<col width="250px">
@@ -71,24 +94,25 @@ li {
 					<td colspan="2">
 					<%-- <img src="${pageContext.request.contextPath}/resources/images/forestImg/${dto.forestFilename}.jpg"
 						style="width: 600px; height: 400px;" /><br /> --%> <%-- ${dto.forestFilename } --%>
-					<img src="https://image.foresttrip.go.kr//ino/goods/2017_07_28_13_41_250.jpg">
+					<img src="${pageContext.request.contextPath}/resources/images/forestImg/${bookingDTO.forestFilename}.jpg"
+						style="width: 100%; height: 40%">
 					</td>
 				</tr>
 				<tr>
-					<td>${dto.forestName }</td>
+					<td>${bookingDTO.forestName }</td>
 
-					<td>${dto.forestType }</td>
+					<td>${bookingDTO.forestType }</td>
 				</tr>
 				<tr>
-					<td colspan="3">${dto.forestFacil}<br><p></td>
+					<td colspan="3">${bookingDTO.forestFacil}<br><p></td>
 				</tr>
 				<tr>
-					<td colspan="3">${dto.forestAddr}</td>
+					<td colspan="3">${bookingDTO.forestAddr}</td>
 				</tr>
 				<tr>
-					<td>${dto.forestWriter }</td>
+					<td>뭐넣어야하지</td>
 
-					<td>${dto.forestTel }</td>
+					<td>${bookingDTO.forestTel }</td>
 				</tr>
 			</tbody>
 			<tfoot>
@@ -106,7 +130,7 @@ li {
 						</div>
 					</div>
 				</div>
- 
+ <hr>
 
 
 
@@ -114,34 +138,38 @@ li {
 
                     </div>
                 </div>
-                <div class="stay_right">
+                <div class="stay_right" style="background-color: lightgray;">
                     <div class="stay_result_border complete">
-                        <h2><i class='fas fa-bed' style='font-size:36px'></i>{숙박이름} 예약선택</h2>
-                        <div class="money_wrap mb_40">
-                        <ul>
+                    <div class="money_wrap mb_40">
+                     <ul>
+                     	  <li>
+                     	    <b>숙박 이름</b><br>
+                        	<h2><i class='fas fa-bed' style='font-size:36px'></i>${bookingDTO.lodgeName}</h2>
+                        
+                       
                           <li>
                             <b>숙박 이용일</b><br>
-                            <i class='far fa-calendar-alt' style='font-size:30px'></i>체크인 날짜 &nbsp;&nbsp;&nbsp;&nbsp;- <input type="date"><br>
-                            <i class='fas fa-calendar-alt' style='font-size:30px'></i>체크아웃 날짜 - <input type="date">
+                            <i class='far fa-calendar-alt' style='font-size:30px'></i>체크인 날짜 &nbsp;&nbsp;&nbsp;&nbsp;- <input type="date" id="startDate" name="startDate"><br>
+                            <i class='fas fa-calendar-alt' style='font-size:30px'></i>체크아웃 날짜 - <input type="date" id="endDate" name="endDate">
+                            <input type="button" id="selectDate" value="날짜선택">
+                          </li>
+                          <li><b>시설</b><br>
+                          	<i class='fas fa-university' style='font-size:30px'></i>
+                          	야영데크(101),4인실(13㎡)
                           </li>
                           <li>
-                            <b>기준인원</b><br>
-                            <i class='fas fa-user-check' style='font-size:25px'></i> &nbsp;<input type="number" name="quantity" min="1" max="100"> 명 
-                          </li>
-                          <li><b>시설</b>야영데크(101),4인실(13㎡)
+                            <b>사용 인원</b><br>
+                            <i class='fas fa-user-check' style='font-size:25px'></i> &nbsp;<input type="number" name="peopleNum" min="1" max="100" id="peopleNum"> 명 <br>
+                           	 ※ 정원 초과시 1인당 만원 추가 요금 발생
                           </li>
                         </ul>
                      	</div>
-                        <strong>예약금액</strong>
-                        <div class="result_total"><div class="days_ch"><span class="d_left">2019.09.16(비수기/평일)<span class="d_right">7,000원</span></span></div></div>
-                        <div class="total">
-                            <span class="all_t">합계</span>
-                            <span class="mn_num">7,000원</span>
-                        </div>
-                        <div id="care_ful02" style="display:none;">
-                            <p class="care_ful02">※ 정원 초과시 1인당 아래의 추가 요금 발생</p>
-                            <div id="addNofprUnprc" class="result_total"><div class="days_ch"><span class="d_left">2019.09.16(비수기/평일)<span class="d_right">7,000원</span></span></div></div>
-                        </div>
+                        <strong>예약금액</strong><br>
+                        <i class='fas fa-money-check-alt' style='font-size:27px; margin-top: 2px'></i>
+                        1박가격 - <input type="text" name="lodgePrice" id="lodgePrice" value="${bookingDTO.lodgePrice}" size="15" readonly="readonly" style="text-align: right;">원<br>
+                        <i class='fas fa-money-check-alt' style='font-size:27px; margin-top: 2px'></i>
+                                                     총 가격 - <input type="text" id="totalPrice" name="totalPrice" value="" readonly="readonly" style="margin-left: 5px;text-align: right;" size="15">원
+                        <br> <input type="hidden" id="checkPrice" value="">
                     </div>
                     <div class="stay_result_border complete solo">
                         <strong>자동예약 방지숫자</strong>
@@ -166,16 +194,12 @@ li {
                         <!--  반려견 등록번호 입력(2019.07.19) -->
                         <div id="cmDogRgNo" class="stay_dog_number mt_20">
                             <p class="war_txt">※ <span class="red">[반려견동반 필수]</span>반려견 이용약관 부적격/증빙 미지참시 <span class="red">입실불가</span>하며 위약금이 부과됩니다.</p>
-                            <label for="dogNumber_1" class="mt_10">반려견 등록번호 1 <span class="red">*</span> </label>
+                            <label for="dogNumber_1" class="mt_10">반려견 등록번호  <span class="red">*</span> </label>
                             <div class="form_style">
                                 <input type="text" id="cmdogOneRgno" name="cmdogOneRgno" value="" title="반려견 등록번호 1" maxlength="15" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
                             </div>
-                            <label for="dogNumber_2">반려견 등록번호 2</label>
-                            <div class="form_style">
-                                <input type="text" id="cmdogTwoRgno" name="cmdogTwoRgno" value="" title="반려견 등록번호 2" maxlength="15" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
-                            </div>
                         </div><br>
-                        <hr>
+                        
                         <!--  반려견 등록번호 입력(2019.07.19) -->
                         
 						
@@ -188,6 +212,8 @@ li {
             
             
                 <div style="text-align: center;">
+                <br>
+               <hr color="black" style="border-width: medium;">
                     <div style="margin-top:50px;">
                         <div class="agree_wrap basic type02 fold_list">
                 
@@ -197,7 +223,7 @@ li {
                 
                         </div>
                     </div>
-                    <hr>
+                    <hr color="black" style="border-width: thin;">
                 <div class="agree_btc mt_40">
 				    <p class="center war_tit">※유의사항 및 이용약관을 확인하신 후 동의하시면 체크해주세요.</p>
 				    <div class="mt_10 agree_ra_bt">
@@ -210,12 +236,16 @@ li {
 	                <button type="button" class="btn btn-success" id="insert" style="font-size:large;">
 						예약완료
 					</button>
+	                <button type="button" class="btn btn-secondary" id="cancleBtn" style="font-size:large;">
+						취소하기
+					</button>
                 </div>
                 </div> 
-                <hr>
+                </form>
+                <hr color="black" style="border-width: medium;">
                 <br>
-<div class="container">
-  <h2><b>위약금 정책</b></h2>
+<div class="container" style="margin-top: 10px;background-color: white;">
+  <h2 style="text-align: center;"><b>위약금 정책</b></h2>
   <br>            
   <table class="table table-striped">
     <thead>
@@ -322,6 +352,8 @@ li {
     </tbody>
   </table>
 </div>
+</div>
 
+<%@ include file="../include/footer.jsp" %>
 </BODY>
 </html>

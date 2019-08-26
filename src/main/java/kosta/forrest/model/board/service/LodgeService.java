@@ -2,6 +2,7 @@ package kosta.forrest.model.board.service;
 
 import java.util.List;
 
+import kosta.forrest.model.board.dto.BookingDTO;
 import kosta.forrest.model.board.dto.ForestDTO;
 import kosta.forrest.model.board.dto.LodgeDTO;
 
@@ -23,7 +24,7 @@ public interface LodgeService {
 	int delete(String lodeCode);
 
 	/**
-	 * 휴양림번호에 해당하는 레코드 수정
-	 * */
-	int update(LodgeDTO LodgeDTO);
+	 * 숙박코드에 해당하는 예약하기폼 불러오기
+	 */
+	BookingDTO selectBookInfo(String lodgeCode);
 }

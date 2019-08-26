@@ -27,6 +27,7 @@
 <style type="text/css">
 .table th {
 	background-color: #FAEBD7;
+	padding: 4px;
 }
 
 .table td {
@@ -58,7 +59,7 @@
 		$(document).on('click', '#booking', function(){
 			var bookUrl ="${pageContext.request.contextPath}/forest/bookingForm?forestNo="+
 						${dto.forestNo}+"&lodgeCode="+$(this).attr("name");
-			window.open(bookUrl,width="400px", height="400px");
+			window.open(bookUrl,width="400px", height="300px");
 		})
 		
 		function printLodge() {
@@ -155,7 +156,7 @@
 	<div class="panel-heading" align="center">
 		<section id="btn-click" style="text-align: right;">
 			<span
-				style="float: left; vertical-align: middle; font-size: 50px; padding-top: 25px; padding-left: 50px;color: black!important; font-family: cursive!important;">
+				style="float: left; vertical-align: middle; font-size: 50px; padding-top: 25px;text-shadow:2px 2px gray; padding-left: 50px;color: black!important; font-family: cursive!important;">
 				${dto.forestName}
 				상세 정보</span> <input type="hidden" name="forestNo" value="${dto.forestNo}"
 				id="no">
@@ -166,7 +167,7 @@
 	</div>
 	<div>
 		<!-- 테이블과 지도 묶기 -->
-		<table class="table" border="1">
+		<table class="table" style="border-collapse: collapse;" >
 			<colgroup>
 				<col width="100px">
 				<col width="150px">
@@ -279,5 +280,7 @@
 	</table>
 
 </div>
+
+<%@ include file="../include/footer.jsp" %>
 </body>
 </html>

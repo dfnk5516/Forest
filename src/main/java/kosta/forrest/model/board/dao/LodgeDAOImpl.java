@@ -1,11 +1,13 @@
 package kosta.forrest.model.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kosta.forrest.model.board.dto.BookingDTO;
 import kosta.forrest.model.board.dto.LodgeDTO;
 
 @Repository
@@ -34,9 +36,9 @@ public class LodgeDAOImpl implements LodgeDAO {
 	}
 
 	@Override
-	public int update(LodgeDTO lodgeDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+	public BookingDTO selectBookInfo(String lodgeCode) {
+		BookingDTO bookingDTO = session.selectOne("forestMapper.selectBookInfo", lodgeCode);
+		return bookingDTO;
 	}
 
 }
