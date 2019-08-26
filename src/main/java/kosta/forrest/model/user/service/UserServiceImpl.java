@@ -86,6 +86,46 @@ public class UserServiceImpl implements UserService {
 	public List<AuthorityDTO> selectAuthorityByUsername(String username) {
 		return authoritiesDAO.selectAuthorityByUserName(username);
 	}
+	
+	////////////////////////////// 관리자
+	@Override
+	public List<UserDTO> selectAll() {
+		List<UserDTO> userList = userDAO.selectAll();
+	if(userList.isEmpty()) throw new RuntimeException("회원 리스트가 존재하지 않습니다.");
+	else return userList;
+	}
+
+	@Override
+	@Transactional  //메소드 위에 선언하면 해당 메소드만 PointCut이 된다. -> 예외가 발생했을 때 알아서 commit/rollback 처리 해준다.
+	public UserDTO selectByUserId(String userId) {
+		UserDTO userDTO = userDAO.selectByUserId(userId);
+		if(userDTO == null) throw new RuntimeException(userId + "에 해당하는 정보가 없습니다.");
+		else return userDTO;
+	}
+
+	@Override
+	public int insert(UserDTO userDTO) {
+		int result = userDAO.insert(userDTO);
+		if(result == 0) throw new RuntimeException("회원이 등록되지 않았습니다.");
+		return result;
+	}
+
+	@Override
+	public int delete(String userId) {
+		int result = userDAO.delete(userId);
+		if(result == 0) throw new RuntimeException("오류 발생! 삭제되지 않았습니다.");
+		return result;
+	}
+
+	@Override
+	public int update(UserDTO userDTO) {
+		System.out.println("update userId?" + userDTO.getUserId());
+		
+		 
+		int result = userDAO.update(userDTO);
+		if(result == 0) throw new RuntimeException("오류 발생! 수정되지 않았습니다.");
+		return result;
+	}
 
 
 }

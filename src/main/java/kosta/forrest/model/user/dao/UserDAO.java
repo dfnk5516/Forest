@@ -24,6 +24,19 @@ public interface UserDAO {
 
 	UserDTO loginConfirm(String id, Object pwd);
 	
-	
+	/* 레코드 전체 검색 */
+	List<UserDTO> selectAll();
+
+	/* 회원아이디 해당하는 레코드 검색 */
+	UserDTO selectByUserId(String userId);
+
+	/* 레코드 삽입 */
+	int insert(UserDTO userDTO);
+
+	/* 회원아이디에 해당하는 레코드 삭제 */
+	int delete(String userId);
+
+	/* 회원아이디 해당하는 레코드 수정 */
+	int update(UserDTO userDTO);
 
 }

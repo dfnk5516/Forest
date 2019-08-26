@@ -25,5 +25,17 @@ public interface UserService {
 	
 	List<AuthorityDTO> selectAuthorityByUsername(String username);
 
-	//UserDTO findUserById(String id, String pwd);
+	/* 레코드 전체 검색 */
+	List<UserDTO> selectAll();
+
+	UserDTO selectByUserId(String userId);
+
+	/* 레코드 삽입 */
+	int insert(UserDTO userDTO);
+
+	/* 사용자 아이디에 해당하는 레코드 삭제 */
+	int delete(String userId);
+
+	/* 모델번호에 해당하는 레코드 수정 */
+	int update(UserDTO userDTO);
 }
