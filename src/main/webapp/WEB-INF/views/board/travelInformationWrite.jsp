@@ -25,6 +25,11 @@
 	var videoMoveCheck = false;
 	var apiKey = "AIzaSyCYGcvsL6xaJ56KYG04pxBQ00xlP5PRM_4";
 	
+	var timer1;
+	var timer2;
+	
+	var delta = 3000;
+	
 	function sightsListInit()
 	{
 		$("[name=writeType]").click();
@@ -313,6 +318,16 @@
 	{
 		if($('input:radio[name=writeType]:checked').val()=="sightsRadio")
 		{
+			for(var i=0; i<sightsArray.length; i++){
+				if($("#sightsName").val()==sightsArray[i].sightsName){
+					$("#formHeaderTitleDiv").html("이름은 중복하여<br>사용할 수 없습니다. ");
+					clearTimeout( timer1 );
+					
+					timer1 = setTimeout( errorMessage, delta);
+					return;
+				}
+			}
+			
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
 			datas += "&&sightsName=" + encodeURIComponent($("#sightsName").val());
 			datas += "&&city=" + encodeURIComponent($("#sightsCity option:selected").val());
@@ -343,6 +358,16 @@
 		}
 		else if($('input:radio[name=writeType]:checked').val()=="festivalRadio")
 		{
+			for(var i=0; i<festivalArray.length; i++){
+				if($("#festivalName").val()==festivalArray[i].festivalName){
+					$("#formHeaderTitleDiv").html("이름은 중복하여<br>사용할 수 없습니다. ");
+					clearTimeout( timer1 );
+					
+					timer1 = setTimeout( errorMessage, delta);
+					return;
+				}
+			}
+			
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
 			datas += "&&festivalName=" + encodeURIComponent($("#festivalName").val());
 			datas += "&&city=" + encodeURIComponent($("#festivalCity option:selected").val());
@@ -377,6 +402,16 @@
 		}
 		else if($('input:radio[name=writeType]:checked').val()=="videoRadio")
 		{
+			for(var i=0; i<videoArray.length; i++){
+				if($("#videoName").val()==videoArray[i].videoName){
+					$("#formHeaderTitleDiv").html("이름은 중복하여<br>사용할 수 없습니다. ");
+					clearTimeout( timer1 );
+					
+					timer1 = setTimeout( errorMessage, delta);
+					return;
+				}
+			}
+			
 			var datas = "${_csrf.parameterName}=${_csrf.token}";
 			datas += "&&videoName=" + encodeURIComponent($("#videoName").val());
 			datas += "&&videoSrc=" + encodeURIComponent($("#videoSrc").val());
@@ -622,7 +657,9 @@
 			})
 			document.getElementById("searchVideoUl").innerHTML = str;
 		});
-		alert("검색 완료");
+		$("#searchCompleteDiv").html("검색 완료");
+		clearTimeout(timer1);
+		timer1 = setTimeout( searchComplete, delta);
 		return false;
 	}
 	
@@ -654,6 +691,15 @@
 			document.getElementById("videoFrame").src = "http://www.youtube.com/embed/" + $("#searchVideoSrc").val() + "?autoplay=0&version=3&loop=1&playlist=" + $("#searchVideoSrc").val();
 		}
 	}
+	
+	function errorMessage(){
+		$("#formHeaderTitleDiv").html("");
+	}
+	
+	function searchComplete(){
+		$("#searchCompleteDiv").html("");
+		return;
+	}
 
 </script>
 </head>
@@ -678,7 +724,9 @@
 						영상<span class = "aa"></span>
 					</label>
 				</div>
-				<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height : 100%;">광광머시기</div>
+				<div id = "formHeaderTitleDiv" class = "floatDiv" style = "width : 40%; height: 97%; padding: 1.5% 0%; text-align: center; font-size: 30px; line-height: 30px;">
+						
+				</div>
 				<div id = "formHeaderButtonsDiv" class = "floatDiv" style = "width : 10%; height : 100%;">
 					<input type = "button" value = "등록" class = "formButton" onclick="insert()" style = "width : 100%; height : 33.3%">
 					<input type = "button" value = "수정" class = "formButton" onclick="update()" style = "width : 100%; height : 33.3%">
@@ -874,7 +922,7 @@
 						</form>
 					</div>
 				</div>
-				<div id = "" class = "floatDiv" style = "width : 40%; height : 100%;">영상 정보</div>
+				<div id = "searchCompleteDiv" class = "floatDiv" style = "width : 40%; height: 94%; padding: 3% 0%; text-align: center; font-size: 30px; line-height: 30px;"></div>
 				<div id = "" class = "floatDiv" style = "width : 10%; height : 100%;">
 					<input type = "button" id = "searchVideoInputBtn" value = "정보 입력" class = "formButton" onclick = "moveVideoInformation()" style = "width : 100%; height : 100%; border-bottom : 3px solid #1E1E1E;"/>
 				</div>
@@ -894,7 +942,7 @@
 								</div>
 							</li>
 							<li class = "clearfix" style = "width : 100%; height : 20%;">
-								<div class = "floatDiv" style = "width : 20%; height : 100%">경로</div>
+								<div class = "floatDiv" style = "width : 20%; height : 100%">경로로로로로로로로롤</div>
 								<div class = "floatDiv" style = "width : 80%; height : 100%">
 									<input type = "text" id="searchVideoSrc" class = "textBox" style = "width : 100%; height : 100%;" readonly>
 								</div>
