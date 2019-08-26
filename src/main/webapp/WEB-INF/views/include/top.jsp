@@ -69,6 +69,7 @@
 								
 								<!--  일반 회원일 때-->
 								<sec:authorize access="!hasAnyRole('ROLE_ADMIN')">
+									<sec:authentication var="udto" property="principal" />
 									<li><a>마이페이지</a>
 										<ul>
 											<li><a href="${pageContext.request.contextPath}/user/findUser?userId=${udto.userName}">나의 정보 페이지</a></li>
