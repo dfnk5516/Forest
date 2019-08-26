@@ -4,28 +4,50 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script>
+$(function(){
+	$(".qna_content").click(function(){
+		var qnaNo=$(this).find("[name=qnaNo]").val();
+		alert(qnaNo);
+		location="${pageContext.request.contextPath}/qna/"+qnaNo;
+	});
+	
+	$("#insert").click(function(){
+		location="${pageContext.request.contextPath}/qnaForm";
+	});
 
-<div style="text-align:center">
-	<h1 style="color:green">1 : 1 문의</h1>
-	<form method="post" action="${pageContext.request.contextPath}/qnalist">
-		<select name="option" style="height:30px; float:left">
-			<option value="title">제목</option>
-			<option value="name">작성자</option>
+})
+
+</script>
+</head>
+<body>
+<div>
+	<h1 style="color:green; font-size: 40px; text-align:center; margin-top:70px; margin-bottom:70px">1 : 1 문의 게시판</h1>
+	
+		<select name="keyField" id="keyField" 
+				style="height:30px; float:left;">
+			<option value="0">선택</option>				
+			<option value="qna_title">제목</option>
+			<option value="qna_name">작성자</option>
 		</select>
-		<input type="text" size="50" placeholder="검색창(제목,이름)" value="${map.keyWord}" name="keyWord" style="height:30px; float:left">
-		<input type="submit" value="검색" style="height:30px; float:left">
-	</form>
+		<input type="text" size="50" name="keyWord" id="keyWord" 
+			   style="height:30px; float:left">
+		<button type="button" id="searchBtn" style="height:30px; float:left">
+			검색
+		</button>
 </div>
 
 <div>
-	<table align="center" border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black">
+	<table align="center" border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black" style="margin-bottom:200px;">
 	
 		<colgroup>
 			<col width="5%"/>
 			<col width="10%"/>
 			<col width="15%"/>
-			<col width="5%"/>
-			<col width="35%"/>
+			<col width="15%"/>
+			<col width="25%"/>
 			<col width="15%"/>
 			<col width="15%"/>
 		</colgroup>
@@ -76,17 +98,24 @@
 				        </td>
 				        <td bgcolor="">
 				            <p align="center"><span style="font-size:12pt;">${dto.qnaPlace}</span></p>
-				        </td>		        
-				        <td bgcolor="">
-				            <p align="center"><span style="font-size:12pt;">${dto.qnaSecret}</span></p>
 				        </td>
 				        <td bgcolor="">
-				            <p align="center"><span style="font-size:12pt;">${dto.qnaTitle}</span></p>
+				        <c:choose>
+				        	<c:when test="${dto.qnaSecret==0}">		        
+						        <p></p>
+						    </c:when>
+						    <c:otherwise>
+						    	<img src="/controller/resources/images/lock.PNG" alt="lock" width="10px" height="10px" align="center">
+						    </c:otherwise>
+				        </c:choose>
+				        </td>
+				        <td bgcolor="" class="qna_content">
+				            <p align="center"  style="font-size:12pt;"><input type="hidden" name="qnaNo" value="${dto.qnaNo}">${dto.qnaTitle}</p>
 				        </td>
 				         
 				         <td bgcolor="">
 				            <p align="center"><span style="font-size:12pt;">${dto.writeDay}</span></p>
-				        </td>
+				        </td>	
 				        <td bgcolor="">
 				        	<c:choose>
 				        		<c:when test="${dto.qnaAnswer==null}">
@@ -104,8 +133,9 @@
 	    </c:choose>
 	    
 	</table>
-	
+	<button id="insert">질문 등록</button>
 </div>
-
+</body>
+</html>
 <%@ include file="../include/footer.jsp"%>
 

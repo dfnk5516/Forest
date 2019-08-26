@@ -18,22 +18,20 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaDTO> selectAll() {
 		return qnaDAO.selectAll();
 	}
-//
+
+	@Override
+	public QnaDTO selectByNo(int qnaNo) {
+		return qnaDAO.selectByNo(qnaNo);
+	}
+	
 //	@Override
-//	public List<QnaDTO> selectByQnaName(String nameKeyword) {
-//		return qnaDAO.selectByQnaName(nameKeyword);
+//	public List<QnaDTO> selectBySearch(String keyWord, String keyField) {
+//		List<QnaDTO> list =  qnaDAO.selectBySearch(keyWord, keyField);
+//		return list;
 //	}
-//
-//	@Override
-//	public List<QnaDTO> selectByQnaTitle(String titleKeyword) {
-//		return qnaDAO.selectByQnaTitle(titleKeyword);
-//	}
-//
-//	@Override
-//	public List<QnaDTO> selectOne(int qnaNo) {
-//		return qnaDAO.selectOne(qnaNo);
-//	}
-//
+
+
+
 //	@Override
 //	public int qnaInsert(QnaDTO qnaDTO) {
 //		int result = qnaDAO.qnaInsert(qnaDTO);

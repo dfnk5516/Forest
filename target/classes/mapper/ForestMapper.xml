@@ -48,10 +48,6 @@
 	where forest_no=#{forestNo}
 	</delete> 
 	
-	<select id="lodgeAll" parameterType="int" resultType="lodgeDTO">
-	select * from lodge where forest_no=#{_parameter} order by lodge_code desc
-	</select>
-	
 	<!-- 전체 데이터의 갯수를 세는 처리 -->
 	<select id="totalCount" resultType="Integer">
 	select count(*) from forest
@@ -61,4 +57,19 @@
 		</if>
 	</where> -->
 	</select>
+	
+	<!-- 숙박 -->
+	<select id="lodgeAll" parameterType="int" resultType="lodgeDTO">
+	select * from lodge where forest_no=#{_parameter} order by lodge_code desc
+	</select>
+	
+	
+	
+	<select id="selectBookInfo" parameterType="string" resultType="bookingDTO">
+	select forest_name, forest_type, forest_addr, forest_tel, forest_facil, forest_filename,
+	lodge_code, lodge_name, lodge_price, lodge_addr, lodge_tel
+	from lodge join forest on forest.forest_no=lodge.forest_no 
+	where lodge_code=#{_parameter}
+	</select>
+	
 </mapper>

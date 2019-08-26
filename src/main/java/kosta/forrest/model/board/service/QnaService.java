@@ -10,22 +10,18 @@ public interface QnaService {
 	 * 리스트 출력
 	 * */
 	List<QnaDTO> selectAll();
-//	
+	
+	/**
+	 * 글 상세보기
+	 * */
+	QnaDTO selectByNo(int qnaNo);
+	
 //	/**
-//	 * 글 검색 - 이름
+//	 * 글 검색
 //	 * */
-//	List<QnaDTO> selectByQnaName(String nameKeyword);
+//	List<QnaDTO> selectBySearch(String keyWord, String keyField);
 //	
-//	/**
-//	 * 글 검색 - 제목
-//	 * */	
-//	List<QnaDTO> selectByQnaTitle(String titleKeyword);
-//	
-//	/**
-//	 * 글 상세보기
-//	 * */
-//	List<QnaDTO> selectOne(int qnaNo);
-//	
+	
 //	/**
 //	 * 질문 등록
 //	 * */

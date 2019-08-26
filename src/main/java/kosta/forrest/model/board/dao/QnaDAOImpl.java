@@ -1,6 +1,8 @@
 package kosta.forrest.model.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +27,25 @@ public class QnaDAOImpl implements QnaDAO {
 		return list;
 	}
 	
+	@Override
+	public QnaDTO selectByNo(int qnaNo) {
+		return sqlSession.selectOne("qnaMapper.selectByNo", qnaNo);
+	}
+
+	
 //	/**
-//	 * 글 검색 - 이름
+//	 * 글 검색
 //	 * */
 //	@Override
-//	public List<QnaDTO> selectByQnaName(String nameKeyword) {
-//		return sqlSession.selectList("qnaMapper.selectByQnaName");
+//	public List<QnaDTO> selectBySearch(String keyWord, String keyField) {
+//		Map<String, String> map = new HashMap<String, String>();
+//		
+//		if(keyField!=null) map.put("keyField", keyField);
+//		if(keyWord!=null) map.put("keyWord",keyWord);
+//		List<QnaDTO> list = sqlSession.selectList("qnaMapper.selectBySearch",map);
+//		return list;
 //	}
 //	
-//	/**
-//	 * 글 검색 - 제목
-//	 * */
-//	@Override
-//	public List<QnaDTO> selectByQnaTitle(String nameKeyword) {
-//		return sqlSession.selectList("qnaMapper.selectByQnaTitle");
-//	}
-//
-//
-//	@Override
-//	public List<QnaDTO> selectOne(int qnaNo) {
-//		return sqlSession.selectOne("qnaMapper.selectOne", qnaNo);
-//	}
-//
 //	@Override
 //	public int qnaInsert(QnaDTO qnaDTO) {
 //		return sqlSession.insert("qnaMapper.qnaInsert", qnaDTO);
