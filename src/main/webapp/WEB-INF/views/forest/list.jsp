@@ -286,12 +286,12 @@ $(function(){
 	<c:forEach begin="${cri.startPage }"
 		 		 end="${cri.endPage }" var="idx">
 		<li ${cri.page==idx?"class='active'":"" }>
-			  	<a href="${path}/forest/list?page=${idx }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">${idx }</a>
+			  	<a href="${path}/forest/list?page=${idx }&perPageNum=${cri.perPageNum}&keyField=${cri.keyField}&keyWord=${cri.keyWord}">${idx }</a>
 		</li>
 	</c:forEach>
 	<c:if test="${cri.next }">
 		<li>
-		  	<a href="${path}/forest/list?page=${cri.endPage+1 }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">
+		  	<a href="${path}/forest/list?page=${cri.endPage+1 }&perPageNum=${cri.perPageNum}&keyField=${cri.keyField}&keyWord=${cri.keyWord}">
 		  		Next<i class="glyphicon glyphicon-step-forward"></i>
 		  	</a>
 	  	</li>

@@ -29,6 +29,8 @@ public class Criteria {
 	
 	private boolean prev, next;
 	
+	private String keyField, keyWord;
+	
 	// 기본 생성자(파라메터가 없는 생성자)를 이용해서 정해 줘야 한다.
 	public Criteria() {
 		// 초기값을 넣는다.
