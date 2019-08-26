@@ -99,7 +99,7 @@ $(function(){
 				        <td bgcolor="">
 				            <p align="center"><span style="font-size:12pt;">${dto.qnaPlace}</span></p>
 				        </td>
-				        <td bgcolor="">
+				        <td bgcolor="" align="center">
 				        <c:choose>
 				        	<c:when test="${dto.qnaSecret==0}">		        
 						        <p></p>
