@@ -10,20 +10,24 @@
 	.login{padding:100px 0;text-align: center;background: #fff;}
 	img{vertical-align: middle;}
 	h5{margin-left:5px; display:inline-block; vertical-align: middle;}
-	table{margin:0 auto;}
-	table td{padding:10px!important;text-align:left;vertical-align: middle;}
+	table{margin: 0 auto;}
+	table td{padding:10px!important; text-align:left; vertical-align: middle;}
 	#loginbtn {
 		color: white; text-align: center; background-color:#79c0d2; width:auto; min-width: 140px; height: 50px; 
-		font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer; float: left;}
-	#contbox {font-weight: 200; text-align: center; width: 220px; height: 30px; margin-left: 20px;}	
+		font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer;}
+	#contbox {font-weight: 200; text-align: center; width: 380px; height: 30px; margin-left: 40px;}	
 	#icon{width: 2%; height: 2%; }
+	#log{padding-bottom: 20px;}
+	#hr{padding-top: 20px;}
+	#hrt{padding-top: 20px;}
 </style>
 </head>
 <body>
 	<div class="login">
-		<h2>로그인</h2>
-		<hr>
+		<h2 id="log">로그인</h2>
+		<hr id="hr">
 		<img src="/controller/resources/images/icons/login.png" id="icon"><h5>로그인 하시고 다양한 서비스를 이용해보세요.</h5>
+		<hr id="hrt" color="white" >
 		<c:if test="${not empty requestScope.errorMessage}">
 			<span style="color:red">${requestScope.errorMessage}</span>
 		</c:if>
@@ -41,7 +45,7 @@
 					<td><input type="password" name="userPwd" size="30"  placeholder="비밀번호를 입력해주세요." id="contbox"></td>
 				</tr>
 			</table>
-			<hr>
+			
 		</form>
 	</div>
 </body>

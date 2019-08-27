@@ -27,9 +27,9 @@
 
 </head>
 
-<table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
+<table align="center" cellpadding="5" cellspacing="2" width="600" border='1' style="margin-top: 150px; margin-bottom: 200px">
 	<tr>
-		<td width="1220" height="40" colspan="4" bgcolor="#00cc00">
+		<td width="1220" height="40" colspan="4" bgcolor="#98b189">
 			<p align="center">
 				<font color="white" size="3"><b> 회원정보 자세히보기 </b></font>
 			</p>
@@ -89,9 +89,8 @@
 	</tr>
 </table>
 <hr>
-
-<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/admin/list">리스트로 돌아가기</a>&gt;</span></div>
-<span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/hometest">홈페이지로 가기</a>&gt;</span>
+<div align=right><span style="font-size:13pt;">&lt;<a href="${pageContext.request.contextPath}/admin/list">리스트로 돌아가기</a>&gt;</span></div>
+<span style="font-size:13pt;">&lt;<a href="${pageContext.request.contextPath}/hometest">홈페이지로 가기</a>&gt;</span>
 <%-- <%@ include file="../include/footer.jsp"%> --%>
 
 

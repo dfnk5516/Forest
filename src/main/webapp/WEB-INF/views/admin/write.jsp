@@ -1,3 +1,4 @@
+<%-- <%@ include file="../include/topcontent.jsp"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <hmtl>
@@ -69,13 +70,13 @@
 
 </head>
 <BODY>
-
-<form id="writeForm" name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/insert">
+<div style=" vertical-align: middle;">
+<form style="margin-top: 50px; margin-bottom: 30px" id="writeForm" name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/insert">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	<table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
 	    <tr>
-	        <td width="1220" height="20" colspan="2" bgcolor="#00cc00">
-	            <p align="center"><font color="white" size="3"><b> 사용자 등록 </b></font></p>
+	        <td width="1220" height="20" colspan="2" bgcolor="#98b189">
+	            <p align="center"><font color="white" size="3"><b> 사용자 정보 등록 </b></font></p>
 	        </td>
 	    </tr>
 	    <tr>
@@ -136,9 +137,10 @@
 	    </tr>	    
 	</table>
 </form>
-
+</div>
 <hr>
-<div align=right><span style="font-size:9pt;">&lt;<a href="${pageContext.request.contextPath}/admin/list">리스트로 돌아가기</a>&gt;</span></div>
+<div align=right><span style="font-size:13pt;">&lt;<a href="${pageContext.request.contextPath}/admin/list">리스트로 돌아가기</a>&gt;</span></div>
+<span style="font-size:13pt;">&lt;<a href="${pageContext.request.contextPath}/hometest">홈페이지로 가기</a>&gt;</span>
 
 </BODY>
 </HTML>

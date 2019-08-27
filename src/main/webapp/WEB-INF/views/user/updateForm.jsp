@@ -1,3 +1,4 @@
+<%@ include file="../include/topcontent.jsp"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
@@ -6,24 +7,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+	#myinfo{padding:50px 580px; background: #fff; }
 	#updatebtn {
 		color: white; text-align: center; background-color:#79c0d2; width:auto; min-width: 140px; height: 50px; line-height: 50px; 
-		margin: 30px 100px; font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer; float: left;}
-	#update {font-weight: 200; text-align: center; width: 220px; height: 30px; margin: 5px 30px;}	
+		margin: 30px 120px; font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer; float: left;}
+	#update {font-weight: 200; text-align: center; width: 320px; height: 30px; margin: 5px 30px; }
+	table tr:first-child td {width: 100px;}
+
 </style>
 </head>
 <body>
 
 <sec:authorize access="isAuthenticated()">
-	<h3>회원정보수정</h3>
+	<div id="myinfo" >
+	<h2 style="text-align: center; margin-bottom: 30px" >회원정보수정</h2>
 	<hr>
 	<form method="post" action="${pageContext.request.contextPath}/updateUserAction">
-		<input type="hidden" name="command" value="update"> 
+		<input type="hidden" name="command" value="update">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-		
-		<table style = "width:450px">
+		<table style = "width:450px" >
 			<tr>
-				<td width="70px" > 아이디 </td>
+				<td> 아이디 </td>
 				<td><input type="text" name="userId" id="update" value="<sec:authentication property="principal.userId"/>" readonly></td>
 			</tr>
 			<tr>
@@ -43,6 +47,8 @@
 			</tr>
 		</table>
 	</form>
+	</div>
 </sec:authorize>
 </body>
 </html>
+<%@ include file="../include/footer.jsp"%>

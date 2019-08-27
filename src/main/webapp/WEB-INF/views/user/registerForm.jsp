@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">	
 	.register{padding:100px 0; text-align: center; background: #fff;}
+	/* form{width: 300px; padding:10px!important;} */
 	/* .register input{width: 200px} */
 	img{vertical-align: middle;}
 	h2{margin-bottom: 30p;}
@@ -15,12 +16,13 @@
 	table{margin:0 auto;}
 	table td{padding:10px!important; padding-left:30px; text-align:left; vertical-align: middle;}
 	/* table:first-child{margin-left: 20px;} */
+	tablt td tr{width: 300px;}
 	#signupbtn {
 		color: white; text-align: center; background-color:#79c0d2; width:auto; min-width: 120px; height: 80px; line-height: 50px; 
-		margin: 20px 100px; font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer; float: left;}
+		margin: 20px 250px; font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer; float: left;}
 	#text {font-weight: 200; text-align: center; width: 350px; height: 30px; margin: 5px 30px; }
 	#icon{width: 2%; height: 2%; display: inline-block; }
-	
+	#signbtn{padding-bottom: 20px;}
 	
 </style>
 
@@ -91,7 +93,7 @@ $(document).ready(function() {
 </head>
 <body>
 	<div class="register">
-	<h2>회원가입</h2>
+	<h2 id="signbtn">회원가입</h2>
 	<img src="/controller/resources/images/icons/smile.png" id="icon">  
 	<h5>회원 가입하시고 다양한 서비스를 이용해 보세요.</h5> 
 
@@ -99,40 +101,40 @@ $(document).ready(function() {
 	<p>
 		<form method="post" action="${pageContext.request.contextPath}/registerUser" id="regForm">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">	 
-			<table style="width:700px">
+			<table style="width:900px" class="form">
 				<tr>
-					<td width="70px" >ID</td>
-					<td><input type="text" name="userId" class="text"><span id="idCheckView"></span></td>
+					<td style="margin-left:150px; width:130px;" >ID</td>
+					<td><input type="text" name="userId" class="text" style="margin-left:50px; width: 400px;"><span id="idCheckView" ></span></td>
 				</tr>
 				<tr>
 					<td>PASSWORD</td>
-					<td><input type="password" name="userPwd" class="text"></td>
+					<td><input type="password" name="userPwd" class="text" style="margin-left:50px; width: 400px;"></td>
 				</tr>
 				<tr>
 					<td>NAME</td>
-					<td><input type="text" name="userName" class="text"></td>
+					<td><input type="text" name="userName" class="text" style="margin-left:50px; width: 400px;"></td>
 				</tr>
 				<tr>
 					<td>Email</td>
-					<td><input type="text" name="userEmail" class="text"></td>
+					<td><input type="text" name="userEmail" class="text" style="margin-left:50px; width: 400px;"></td>
 				</tr>
 				<tr>
 					<td>Telephone</td>
-					<td><input type="text" name="userTel" class="text"></td>
+					<td><input type="text" name="userTel" class="text" style="margin-left:50px; width: 400px;"></td>
 				</tr>
 				<tr>
 					<td>ADDRESS</td>
-					<td> <input type="text" name="userAddr" class="text"></td>
+					<td> <input type="text" name="userAddr" class="text" style="margin-left:50px; width: 400px;"></td>
 				</tr>
 				<tr>
 					<td>USER TYPE</td>
 					<td>
-						<input type="radio" value="0" name="userGrade" checked = "checked">ROLE_MEMBER
-						<input type="radio" value="1" name="userGrade">ROLE_ADMIN
+						<input type="radio" value="0" name="userGrade" checked = "checked" style="margin-left:50px; ">ROLE_MEMBER
+						<input type="radio" value="1" name="userGrade" style="margin-left:50px; ">ROLE_ADMIN
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="회원 가입" id="signupbtn"></td>
+					<td colspan="2"><input type="submit" value="회원 가입" id="signupbtn" style="margin-left:320px; "></td>
 				</tr>
 			</table>
 		</form>
