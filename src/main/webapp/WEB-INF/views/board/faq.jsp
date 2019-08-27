@@ -6,16 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
-	
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="${path}/resources/js/modal.js"></script>
   <link rel="stylesheet" type="text/css" href="${path}/resources/css/modal.css">
 
@@ -26,8 +16,6 @@
 	}
 
 	function sendDelete(faqNo){
-		/* document.requestForm.action="${pageContext.request.contextPath}/faqDelete"
-		document.requestForm.submit(); */
 		$.ajax(
 			{
 				beforeSend : function(xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
@@ -39,44 +27,28 @@
 			location.reload();
 	}
 </script>
-
-<div style="background-color:#fff">
-
-	<div style="text-align:center">
+<div style="background-color:#fff; margin-top:40px;" class="container">
+	<h1 class="container_title">자주하는 질문</h1>
+	<div style="text-align:center; margin-bottom:15px; border-top: 2px solid #000; padding: 30px 20px 30px 20px; background: #f8f7fc;">
 	<form method="post" action="${pageContext.request.contextPath}/faq">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-		<select name="option">
-		<option value="all" <c:out value="${map.option == 'all'?'selected':''}"/>>제목+내용</option>
-		<option value="title" <c:out value="${map.option == 'title'?'selected':''}"/>>제목</option>
-		<option value="content" <c:out value="${map.option == 'content'?'selected':''}"/>>내용</option>
+		<select name="option" class="form-control" style="width:15%; display:inline-block; float:left;">
+			<option value="all" <c:out value="${map.option == 'all'?'selected':''}"/>>제목+내용</option>
+			<option value="title" <c:out value="${map.option == 'title'?'selected':''}"/>>제목</option>
+			<option value="content" <c:out value="${map.option == 'content'?'selected':''}"/>>내용</option>
 		</select>
-		<input type="text" size="50" placeholder="검색창(제목,내용)" value="${map.keyWord}" name="keyWord" style="display:inline; width:40%">
-		<input type="submit" value="검색">
+		<div class="input-group">
+		    <input type="text" class="form-control" size="40" placeholder="검색창(제목,내용)" value="${map.keyWord}" name="keyWord">
+		    <div class="input-group-btn">
+		      <button class="btn btn-default" type="submit">
+		        <i class="glyphicon glyphicon-search"></i>
+		      </button>
+	   		</div>
+  		</div>
 	</form>
 	</div>
 	
-	<div>총 ${map.count}개</div>
-	
-	<%-- <div class="panel-group" id="accordion">
-	  <div class="panel panel-default">
-	    <div class="panel-heading">
-	      <h4 class="panel-title">
-	        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne?${faqDto.faqNo}">
-	          ${faqDto.faqTitle}
-	        </a>
-	      </h4>
-	    </div>
-	    <div id="collapseOne?${faqDto.faqNo}" class="panel-collapse collapse">
-	      <div class="panel-body">
-	        ${faqDto.faqContent}
-	      </div>
-	    </div>
-	  </div>
- 	</div> --%>
-
-	<%-- <form name="requestForm" method="post">
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
-	
+	<div style="text-align:right">총 게시글 : <font color="#db001a">${map.count}</font>건</div>
     <c:choose>
     <c:when test="${empty map.list}">
 	<div>
@@ -85,26 +57,24 @@
     </c:when>
     
     <c:otherwise>
-    <div class="panel-group" id="accordion">
+    <div class="panel-group" id="faqAccordion">
 		<div class="panel panel-default">
 		<c:forEach items="${map.list}" var="faqDto" varStatus="status">
 		<form name="requestForm" method="post">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-		<div class="panel-heading">
-	      <h4 class="panel-title">
-	        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne?${faqDto.faqNo}">
-	          ${faqDto.faqTitle}
-	        </a>
-			<%-- <input type=hidden name="faqNo" id="faqNo" value="${faqDto.faqNo}"> --%>
-			<%-- <input class="btn btn-xs btn-warning" type="button" value="수정하기" onClick="sendUpdate(${faqDto.faqNo})"> --%>
-			<input class="btn btn-xs btn-danger" type="button" value="삭제하기" onClick="sendDelete(${faqDto.faqNo})">
-	      </h4>
-	    </div>
-	    <div id="collapseOne?${faqDto.faqNo}" class="panel-collapse collapse">
-	      <div class="panel-body">
-	        ${faqDto.faqContent}
-	     </div>
-	    </div>
+		<div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question${faqDto.faqNo}" style="border-bottom:1px solid #e7e7e7; padding:20px 15px;">
+          <h4 class="panel-title"><a href="#" class="ing">Q: ${faqDto.faqTitle}</a></h4>
+		</div>
+	    <div id="question${faqDto.faqNo}" class="panel-collapse collapse" style="height: 0px; background:#f7f7fb;">
+           <div class="panel-body">
+               <h5><span class="label label-primary">답변</span></h5>
+               <p>${faqDto.faqContent}</p>
+               <p style="float: right;">
+               <%-- <input class="btn btn-xs btn-warning" type="button" value="수정하기" onClick="sendUpdate(${faqDto.faqNo})"> --%>
+               <input class="btn btn-xs btn-danger" type="button" value="삭제하기" onClick="sendDelete(${faqDto.faqNo})">
+               </p>
+           </div>
+         </div>
 	    </form>
    		</c:forEach>
     	</div>
@@ -113,7 +83,7 @@
     </c:choose>
     
     <!-- 페이징 -->
-	<div>
+	<div style="text-align:center">
 		<!-- 처음페이지로 이동 : 현재 페이지가 1보다 크면  [처음]하이퍼링크를 화면에 출력-->
 		<c:if test="${map.boardPager.curBlock > 1}">
 			<a href="javascript:list('1')">[처음]</a>
@@ -149,19 +119,8 @@
 	</div>
 <!-- 페이징 -->
 
-	<%-- <div><a href="${pageContext.request.contextPath}/faqWrite">글쓰기</a></div> --%>
-	<button id="createBtn" type="button" class="btn btn-info btn-sm"
-			data-toggle="modal">글 쓰기</button>
-	<jsp:include page="faqWrite.jsp" />
+	<button id="createBtn" type="button" class="btn btn-info btn-sm" data-toggle="modal" style="float:right">글 쓰기</button>
 </div>
-
+<jsp:include page="faqWrite.jsp" />
 
 <%@ include file="../include/footer.jsp"%>
-
-
-
-
-
-
-
-
