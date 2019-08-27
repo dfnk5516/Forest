@@ -74,7 +74,7 @@
 										<ul>
 											<li><a href="${pageContext.request.contextPath}/user/findUser?userId=${udto.userName}">나의 정보 페이지</a></li>
 											<li><a href="${pageContext.request.contextPath}/user/updateForm">정보 수정 폼</a></li>
-											<li><a href="#">나의 예약현황 보기</a></li>
+											<li><a href="${pageContext.request.contextPath}/forest/bookList">나의 예약현황 보기</a></li>
 										</ul> 
 									</li>
 								</sec:authorize>
