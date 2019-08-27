@@ -10,7 +10,6 @@
 $(function(){
 	$(".qna_content").click(function(){
 		var qnaNo=$(this).find("[name=qnaNo]").val();
-		alert(qnaNo);
 		location="${pageContext.request.contextPath}/qna/"+qnaNo;
 	});
 	
