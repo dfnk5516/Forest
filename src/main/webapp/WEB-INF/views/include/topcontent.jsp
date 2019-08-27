@@ -41,7 +41,7 @@
 			<div id="header">
 				<div class="container">
 					<!-- Logo -->
-					<h4><a href="hometest" id="logo">FORREST</a></h4>	
+					<h4><a href="${pageContext.request.contextPath}/hometest" id="logo">FORREST</a></h4>	
 					<!-- Nav -->
 					<nav id="nav">
 						<ul>
