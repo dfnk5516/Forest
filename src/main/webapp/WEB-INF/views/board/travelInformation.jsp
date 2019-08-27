@@ -33,6 +33,8 @@
 	var alpha = 5000;
 	var timer3 = null;
 	
+	var image;
+	
 	var currentImageIndex = null;
 	
 	var map;
@@ -120,6 +122,9 @@
 	
 	$(document).ready(function()
 	{ 	
+		$("#sightsForm").hide();
+		$("#festivalForm").hide();
+		
 		$("[name=searchType]").click(function()      
 		{			
 			if($('input:radio[name=searchType]:checked').val() == "searchByCity")
@@ -265,7 +270,7 @@
 		})
 	}
 	/////////////	function mapInit() end
-	function addMarker(Position, markerImage, option)
+	function addMarker(Position, markerImage, define)
 	{
 		// 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
 		var marker = new kakao.maps.Marker(
@@ -282,15 +287,15 @@
 	        // 마커의 이미지를 오버 이미지로 변경합니다
 	        if (!selectedMarker || selectedMarker !== marker)
 	        {
-	        	if(option  == "forest")
+	        	if(define  == "forest")
 	        	{						
 		            marker.setImage(forestOverMarkerImage);
 	        	}
-	        	else if(option == "sights")
+	        	else if(define == "sights")
 	        	{
 	        		marker.setImage(sightsOverMarkerImage);
 	        	}
-	        	else if(option == "festival")
+	        	else if(define == "festival")
 	        	{
 	        		marker.setImage(festivalOverMarkerImage);
 	        	}
@@ -304,15 +309,15 @@
 	        // 마커의 이미지를 기본 이미지로 변경합니다
 	        if (!selectedMarker || selectedMarker !== marker)
 	        {
-	        	if(option  == "forest")
+	        	if(define  == "forest")
 	            {
 	        		marker.setImage(currentForestMarkerImg);
 	            }
-	        	else if(option == "sights")
+	        	else if(define == "sights")
 	        	{
 	        		marker.setImage(currentSightsMarkerImg);
 	        	}
-	        	else if(option == "festival")
+	        	else if(define == "festival")
 	        	{
 	        		marker.setImage(currentFestivalMarkerImg);
 	        	}
@@ -339,25 +344,31 @@
        		{
        			clearInterval(timer3);
        			timer3 = null;
-       			searchImage(Position.title, marker, option);
+       			searchImage(Position.title, marker, define);
        			
-       			if(option  == "forest")
+       			if(define  == "forest")
        			{
        				changeBackSelectedMarkerImg(); // 클릭된 마커 객체가 null이 아니면 클릭된 마커의 이미지를 기본 이미지로 변경하고
             		marker.setImage(forestOverMarkerImage); // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
             		selectedMarkerImg = "forest";
+            		$("#sightsForm").hide();
+            		$("#festivalForm").hide();
        			}
-       			else if(option == "sights")
+       			else if(define == "sights")
 	        	{
        				changeBackSelectedMarkerImg();
             		marker.setImage(sightsOverMarkerImage);
             		selectedMarkerImg = "sights";
+            		$("#festivalForm").hide();
+        			$("#sightsForm").show();
 	        	}
-       			else if(option == "festival")
+       			else if(define == "festival")
        			{
        				changeBackSelectedMarkerImg();
             		marker.setImage(festivalOverMarkerImage);
             		selectedMarkerImg = "festival";
+        			$("#sightsForm").hide();
+            		$("#festivalForm").show();
        			}
 				
        			// 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
@@ -366,7 +377,6 @@
        		}
        		else if(selectedMarker == marker)
        		{
-       			marker.setImage(currentForestMarkerImg);
        			selectedMarker = null;
        			overlay.setMap(null);
        			clearInterval(timer3);
@@ -1061,7 +1071,7 @@
  	function panTo(latitude, longitude)
  	{
  	    // 이동할 위도 경도 위치를 생성합니다 
- 	    var moveLatLon = new kakao.maps.LatLng(latitude + 0.4, longitude);
+ 	    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
  	    
  	    // 지도 중심을 부드럽게 이동시킵니다
  	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -1086,7 +1096,7 @@
  		document.getElementById("searchImg").src = searchImageArray[currentImageIndex];
  	}
 	
- 	function searchImage(keyword, marker, option)
+ 	function searchImage(keyword, marker, define)
  	{
  		
  		
@@ -1110,14 +1120,17 @@
 				
 				var str;
 				var addr;
+				var index;
 				
-				if(option == "forest")
+				if(define == "forest")
 				{
 					str = "휴양림 정보";
 					for(var i = 0; i < forestArray.length; ++i)
 					{
 						if(forestArray[i].forestName == keyword)
 						{
+							index = i;
+							
 							if(forestArray[i].forestAddr == null)
 							{
 								addr = "";
@@ -1130,13 +1143,14 @@
 						}
 					}
 				}
-				else if(option == "sights")
+				else if(define == "sights")
 				{
 					str = "관광지 정보";
 					for(var i = 0; i < sightsArray.length; ++i)
 					{
 						if(sightsArray[i].sightsName == keyword)
 						{
+							index = i;
 							if(sightsArray[i].sightsLocation == null)
 							{
 								addr = "";
@@ -1149,13 +1163,14 @@
 						}
 					}
 				}
-				else if(option == "festival" )
+				else if(define == "festival" )
 				{
 					str = "행사 정보";
 					for(var i = 0; i < festivalArray.length; ++i)
 					{
 						if(festivalArray[i].festivalName == keyword)
 						{
+							index = i;
 							if(festivalArray[i].festivalAddress == null)
 							{
 								addr = "";
@@ -1177,20 +1192,21 @@
 	   		    '        <div class="movietitle text">' + keyword + '</div>' +
 	   		    '    </div>'+
 	   			'	 <ul>' +
-	   		    '        <li class="up">' +
+	   		    '        <li class="up" onclick="informationPop(' + i + ')">' +
 	   		    '            <div style = "overflow : hidden" class="number">' + addr + '</div>' +
 	   		    '        </li>' +
 	   		    '    </ul>' +
 	   		    '</div>';
-	   		
+	   		    
+	   		    //console.log(content);
 				overlay = new kakao.maps.CustomOverlay(
 				{
 					content: content,
 					map: map,
 					position: marker.getPosition(),
 					position : new kakao.maps.LatLng(marker.getPosition().getLat(), marker.getPosition().getLng()),
-					xAnchor: 0.2,
-					yAnchor: 1.15
+					xAnchor: 0.42,
+					yAnchor: 1.18
 				});
 				
 
@@ -1213,6 +1229,63 @@
  	    	overlay.setMap(null);
 		}
  	}
+	
+	function informationPop(index)
+	{
+		if(selectedMarkerImg == "forest")
+		{
+			
+		}
+		else if(selectedMarkerImg == "sights")
+		{
+			document.getElementById("searchResultDiv").scrollIntoView(true);
+			
+			$("#sightsName").val(replaceStr(sightsArray[index].sightsName));
+			$("#sightsCity").val(sightsArray[index].city);
+			$("#sightsRegion").val(replaceStr(sightsArray[index].sightsRegion));
+			$("#sightsDescription").val(replaceStr(sightsArray[index].sightsDescription));
+			$("#sightsLocation").val(replaceStr(sightsArray[index].sightsLocation));
+			$("#sightsHomepage").val(replaceStr(sightsArray[index].sightsHomepage));
+			$("#sightsLatitude").val(replaceStr(sightsArray[index].sightsLatitude));
+			$("#sightsLongitude").val(replaceStr(sightsArray[index].sightsLongitude));
+		}
+		else if(selectedMarkerImg == "festival" )
+		{
+			document.getElementById("searchResultDiv").scrollIntoView(true);
+			
+			$("#festivalName").val(replaceStr(festivalArray[index].festivalName));
+			$("#festivalCity").val(festivalArray[index].city);
+			$("#festivalLocation").val(replaceStr(festivalArray[index].festivalLocation));
+			$("#festivalAddress").val(replaceStr(festivalArray[index].festivalAddress));
+			$("#festivalDescription").val(replaceStr(festivalArray[index].festivalDescription));
+			$("#festivalStart").val(replaceStr(festivalArray[index].festivalStart));
+			$("#festivalEnd").val(replaceStr(festivalArray[index].festivalEnd));
+			$("#festivalAgency").val(replaceStr(festivalArray[index].festivalAgency));
+			$("#festivalPhone").val(replaceStr(festivalArray[index].festivalPhone));
+			$("#festivalHomepage").val(replaceStr(festivalArray[index].festivalHomepage));
+			$("#festivalLatitude").val(replaceStr(festivalArray[index].festivalLatitude));
+			$("#festivalLongitude").val(replaceStr(festivalArray[index].festivalLongitude));
+		}
+	}
+	
+	function replaceStr(string)
+	{
+		if(string != null)
+		{
+			var replacedStr;
+			replacedStr = string.replace(/&amp;/gi, '&');
+			replacedStr = replacedStr.replace(/&lt;/gi, '<');
+			replacedStr = replacedStr.replace(/&gt;/gi, '>');
+			replacedStr = replacedStr.replace(/&#39;/gi, "'");
+			//replacedStr = replacedStr.replace(/$1&quot;/gi, '((?<!\\\\)(\\\\\\\\)*)(\\\\\\\")');
+			replacedStr = replacedStr.replace(/&#x27;/gi, "'");
+			replacedStr = replacedStr.replace(/&#x2F;/gi, '/');
+			return replacedStr;
+		}
+		return null;
+	}
+	
+	
 ///////////////////////////////////////////////////////////////////////////////////
 </script>
 
@@ -1244,10 +1317,10 @@
 			</div>
 		</div>
 		<div class = "floatDiv" style = "width : 70%; height : 1500px;" id = "travelInformation">
-			<div id = "travelInformationHeader" style = "width : 100%; height : auto; margin : 5px 0px;">여행 정보 검색</div>				
-			<div id = "travelInformationExplain" style = "width : 100%;  height : auto; margin : 5px 0px;">휴양림 주변 관광지, 행사 정보 검색</div>
+			<div id = "travelInformationHeader" style = "width : 100%; height : 3%; margin : 0px;">여행 정보 검색</div>				
+			<div id = "travelInformationExplain" style = "width : 100%;  height : 2%; margin : 0px;">휴양림 주변 관광지, 행사 정보 검색</div>
 			
-			<div id = "radioGroup" style = "width : 100%; height : auto;">
+			<div id = "radioGroup" style = "width : 100%; height : 2%;">
 				<label class = "radioLabel">
 					<input type="radio" class="medium" name="searchType" id="searchType1" value="searchByCity" checked="checked">지역으로 찾기
 				</label>
@@ -1255,7 +1328,7 @@
 					<input type="radio" class="medium" name="searchType" id="searchType2" value="searchByName">이름으로 찾기				
 				</label>
 			</div>
-			<form name="searchForm" id = "searchForm" style = "width : 100%; height : auto;" action = "#" onSubmit = "return forestSearch()">
+			<form name="searchForm" id = "searchForm" style = "width : 100%; height : 3%;" action = "#" onSubmit = "return forestSearch()">
 				<div id = "searchGroup" style = "width : 100%">
 					<div id = "select-box-wrapper" style = "width : 100%">
 						<select id = "citySelect" onchange="citySelectChange(this.value)" style = "width : 45%;">
@@ -1276,8 +1349,8 @@
 				</div>
 			</form>
 				
-			<div id = "checkBoxTopDiv" style = "width : 100%;" >
-				<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%;">
+			<div id = "checkBoxTopDiv" style = "width : 100%; height : 2%; margin : 1px 0px;" >
+				<div id = "checkBoxGroup1" style = "text-align : left; vertical-align: middle; width : 100%; height : 100%">
 					<label class = "checkBoxLabel">
 						<input type="checkbox" onchange="markerOnOff(this, markerClassify('forest'))" id = "forest" checked = "checked"/>휴양림 보기
 					</label>
@@ -1291,7 +1364,7 @@
 						
 			</div>
 					<!-- 지도 -->	
-			<div id="container" style = "width: 100%; height: 650px;">
+			<div id="container" style = "width: 100%; height: 40%;">
 				<div id="rvWrapper">
 					<div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
 					<div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>
@@ -1301,7 +1374,7 @@
         			<div id="roadviewControl" onclick="setRoadviewRoad('button')"></div>
     			</div>
 			</div>
-			<div id = "checkBoxBottomDiv" style = "width : 100%;" class = "clearfix" >
+			<div id = "checkBoxBottomDiv" style = "width : 100%; height: 2%;" class = "clearfix" >
 				<div id = "checkBoxGroup2" style = "text-align : right; vertical-align: middle; width : 100%;">
 					<label class = "checkBoxLabel">
 						<input type = "checkbox" class = "mapOption" onclick="setOverlayMapTypeId(this)" id = "traffic" />교통정보 보기
@@ -1314,22 +1387,146 @@
 					</label>
 				</div>
 			</div>
-			<div id = "searchResultDiv" class = "clearfix" style = "width : 100%; height : 500px; border : 4px solid #1E1E1E; border-radius : 4px; background-color : #FFFFFF">
-				<div id = "naverSearchResultDiv" class = "floatDiv" style = "width : 30%; height : 100%; overflow : auto" >
-					<div style = "width : 100%; height : auto"><img id = "searchImg1" style = "width : 100%; height : auto" src = "http://image.aladin.co.kr/scm/editor/2015/0828/scm3855923816575.jpg"></div>
-					<div style = "width : 100%; height : auto"><img id = "searchImg1" style = "width : 100%; height : auto" src = "http://www.chungnam.net/export/media/article_image/20130527/IM0000559186.jpg"></div>
-					<div style = "width : 100%; height : auto"><img id = "searchImg1" style = "width : 100%; height : auto"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-					<div style = "width : 100%; height : 40%"><img id = "searchImg1" style = "width : 100%; height : 100%"></div>
-				</div>
-				<div id = "dBSearchResultDiv" class = "floatDiv" style = "width : 70%; height : 100%;">
-					<input type ="button" onclick = "tTest()">
-				</div>
+			<div id = "searchResultDiv" class = "clearfix" style = "width : 100%; height : 46%; border : 4px solid #1E1E1E; border-radius : 4px; background-color : #F2F2F2">
+				<form id = "sightsForm" method = "post" action = "${path}/sightsInsert" style = "width : 100%; padding : 0% 5%; height : 100%; background-color : #F2F2F2">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+					<ul id = "sightsTableUl" style = "width : 100%; height : 100%">
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div id = "sightsNameDiv" class = "floatDiv" style = "width : 20%; height : 98%; padding : 2% 0;">관광지명</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="sightsName" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">시/도</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<select id="sightsCity" class = "textBox" style = "width : 100%; height : 100%;">
+									<c:forEach items="${cityList}" var="city">
+										<option value = "${city}">${city}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">지역</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id= "sightsRegion" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 41.65%;">
+							<div class = "floatDiv" style = "width : 20%; height : 100%;">설명</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<textarea id="sightsDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">위치</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="sightsLocation" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">홈페이지</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="sightsHomepage" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">위도</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="sightsLatitude" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 8.33%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">경도</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="sightsLongitude" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+					</ul>
+				</form>
+					
+				<form id = "festivalForm" method = "post" action = "" style = "width : 90%; padding : 0% 5%;height : 100%">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+					<ul id = "festivalTableUl" style = "width : 100%; height : 100%">
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">이름</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalName" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">시/도</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<select id="festivalCity" class = "textBox" style = "width : 100%; height : 100%;">
+									<c:forEach items="${cityList}" var="city">
+										<option>${city}</option>
+									</c:forEach>
+								</select>
+								</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">지역</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalLocation" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">주소</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalAddress" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 31.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 100%;">설명</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<textarea id="festivalDescription" class = "textBox" style = "width : 100%; height : 100%; resize : none;"></textarea>
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">시작일</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalStart" class ="textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">종료일</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalEnd"class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">주최기관</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalAgency" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">전화번호</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalPhone" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">홈페이지</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalHomepage" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">위도</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalLatitude" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+						<li class = "clearfix" style = "width : 100%; height : 6.25%;">
+							<div class = "floatDiv" style = "width : 20%; height : 96%; padding : 2% 0;">경도</div>
+							<div class = "floatDiv" style = "width : 80%; height : 100%">
+								<input type = "text" id="festivalLongitude" class = "textBox" style = "width : 100%; height : 100%;">
+							</div>
+						</li>
+					</ul>
+				</form>
 			</div>
 		</div>
 		

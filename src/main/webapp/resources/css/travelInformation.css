@@ -99,7 +99,7 @@ input[type="text"]
     border-radius : 5px 0 0 5px;
 }
 
-input[type="text"], select
+input[type="text"][id = "textBox"], select
 {
 	font-weight : normal;
 	height: 40px;
@@ -127,7 +127,7 @@ div[id = "travelInformationHeader"]
 	line-height : 28.8px;
 	font-size : 28.8px;
 	height : 50px;
-	padding : 5px 0 5px 0;
+	padding : 0;
 	color : #1E1E1E;
 }
 
@@ -141,11 +141,11 @@ div[id = "travelInformationExplain"]
 div[id = "checkBoxGroup1"],
 div[id = "checkBoxGroup2"]
 {
-	padding : 5px 0px 5px 0px;
+	padding : 0px;
 }
 div[id = "searchGroup"]
 {
-	padding : 5px;
+	padding : 0px;
 }
 
 div[id = "radioGroup"],
@@ -385,4 +385,12 @@ button[id = "search-box-button"]:focus
 .overlaybox li .count {position:absolute;margin-top:5px;right:15px;font-size:10px;}
 .overlaybox li:hover {color:#fff;background:#d24545;}
 .overlaybox li:hover .up {background-position:0 0px;}
-.overlaybox li:hover .down {background-position:0 -20px;}   
+.overlaybox li:hover .down {background-position:0 -20px;}
+
+.textBox,
+.textBox:focus
+ {
+ 	border : 0px solid #1E1E1E;
+ 	padding : 0px;
+ 	background-color : #F2F2F2;
+ }
