@@ -21,7 +21,8 @@
 
 <form name="updateForm" method="post" action="${pageContext.request.contextPath}/noticeupdate?${_csrf.parameterName}=${_csrf.token}" onSubmit='return checkValid()' enctype="multipart/form-data">
 	
-	
+	<input type="hidden" name="noticeId" value="${noticeDTO.noticeId}">
+	<input type="hidden" name="noticeNo" value="${noticeDTO.noticeNo}">
 	<table align="center" cellpadding="5" cellspacing="2" width="1000" border="1">
 	    <tr>
 	        <td width="1220" height="20" colspan="2" bgcolor="#COCOCO">

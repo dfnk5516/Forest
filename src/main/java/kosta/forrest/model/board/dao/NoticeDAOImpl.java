@@ -41,7 +41,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 	}
 	@Override
 	public int update(NoticeDTO noticeDTO) {
-		return sqlSession.insert("noticeMapper.noticeUpdate");
+		return sqlSession.update("noticeMapper.noticeUpdate", noticeDTO);
 	}
 	
 	@Override

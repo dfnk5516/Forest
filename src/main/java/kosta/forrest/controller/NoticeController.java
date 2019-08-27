@@ -141,7 +141,7 @@ public class NoticeController {
     	noticeService.update(noticeDTO);//
     	ModelAndView mv = new ModelAndView();
     	mv.addObject("noticeDTO", noticeDTO);
-		mv.setViewName("redirect:noticeread/"+noticeDTO.getNoticeNo());
+		mv.setViewName("redirect:noticeread?noticeNo="+noticeDTO.getNoticeNo());
 		return mv;
 	}
 
