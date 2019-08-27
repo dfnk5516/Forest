@@ -13,7 +13,9 @@
 		margin: 30px 120px; font-size: 15px; font-weight: 700; border-radius: 5px; border:none; cursor:pointer; float: left;}
 	#update {font-weight: 200; text-align: center; width: 320px; height: 30px; margin: 5px 30px; }
 	table tr:first-child td {width: 100px;}
-
+	img{vertical-align: middle;}
+	#icon{width: 18%; height: 18%; display: inline-block; vertical-align: middle; margin: 10px 0px 50px 170px;}
+	
 </style>
 </head>
 <body>
@@ -21,6 +23,7 @@
 <sec:authorize access="isAuthenticated()">
 	<div id="myinfo" >
 	<h2 style="text-align: center; margin-bottom: 30px" >회원정보수정</h2>
+	<img src="/controller/resources/images/icons/update.png" id="icon">  
 	<hr>
 	<form method="post" action="${pageContext.request.contextPath}/updateUserAction">
 		<input type="hidden" name="command" value="update">

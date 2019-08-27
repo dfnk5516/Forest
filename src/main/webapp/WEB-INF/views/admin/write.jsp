@@ -70,6 +70,7 @@
 
 </head>
 <BODY>
+<sec:authorize access="isAuthenticated()">
 <div style=" vertical-align: middle;">
 <form style="margin-top: 50px; margin-bottom: 30px" id="writeForm" name="writeForm" method="post" action="${pageContext.request.contextPath}/admin/insert">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -141,6 +142,6 @@
 <hr>
 <div align=right><span style="font-size:13pt;">&lt;<a href="${pageContext.request.contextPath}/admin/list">리스트로 돌아가기</a>&gt;</span></div>
 <span style="font-size:13pt;">&lt;<a href="${pageContext.request.contextPath}/hometest">홈페이지로 가기</a>&gt;</span>
-
+</sec:authorize>
 </BODY>
 </HTML>
