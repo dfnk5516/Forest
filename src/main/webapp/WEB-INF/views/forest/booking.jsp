@@ -53,6 +53,22 @@ $(function(){
 		}
 	})
 	
+	$("#insertBtn").click(function(){
+		if($("#arr_01").is(":checked") == true){
+			window.opener.name = "parentPage"; // 부모창의 이름 설정
+		    $("#booking").target = "parentPage"; // 타켓을 부모창으로 설정
+		    $("#booking").action = "${pageContext.request.contextPath}/forest/bookingInsert";
+		    $("#booking").submit();
+		    alert("예약이 완료되었습니다.");
+		    window.opener.location="${pageContext.request.contextPath}/forest/bookList";
+		    self.close();
+		} else if($("input").val()==""){
+			alert("정보를 입력해주세요")
+		} else {
+			alert("약관에 동의해주세요");
+		}
+	})
+	
 	$("#cancleBtn").click(function(){
 		if (confirm("완료되지 않은 예약정보는 저장되지 않습니다. 취소하시겠습니까?")) {
 			window.close();
@@ -72,8 +88,10 @@ li {
 <BODY>
 <%@ include file="background.jsp" %>
 <div id="back">
-<form name="updateForm" method="post">
+<form name="bookingForm" method="post" action="${pageContext.request.contextPath}/forest/bookingInsert" id="booking">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+<input type="hidden" name="bookId" value="qortmd8886">
+<input type="hidden" name="lodgeCode" value="${bookingDTO.lodgeCode}">
 <div id="container" class="layout">
     
     <h2 class="container_title">예약 정보</h2>
@@ -131,11 +149,6 @@ li {
 					</div>
 				</div>
  <hr>
-
-
-
-
-
                     </div>
                 </div>
                 <div class="stay_right" style="background-color: lightgray;">
@@ -233,7 +246,7 @@ li {
 				    </div>
 				</div>
                 <div class="total_go">
-	                <button type="button" class="btn btn-success" id="insert" style="font-size:large;">
+	                <button type="button" class="btn btn-success" id="insertBtn" style="font-size:large;">
 						예약완료
 					</button>
 	                <button type="button" class="btn btn-secondary" id="cancleBtn" style="font-size:large;">
