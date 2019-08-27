@@ -66,10 +66,38 @@
 	
 	
 	<select id="selectBookInfo" parameterType="string" resultType="bookingDTO">
-	select forest_name, forest_type, forest_addr, forest_tel, forest_facil, forest_filename,
+	select forest_name, forest_type, forest_addr, forest_tel, forest_facil, forest_filename, forest_writer,
 	lodge_code, lodge_name, lodge_price, lodge_addr, lodge_tel
 	from lodge join forest on forest.forest_no=lodge.forest_no 
 	where lodge_code=#{_parameter}
 	</select>
+	
+	<insert id="bookingInsert" parameterType="bookingDTO" >
+	insert into booking (book_code, lodge_code, start_date, end_date, people_num, book_date, book_id)
+	values(booking_seq.nextval, #{lodgeCode}, #{startDate}, #{endDate}, #{peopleNum}, sysdate, #{bookId})
+	</insert>
+	
+	<!-- <select id="selectBookAll" resultType="bookingDTO">
+	select * from booking order by book_code desc
+	</select> -->
+	
+	
+	<select id="selectBookAll" resultType="bookingDTO">
+	select forest_name, forest_type, forest_addr, forest_tel, forest_facil, forest_filename, forest_writer, forest_url,
+	booking.lodge_code, lodge_name, lodge_price, lodge_addr, lodge_tel,lodge_filename, book_code, start_date,end_date,people_num,book_date,book_id
+	from booking
+	join lodge on lodge.lodge_code=booking.lodge_code
+	join forest on forest.forest_no=lodge.forest_no
+	order by book_code desc
+	</select>
+	
+	<select id="selectBookDetail" parameterType="int" resultType="bookingDTO">
+	select forest_name, forest_type, forest_addr, forest_tel, forest_facil, forest_filename, forest_writer, forest_url,
+	booking.lodge_code, lodge_name, lodge_price, lodge_addr, lodge_tel,lodge_filename, book_code, start_date,end_date,people_num,book_date,book_id
+	from booking
+	join lodge on lodge.lodge_code=booking.lodge_code
+	join forest on forest.forest_no=lodge.forest_no where book_code=#{_parameter}
+	</select>
+	
 	
 </mapper>

@@ -41,4 +41,22 @@ public class LodgeDAOImpl implements LodgeDAO {
 		return bookingDTO;
 	}
 
+	@Override
+	public int bookingInsert(BookingDTO bookingDTO) {
+		int result = session.insert("forestMapper.bookingInsert", bookingDTO);
+		return result;
+	}
+
+	@Override
+	public List<BookingDTO> selectBookAll() {
+		List<BookingDTO> list = session.selectList("forestMapper.selectBookAll");
+		return list;
+	}
+
+	@Override
+	public BookingDTO selectByForestNo(int bookCode) {
+		BookingDTO bookingDTO = session.selectOne("forestMapper.selectBookDetail", bookCode);
+		return bookingDTO;
+	}
+
 }

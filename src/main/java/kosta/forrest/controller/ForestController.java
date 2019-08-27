@@ -140,4 +140,35 @@ public class ForestController {
 		return mv;
 	}
 	
+	//예약하기
+	@RequestMapping("/bookingInsert")
+	public String bookInsert(BookingDTO bookingDTO) {
+		System.out.println("ForestController의 bookInsert호출");
+		lodgeService.bookingInsert(bookingDTO);
+		return "redirect:list";
+	}
+	
+	//예약 목록
+	@RequestMapping("/bookList")
+	public ModelAndView bookList() {
+		System.out.println("ForestController의 bookList호출");
+		ModelAndView mv = new ModelAndView();
+		List<BookingDTO> list = lodgeService.selectBookAll();
+		mv.addObject("list", list);
+		mv.setViewName("forest/bookList");
+		
+		return mv;
+	}
+	
+	//예약 상세보기
+	@RequestMapping("/bookDetail/{bookCode}")
+	public ModelAndView selectByBook(@PathVariable int bookCode) {
+		BookingDTO dbDTO = lodgeService.selectByBookingCode(bookCode);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("bookingDTO", dbDTO);
+		mv.setViewName("forest/bookDetail");
+		return mv;
+	}
+	
+	
 }

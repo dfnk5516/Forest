@@ -22,18 +22,24 @@ public class BookingDTO {
 	private String forestAddr;
 	private String forestTel;
 	private String forestFacil;
+	private String forestWriter;
+	private String forestUrl;
 	
 	private String lodgeCode;
 	private String lodgeName;
 	private int lodgePrice;
 	private String lodgeAddr;
 	private String lodgeTel;
+	private String lodgeWriter;
+	private String lodgeFilename;
 	
-	private String bookingCode;
+	private String bookCode;
 	private String startDate;
 	private String endDate;
 	private int peopleNum;
 	private String bookDate;
-	private String userId;
+	private String bookId;
 	
 }
+
+

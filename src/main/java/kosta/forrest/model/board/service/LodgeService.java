@@ -27,4 +27,13 @@ public interface LodgeService {
 	 * 숙박코드에 해당하는 예약하기폼 불러오기
 	 */
 	BookingDTO selectBookInfo(String lodgeCode);
+
+
+	int bookingInsert(BookingDTO bookingDTO);
+
+
+	List<BookingDTO> selectBookAll();
+
+
+	BookingDTO selectByBookingCode(int bookCode);
 }

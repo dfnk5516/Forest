@@ -19,4 +19,10 @@ public interface LodgeDAO{
 	BookingDTO selectBookInfo(String lodgeCode);
 
 	int delete(String LodgeCode);
+
+	int bookingInsert(BookingDTO bookingDTO);
+
+	List<BookingDTO> selectBookAll();
+
+	BookingDTO selectByForestNo(int bookCode);
 }
