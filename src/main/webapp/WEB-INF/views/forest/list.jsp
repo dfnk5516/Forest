@@ -278,7 +278,7 @@ $(function(){
 <ul class="pagination">
 	<c:if test="${cri.prev }">
 	  <li>
-		<a href="${path}/forest/list?page=${cri.startPage-1 }&perPageNum=${cri.perPageNum}&searchType=${cri.searchType}&keyword=${cri.keyword}">
+		<a href="${path}/forest/list?page=${cri.startPage-1 }&perPageNum=${cri.perPageNum}&keyField=${cri.keyField}&keyWord=${cri.keyWord}">
 		  <i class="glyphicon glyphicon-step-backward" ></i>Previous
 		</a>
 	  </li>
