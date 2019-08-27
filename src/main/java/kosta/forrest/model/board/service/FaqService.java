@@ -15,4 +15,19 @@ public interface FaqService {
 	 * 카운트
 	 */
 	int countArticle(String option, String keyWord);
+	
+	/**
+	 * 레코드 삽입
+	 * */
+	int faqInsert(FaqDTO faqDTO);
+	  
+    /**
+     * 모델번호에 해당하는 레코드 삭제
+     */
+	int faqDelete(int faqNo);
+	  
+	/**
+	 * 모델번호에 해당하는 레코드 수정
+	 */
+	int faqUpdate(FaqDTO faqDTO);
 }

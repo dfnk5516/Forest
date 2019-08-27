@@ -24,4 +24,26 @@ public class FaqServiceImpl implements FaqService{
 		return faqDAO.countArticle(option, keyWord);
 	}
 
+	@Override
+	public int faqInsert(FaqDTO faqDTO) {
+		int result = faqDAO.faqInsert(faqDTO);
+		if(result==0)throw new RuntimeException("등록되지 않았습니다.");
+		return result;
+	}
+
+	@Override
+	public int faqDelete(int faqNo) {
+		int result = faqDAO.faqDelete(faqNo);
+		if(result==0)throw new RuntimeException("삭제되지 않았습니다.");
+		return result;
+	}
+
+	@Override
+	public int faqUpdate(FaqDTO faqDTO) {
+			//faqDAO.selectByModelNum(faqDTO.getFaqNo());
+			int result = faqDAO.faqUpdate(faqDTO);
+			if(result==0)throw new RuntimeException("수정되지 않았습니다.");
+			return result;
+	}
+
 }

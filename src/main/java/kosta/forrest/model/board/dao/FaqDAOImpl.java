@@ -35,5 +35,20 @@ public class FaqDAOImpl implements FaqDAO {
 		map.put("keyWord", keyWord);
 		return session.selectOne("faqMapper.countArticle", map);
 	}
+
+	@Override
+	public int faqInsert(FaqDTO faqDTO) {
+		return session.insert("faqMapper.faqInsert" ,faqDTO);
+	}
+
+	@Override
+	public int faqDelete(int faqNo) {
+		return session.delete("faqMapper.faqDelete", faqNo);
+	}
+
+	@Override
+	public int faqUpdate(FaqDTO faqDTO) {
+		return session.update("faqMapper.faqUpdate", faqDTO);
+	}
 	
 }

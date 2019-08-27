@@ -38,7 +38,7 @@
 	) WHERE fn BETWEEN #{start} AND #{end}
 </sql>
 
-
+<!-- 리스트 출력 -->
 <select id="selectAll" resultType="faqDTO" parameterType="map">
 	<include refid="pagingHeader"/>
 	select <include refid="faqcolumnName"/> from bbs_faq
@@ -47,10 +47,32 @@
 	<include refid="pagingFooter"/>
 </select>
 
+<!-- 리스트 총 개수 출력 -->
 <select id="countArticle" resultType="int">
 	select count(*) from bbs_faq
 	<include refid="faqSearch"/>
 </select>
+
+
+
+<!-- 게시물 등록 -->
+<insert id="faqInsert" parameterType="faqDTO">
+  insert into bbs_faq(<include refid="faqcolumnName"/>) 
+  values(faq_seq.nextval,'admin',#{faqTitle},#{faqContent},null,sysdate)
+</insert>
+
+<!-- 수정 -->
+ <update id="faqUpdate" parameterType="faqDTO">
+    update bbs_faq 
+    set  faq_title=#{faqTitle},faq_content=#{faqContent}
+    where faq_no=#{faqNo}
+ </update>
+ 
+ <!-- 삭제 --> 
+ <delete id="faqDelete" parameterType="int">
+  delete from bbs_faq 
+  where faq_no=#{faqNo}
+ </delete>
 
 </mapper>
 

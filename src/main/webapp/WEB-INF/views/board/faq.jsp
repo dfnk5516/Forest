@@ -5,22 +5,38 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-//게시글 toggle
-$(function() {
-    $("#faqAccodion").accordion({
-      collapsible: true
-    });
-  });
-</script>
+	
+	
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+	
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="${path}/resources/js/modal.js"></script>
+  <link rel="stylesheet" type="text/css" href="${path}/resources/css/modal.css">
+
 <script>
 	//원하는 페이지로 이동시 검색조건, 키워드 값을 유지하기 위해 
 	function list(page){
 		location.href="${pageContext.request.contextPath}/faq?curPage="+page+"&option=${map.option}"+"&keyWord=${map.keyWord}";
+	}
+
+	function sendDelete(faqNo){
+		/* document.requestForm.action="${pageContext.request.contextPath}/faqDelete"
+		document.requestForm.submit(); */
+		$.ajax(
+			{
+				beforeSend : function(xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+	                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
+				url: "${pageContext.request.contextPath}/faqDelete?faqNo="+faqNo,
+				type :"post"
+			})
+			location.reload();
 	}
 </script>
 
@@ -40,71 +56,61 @@ $(function() {
 	</div>
 	
 	<div>총 ${map.count}개</div>
+	
+	<%-- <div class="panel-group" id="accordion">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne?${faqDto.faqNo}">
+	          ${faqDto.faqTitle}
+	        </a>
+	      </h4>
+	    </div>
+	    <div id="collapseOne?${faqDto.faqNo}" class="panel-collapse collapse">
+	      <div class="panel-body">
+	        ${faqDto.faqContent}
+	      </div>
+	    </div>
+	  </div>
+ 	</div> --%>
 
-	<!-- <tr>
-        <td bgcolor="#00cc00">
-            <p align="center">
-            <font color="white"><b><span style="font-size:9pt;">번호</span></b></font></p>
-        </td>
-        <td bgcolor="#00cc00">
-            <p align="center"><font color="white"><b><span style="font-size:9pt;">아이디</span></b></font></p>
-        </td>
-        <td bgcolor="#00cc00">
-            <p align="center"><font color="white"><b><span style="font-size:9pt;">제목</span></b></font></p>
-        </td>
-        <td bgcolor="#00cc00">
-            <p align="center"><font color="white"><b><span style="font-size:9pt;">내용</span></b></font></p>
-        </td>
-        
-        <td bgcolor="#00cc00">
-            <p align="center"><font color="white"><b><span style="font-size:9pt;">이미지</span></b></font></p>
-        </td>
-        <td bgcolor="#00cc00">
-            <p align="center"><font color="white"><b><span style="font-size:9pt;">작성일</span></b></font></p>
-        </td>
-    </tr> -->
-    
-   
-    <div id="faqAccodion">
+	<%-- <form name="requestForm" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
+	
     <c:choose>
     <c:when test="${empty map.list}">
 	<div>
     	<p align="center"><b><span style="font-size:9pt;">없습니다.</span></b></p>
     </div>
     </c:when>
+    
     <c:otherwise>
-	<c:forEach items="${map.list}" var="faqDto" varStatus="status">
-			<h3>${faqDto.faqTitle}</h3>
-			<div>
-				<p>${faqDto.faqContent}</p>
-			</div>
-		    <%-- <tr onmouseover="this.style.background='#eaeaea'" onmouseout="this.style.background='white'">
-		        <td bgcolor="">
-		        
-		            <p align="center"><span style="font-size:9pt;">${faqDto.faqNo}</span></p>
-		        </td>
-		        <td bgcolor="">
-					<p><span style="font-size:9pt;">${faqDto.faqId}</span></p>
-		        </td>
-		        
-		        <td bgcolor="">
-		            <p><span style="font-size:9pt;">${faqDto.faqTitle}</span></p>
-		        </td>
-		        <td bgcolor="">
-		            <p><span style="font-size:9pt;">${faqDto.faqContent}</span></p>
-		        </td>
-		         
-		         <td bgcolor="">
-		            <p><span style="font-size:9pt;">${faqDto.faqImg}</span></p>
-		        </td>
-		         <td bgcolor="">
-		            <p><span style="font-size:9pt;">${faqDto.faqDate}</span></p>
-		        </td>
-		    </tr> --%>
-    </c:forEach>
+    <div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+		<c:forEach items="${map.list}" var="faqDto" varStatus="status">
+		<form name="requestForm" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		<div class="panel-heading">
+	      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne?${faqDto.faqNo}">
+	          ${faqDto.faqTitle}
+	        </a>
+			<%-- <input type=hidden name="faqNo" id="faqNo" value="${faqDto.faqNo}"> --%>
+			<%-- <input class="btn btn-xs btn-warning" type="button" value="수정하기" onClick="sendUpdate(${faqDto.faqNo})"> --%>
+			<input class="btn btn-xs btn-danger" type="button" value="삭제하기" onClick="sendDelete(${faqDto.faqNo})">
+	      </h4>
+	    </div>
+	    <div id="collapseOne?${faqDto.faqNo}" class="panel-collapse collapse">
+	      <div class="panel-body">
+	        ${faqDto.faqContent}
+	     </div>
+	    </div>
+	    </form>
+   		</c:forEach>
+    	</div>
+    </div>
 	</c:otherwise>
     </c:choose>
-    </div>
     
     <!-- 페이징 -->
 	<div>
@@ -143,7 +149,10 @@ $(function() {
 	</div>
 <!-- 페이징 -->
 
-	<div><a href="${pageContext.request.contextPath}/faqWrite">글쓰기</a></div>
+	<%-- <div><a href="${pageContext.request.contextPath}/faqWrite">글쓰기</a></div> --%>
+	<button id="createBtn" type="button" class="btn btn-info btn-sm"
+			data-toggle="modal">글 쓰기</button>
+	<jsp:include page="faqWrite.jsp" />
 </div>
 
 
