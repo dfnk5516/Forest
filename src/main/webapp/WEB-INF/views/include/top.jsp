@@ -58,11 +58,9 @@
 								<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<li><a>관리 페이지</a>
 										<ul>
-											<%-- <li><a href="${pageContext.request.contextPath}/board/travelInformationWrite"></a></li> --%>
+											<li><a href="${pageContext.request.contextPath}/travelInformationWrite">여행 정보 관리</a></li>
 											<li><a href="${pageContext.request.contextPath}/admin/list">회원 목록보기</a></li>
-											<%-- <li><a href="${pageContext.request.contextPath}/admin/update">회원정보수정</a></li> --%>
 											<li><a href="${pageContext.request.contextPath}/admin/write">사용자 정보 등록</a></li>
-														
 										</ul> 
 									</li>
 								</sec:authorize>
